@@ -1,4 +1,6 @@
-kloxo
-=====
+![Kloxo-MR logo](https://github.com/mustafaramadhan/kloxo/blob/dev/kloxo-mr_big.png)
 
-This is special edition (fork) of Kloxo with many features not existing on Kloxo official release (6.1.12+).  This fork named as Kloxo-MR (meaning 'Kloxo fork by Mustafa Ramadhan')
+### Kloxo fork by Mustafa Ramadhan
+
+
+Go to https://github.com/mustafaramadhan/kloxo/blob/dev/README.md
