@@ -9,6 +9,15 @@ fi
 CURRPATH=${PWD}
 CURRBASENAME=${PWD##*/}
 
+if [ "$CURRBASENAME" != "mratwork" ] ; then
+	echo
+	echo "* Your current path is '$CURRPATH'"
+	echo "  - Need path as '/home/rpms/<domain>/repo/mratwork'"
+	echo "    where 'rpms' as client in Kloxo-MR 7.0"
+	echo
+	exit
+fi
+
 if [ "$(yum list *yum*|grep '@')" == "" ] ; then
 	OPTIONS=""
 else

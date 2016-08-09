@@ -46,7 +46,6 @@ gpgcheck=0
 [release-centos7-noarch]
 name=release-centos7-noarch
 baseurl=http://rpms.mratwork.com/repo/mratwork/release/centos7/noarch/
-enabled=0
 gpgcheck=0
 
 [release-centos7-i386]
@@ -102,7 +101,6 @@ gpgcheck=0
 [testing-6-x86_64]
 name=testing-6-x86_64
 baseurl=http://rpms.mratwork.com/repo/mratwork/testing/centos6/x86_64/
-enabled=1
 gpgcheck=0
 
 [testing-7-noarch]

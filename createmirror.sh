@@ -2,85 +2,18 @@
 
 T="$(date +%s%N)"
 
-if [ "$(rpm -qa createrepo)" == "" ] ; then
-	yum install createrepo -q -y
-fi
-
-CURRPATH=${PWD}
-CURRBASENAME=${PWD##*/}
-
 echo "* Start for mratwork.repo mirror"
 
-if [ ! -f $CURRPATH/mratwork-mirror.repo ] ; then
-	echo
-	echo "  - Need '$CURRPATH/mratwork-mirror.repo' file"
-	echo
-	exit
+if [ ! -d ./repo/mratwork ] ; then
+	cd ../../
 fi
 
-if [ "$(yum list *yum*|grep '@')" == "" ] ; then
-	crOPTIONS=""
-	csOPTIONS=""
-else
-	crOPTIONS="--no-database --checksum=sha"
-	csOPTIONS="--norepopath"
-fi
+echo "  - Removing '.repodata' dirs and 'index.html' files"
+find ./repo/ -type d -name ".repodata" -exec rm -rf {} \; >/dev/null 2>&1
+find ./repo/ -type f -name "index.html" -exec rm -rf {} \; >/dev/null 2>&1
 
-cd $CURRPATH
-
-if [ ! -d $CURRPATH/mirror ] ; then
-	mkdir -p $CURRPATH/mirror
-fi
-
-### MR -- release/testing portion ###
-for a in release testing ; do
-	for b in neutral centos5 centos6 centos7 ; do
-		for c in noarch i386 x86_64 ; do
-			if [ ! -d $CURRPATH/$a/$b/$c ] ; then
-				mkdir -p $CURRPATH/$a/$b/$c
-			fi
-
-			echo "  - Processing for './$a/$b/$c'"
-			mv -f $CURRPATH/$a/$b/$c $CURRPATH/$a/$b/$a-$b-$c
-			echo "    - Getting rpm files"
-			reposync $csOPTIONS \
-				--quiet --delete --arch=$c --config=$CURRPATH/mratwork-mirror.repo \
-				--repoid=$a-$b-$c --download_path=$CURRPATH/$a/$b/$a-$b-$c
-
-			if [ -d $CURRPATH/$a/$b/$a-$b-$c ] ; then
-				mv -f $CURRPATH/$a/$b/$a-$b-$c $CURRPATH/$a/$b/$c
-			fi
-
-			createrepo $crOPTIONS --quiet --checkts --update $CURRPATH/$a/$b/$c
-
-			echo "    - Getting mirror list"
-			wget https://github.com/mustafaramadhan/kloxo/raw/rpms/mirror/mratwork-$a-$b-$c-mirrors.txt \
-				--output-document=$CURRPATH/mirror/mratwork-$a-$b-$c-mirrors.txt --no-check-certificate \
-				 >/dev/null 2>&1
-
-		done
-	done
-done
-
-if [ ! -d $CURRPATH/SRPMS ] ; then
-	mkdir -p $CURRPATH/SRPMS
-fi
-
-echo "  - Processing for './SRPMS'"
-
-echo "    - Getting rpm files"
-
-### MR -- SRPMS portion ###
-reposync $csOPTIONS --source \
-	--quiet --delete --arch=SRPMS --config=$CURRPATH/mratwork-mirror.repo \
-	--repoid=srpms --download_path=$CURRPATH/SRPMS
-
-createrepo $crOPTIONS --quiet --checkts --update $CURRPATH/SRPMS
-
-echo "    - Getting mirror list"
-wget https://github.com/mustafaramadhan/kloxo/raw/rpms/mirror/mratwork-SRPMS-mirrors.txt \
-	--output-document=$CURRPATH/mirror/mratwork-SRPMS-mirrors.txt --no-check-certificate \
-	 >/dev/null 2>&1
+echo "  - Getting rpms files"
+wget -R index.html*,.repodata -m -nH -x http://rpms.mratwork.com/repo/mratwork/
 
 echo "* End for mratwork.repo mirror"
 
@@ -95,4 +28,3 @@ echo ""
 printf "*** Process Time: %02d:%02d:%02d:%02d.%03d (dd:hh:mm:ss:xxxxxx) ***\n" \
 	"$((S/86400))" "$((S/3600%24))" "$((S/60%60))" "$((S%60))" "${M}"
 echo ""
-
