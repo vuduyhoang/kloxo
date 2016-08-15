@@ -1,2 +1,3 @@
 http://rpms.mratwork.com/repo/mratwork/testing/centos5/x86_64/
 http://rpms.potissima.com/repo/mratwork/testing/centos5/x86_64/
+http://rpms.mustafa.id/repo/mratwork/testing/centos5/x86_64/
