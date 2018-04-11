@@ -123,9 +123,11 @@ class Servermail__Qmail  extends lxDriverClass
 			lxshell_return("/var/qmail/bin/simscanmk", "-g");
 
 			$cpath = "/var/qmail/supervise/clamd";
-
-			lxfile_mv("{$cpath}/down", "{$cpath}/run");
-			lxfile_mv("{$cpath}/log/down", "{$cpath}/log/run");
+	
+			if (file_exists($cpath)) {
+				lxfile_mv("{$cpath}/down", "{$cpath}/run");
+				lxfile_mv("{$cpath}/log/down", "{$cpath}/log/run");
+			}
 
 			createRestartFile("restart-mail");
 
@@ -144,9 +146,11 @@ class Servermail__Qmail  extends lxDriverClass
 				lxshell_return("yum", "remove", "-y", "simscan-toaster");
 
 				$cpath = "/var/qmail/supervise/clamd";
-
-				lxfile_mv("{$cpath}/run", "{$cpath}/down");
-				lxfile_mv("{$cpath}/log/run", "{$cpath}/log/down");
+				
+				if (file_exists($cpath)) {
+					lxfile_mv("{$cpath}/run", "{$cpath}/down");
+					lxfile_mv("{$cpath}/log/run", "{$cpath}/log/down");
+				}
 
 				// MR -- clamav for ftp upload file
 				exec("sh /script/pure-ftpd-without-clamav");
@@ -160,6 +164,9 @@ class Servermail__Qmail  extends lxDriverClass
 		if (isset($this->main->send_limit)) {
 			$slbin = "/var/qmail/bin/sendlimiter";
 			lfile_put_contents("/var/qmail/control/sendlimit", $this->main->send_limit);
+			exec("'cp' -f ../file/qmail/var/qmail/bin/sendlimiter {$slbin}; chown root:qmail {$slbin}; chmod 755 {$slbin}; sh {$slbin}");
+		} else {
+			exec("'rm' -f /var/qmail/control/sendlimit");
 			exec("'cp' -f ../file/qmail/var/qmail/bin/sendlimiter {$slbin}; chown root:qmail {$slbin}; chmod 755 {$slbin}; sh {$slbin}");
 		}
 	}
