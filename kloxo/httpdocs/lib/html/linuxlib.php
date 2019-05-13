@@ -202,7 +202,8 @@ function getIPs_from_ifcfg()
 					if ($ip === '127.0.0.1') { 
 						continue;
 					} else {
-						$r[] = trim($i[1]);
+					//	$r[] = trim($i[1]);
+					$r[] = preg_replace('/[^0-9\.]/', '', trim($i[1]));
 					}
 				}
 			}

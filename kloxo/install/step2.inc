@@ -415,7 +415,7 @@ kloxo_install_bye() {
 		echo "._/ - Need running 'sh /script/cleanup' for update                           _/."
 	fi
 
-		echo "._/ - Run 'sh /script/mysql-convert --engine=myisam' to minimize MySQLcccc   _/."
+		echo "._/ - Run 'sh /script/mysql-convert --engine=myisam' to minimize MySQL       _/."
 		echo "._/   memory usage. Or, go to 'admin->Webserver Configure'                   _/."
 		echo "._/ - Run 'sh /script/make-slave' for change to 'SLAVE'                      _/."
 
