@@ -755,7 +755,7 @@ $__description["enable_php_fastcgi"] = array("Enable PHP Fastcgi");
 
 // MR -- change to 'php children' purpose!
 // $__description["phpfcgi:number_of_fastcgi_process"] = array("PHPfcgi:Number Of Fastcgi Process");
-$__description["phpfcgi:number_of_fastcgi_process"] = array("PHPfcgi:Number Of FastCGI Children");
+$__description["phpfcgi:number_of_fastcgi_process"] = array("PHPfcgi:Number Of FastCGI ChildrenNumber Of FastCGI Children (Unlimited=4)");
 
 $__description["allow_minute_management_for_cron"] = array("Allow Minute Management For Cron");
 $__description["mysqldb:mysql_databases"] = array("MySQLdb:MySQL Databases");

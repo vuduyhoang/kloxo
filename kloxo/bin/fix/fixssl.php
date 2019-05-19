@@ -58,6 +58,23 @@ if (file_exists("{$pureftp_path}/pure-ftpd.pem")) {
 	exec("ln -sf {$kloxo_etc_path}/program.pem {$pureftp_path}/pure-ftpd.pem");
 }
 
+print("- Process for Qmail-toaster SSL files\n");
+
+$qmail_path="/var/qmail/control";
+
+if (file_exists("{$qmail_path}/servercert.pem")) {
+	if (!file_exists("{$qmail_path}/servercert.pem.old")) {
+		exec("'mv' -f {$qmail_path}/servercert.pem {$qmail_path}/servercert.pem.old");
+	} else {
+		exec("'rm' -f {$qmail_path}/servercert.pem");
+		exec("'mv' -f {$qmail_path}/servercert.pem {$qmail_path}/servercert.pem.old");
+	}
+
+//	exec("ln -sf {$kloxo_etc_path}/program.pem {servercert.pem}/pure-ftpd.pem");
+	exec("'cp' -f {$kloxo_etc_path}/program.pem {servercert.pem}/pure-ftpd.pem; ".
+		"chown -f root:qmail {servercert.pem}/pure-ftpd.pem");
+}
+
 if ((!is_link("{$kloxo_etc_path}/program.pem")) ||
 		((is_link("{$kloxo_etc_path}/program.pem")) && (!file_exists("{$kloxo_etc_path}/program.pem")))) {
 	$list = array('key', 'crt', 'ca', 'pem');
@@ -167,5 +184,3 @@ foreach($slist as $b) {
 
 	$b->was();
 }
-
-

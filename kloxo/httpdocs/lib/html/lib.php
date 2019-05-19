@@ -6277,7 +6277,8 @@ function setInitialPureftpConfig($nolog = null)
 
 	if (getServiceType('pure-ftpd') === 'init') {
 		lxfile_cp("../file/pure-ftpd/etc/init.d/pure-ftpd.init", "/etc/rc.d/init.d/pure-ftpd");
-		exec("chkconfig pure-ftpd on >/dev/null 2>&1; chmod 0755 /etc/rc.d/init.d/pure-ftpd");
+	//	exec("chkconfig pure-ftpd on >/dev/null 2>&1; chmod 0755 /etc/rc.d/init.d/pure-ftpd");
+		exec("sh /script/enable-service pure-ftpd >/dev/null 2>&1; chmod 0755 /etc/rc.d/init.d/pure-ftpd");
 	}
 
 	log_cleanup("- Restart pure-ftpd service", $nolog);

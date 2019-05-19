@@ -1457,17 +1457,7 @@ class Web extends Lxdb
 			case "configure_misc":
 				$vlist['force_www_redirect'] = null;
 				$vlist['force_https_redirect'] = null;
-			/*
-			//	if ($driverapp === 'apache') {
-				if (($driverapp === 'apache') || 
-						((strpos($driverapp, 'proxy') !== false) && 
-						($this->web_selected === 'back-end'))) {
-					$vlist['webmisc_b-execcgi'] = null;
-					if ($login->isAdmin()) {
-						$vlist['webmisc_b-disable_openbasedir'] = null;
-					}
-				}
-			*/
+
 				$vlist['__v_updateall_button'] = array();
 
 				return $vlist;
@@ -1565,16 +1555,7 @@ class Web extends Lxdb
 				// MR -- configure_misc
 				$vlist['force_www_redirect'] = null;
 				$vlist['force_https_redirect'] = null;
-			/*
-				if (($driverapp === 'apache') || 
-						((strpos($driverapp, 'proxy') !== false) && 
-						($this->web_selected === 'back-end'))) {
-					$vlist['webmisc_b-execcgi'] = null;
-					if ($login->isAdmin()) {
-						$vlist['webmisc_b-disable_openbasedir'] = null;
-					}
-				}
-			*/
+
 				$vlist['__v_updateall_button'] = array();
 
 				return $vlist;
@@ -1598,9 +1579,7 @@ class Web extends Lxdb
 
 				$l = self::getPhpSelectedList();
 
-				if (($driverapp === 'apache') || 
-						((strpos($driverapp, 'proxy') !== false) && 
-						($this->web_selected === 'back-end'))) {
+				if (($driverapp === 'apache') || ((strpos($driverapp, 'proxy') !== false) && ($this->web_selected === 'back-end'))) {
 					if ((strpos($phptype, 'php-fpm') !== false) || (strpos($phptype, 'proxy_fcgi') !== false)) {
 						if (count($l) === 1) {
 							$y['php_selected'] = $l[0];

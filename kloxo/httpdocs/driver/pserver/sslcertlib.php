@@ -331,9 +331,15 @@ class SslCert extends Lxdb
 
 			$mpath = "/var/qmail/control";
 
+			// MR -- symlink may trouble for qmail and then change to copy
 			if (!is_link("{$mpath}/servercert.pem")) {
-				exec("mv -f {$mpath}/servercert.pem {$mpath}/servercert.pem.old");
-				exec("ln -sf {$tpath}/program.pem {$mpath}/servercert.pem");
+				exec("'mv' -f {$mpath}/servercert.pem {$mpath}/servercert.pem.old");
+			//	exec("'ln' -sf {$tpath}/program.pem {$mpath}/servercert.pem");
+				exec("'cp' -f {$tpath}/program.pem {$mpath}/servercert.pem");
+			} else {
+				exec("'rm' -f {$tpath}/program.pem {$mpath}/servercert.pem");
+				exec("'cp' -f {$tpath}/program.pem {$mpath}/servercert.pem; ".
+					"chown -f root:qmail {$mpath}/servercert.pem");
 			}
 
 			// MR -- make pure-ftp using the same ssl
@@ -341,8 +347,8 @@ class SslCert extends Lxdb
 			$ppath = "/etc/pki/pure-ftpd";
 
 			if (!is_link("{$ppath}/pure-ftpd.pem")) {
-				exec("mv -f {$ppath}/pure-ftpd.pem {$ppath}/pure-ftpd.pem.old");
-				exec("ln -sf {$tpath}/program.pem {$ppath}/pure-ftpd.pem");
+				exec("'mv' -f {$ppath}/pure-ftpd.pem {$ppath}/pure-ftpd.pem.old");
+				exec("'ln' -sf {$tpath}/program.pem {$ppath}/pure-ftpd.pem");
 			}
 		} else {
 			$this->updateSetProgramSSL($param);

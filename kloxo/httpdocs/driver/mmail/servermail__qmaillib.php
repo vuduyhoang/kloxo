@@ -110,12 +110,12 @@ class Servermail__Qmail  extends lxDriverClass
 			if (isServiceExists("freshclam")) {
 			//	exec("chkconfig freshclam on >/dev/null 2>&1");
 			//	os_service_manage("freshclam", "restart");
-				exec("sh /script/enable-service freshclam");
+				exec("sh /script/enable-service freshclam restart");
 			}
 	
 			// MR -- clamav from epel use clamd instead clamav init
 			if (isServiceExists("clamd")) {
-				exec("sh /script/disable-service clamd");
+				exec("sh /script/disable-service clamd stop");
 			}
 
 			lxfile_cp("../file/linux/simcontrol", "/var/qmail/control/");
