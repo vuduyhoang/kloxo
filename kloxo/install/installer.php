@@ -739,16 +739,18 @@ function addLineIfNotExist($filename, $pattern, $comment)
 // MR -- taken from lib.php
 function getPhpBranch()
 {
-	$a = array('php', 'php52', 'php53', 'php53u', 'php54', 'php55u', 'php56u',
-		'php52w', 'php53w', 'php54w', 'php55w', 'php56w');
+//	$a = array('php', 'php52', 'php53', 'php53u', 'php54', 'php55u', 'php56u',
+//		'php52w', 'php53w', 'php54w', 'php55w', 'php56w');
 
+	$a = explode(",", file_get_contents('/usr/local/lxlabs/kloxo/etc/list/set.php.lst'));
+	
 	foreach ($a as &$e) {
 		if (isRpmInstalled("{$e}-cli")) {
 			return $e;
 		}
 	}
 
-	return 'php';
+	return 'php56u';
 }
 
 // MR -- taken from lib.php

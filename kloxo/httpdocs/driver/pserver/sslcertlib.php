@@ -333,11 +333,12 @@ class SslCert extends Lxdb
 
 			// MR -- symlink may trouble for qmail and then change to copy
 			if (!is_link("{$mpath}/servercert.pem")) {
-				exec("'mv' -f {$mpath}/servercert.pem {$mpath}/servercert.pem.old");
+				if (file_exists("{$mpath}/servercert.pem")) {
+					exec("'mv' -f {$mpath}/servercert.pem {$mpath}/servercert.pem.old");
+				}
 			//	exec("'ln' -sf {$tpath}/program.pem {$mpath}/servercert.pem");
 				exec("'cp' -f {$tpath}/program.pem {$mpath}/servercert.pem");
 			} else {
-				exec("'rm' -f {$tpath}/program.pem {$mpath}/servercert.pem");
 				exec("'cp' -f {$tpath}/program.pem {$mpath}/servercert.pem; ".
 					"chown -f root:qmail {$mpath}/servercert.pem");
 			}
@@ -347,7 +348,9 @@ class SslCert extends Lxdb
 			$ppath = "/etc/pki/pure-ftpd";
 
 			if (!is_link("{$ppath}/pure-ftpd.pem")) {
-				exec("'mv' -f {$ppath}/pure-ftpd.pem {$ppath}/pure-ftpd.pem.old");
+				if (file_exists("{$ppath}/pure-ftpd.pem")) {
+					exec("'mv' -f {$ppath}/pure-ftpd.pem {$ppath}/pure-ftpd.pem.old");
+				}
 				exec("'ln' -sf {$tpath}/program.pem {$ppath}/pure-ftpd.pem");
 			}
 		} else {

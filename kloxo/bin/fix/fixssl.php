@@ -51,7 +51,6 @@ if (file_exists("{$pureftp_path}/pure-ftpd.pem")) {
 	if (!file_exists("{$pureftp_path}/pure-ftpd.pem.old")) {
 		exec("'mv' -f {$pureftp_path}/pure-ftpd.pem {$pureftp_path}/pure-ftpd.pem.old");
 	} else {
-		exec("'rm' -f {$pureftp_path}/pure-ftpd.pem.old");
 		exec("'mv' -f {$pureftp_path}/pure-ftpd.pem {$pureftp_path}/pure-ftpd.pem.old");
 	}
 }
@@ -66,7 +65,6 @@ if (file_exists("{$qmail_path}/servercert.pem")) {
 	if (!file_exists("{$qmail_path}/servercert.pem.old")) {
 		exec("'mv' -f {$qmail_path}/servercert.pem {$qmail_path}/servercert.pem.old");
 	} else {
-		exec("'rm' -f {$qmail_path}/servercert.pem");
 		exec("'mv' -f {$qmail_path}/servercert.pem {$qmail_path}/servercert.pem.old");
 	}
 }
