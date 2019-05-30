@@ -14,6 +14,7 @@ class lxbackup extends Lxdb
 	static $__desc_backupschedule_type = array("", "", "schedule_backup");
 	static $__desc_backupschedule_time = array("", "", "schedule_backup_time");
 	static $__desc_backup_from_file_f = array("n", "", "backup_from_file");
+	static $__desc_restore_from_file_f = array("n", "", "restore_from_file");
 	static $__desc_backup_ftp_file_f = array("n", "", "filename_on_the_ftp_server");
 	static $__desc_backup_to_file_f = array("n", "", "backup_file_initial_string");
 	static $__desc_send_email = array("f", "", "send_email_after_backup");
@@ -360,7 +361,7 @@ class lxbackup extends Lxdb
 				}
 			*/
 				$vlist['restorestage'] = array('M', null);
-				$vlist['backup_from_file_f'] = array('L', "/");
+				$vlist['restore_from_file_f'] = array('L', "/");
 				$vlist['__v_next'] = 'restore_confirm';
 				$vlist['__v_button'] = 'Start Restore Process';
 
