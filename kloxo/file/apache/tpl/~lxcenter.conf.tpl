@@ -63,100 +63,100 @@ MaxKeepAliveRequests 100
 KeepAliveTimeout 15
 
 <IfModule prefork.c>
-    StartServers 2
-    MinSpareServers <?php echo $minpar_p; ?>
+	StartServers 2
+	MinSpareServers <?php echo $minpar_p; ?>
 
-    MaxSpareServers <?php echo $maxpar_p; ?>
+	MaxSpareServers <?php echo $maxpar_p; ?>
 
-    ServerLimit <?php echo $maxpar_p; ?>
+	ServerLimit <?php echo $maxpar_p; ?>
 
-    <IfVersion >= 2.4>
-        MaxRequestWorkers <?php echo $maxpar_p; ?>
+	<IfVersion >= 2.4>
+		MaxRequestWorkers <?php echo $maxpar_p; ?>
 
-        MaxConnectionsPerChild 4000
-    </IfVersion>
-    <IfVersion < 2.4>
-        MaxClients <?php echo $maxpar_p; ?>
+		MaxConnectionsPerChild 4000
+	</IfVersion>
+	<IfVersion < 2.4>
+		MaxClients <?php echo $maxpar_p; ?>
 
-        MaxRequestsPerChild 4000
-    </IfVersion>
-    MaxMemFree 2
-    SendBufferSize 65536
-    ReceiveBufferSize 65536
+		MaxRequestsPerChild 4000
+	</IfVersion>
+	MaxMemFree 2
+	SendBufferSize 65536
+	ReceiveBufferSize 65536
 </IfModule>
 
 <IfModule itk.c>
-    StartServers 2
-    MinSpareServers <?php echo $minpar_p; ?>
+	StartServers 2
+	MinSpareServers <?php echo $minpar_p; ?>
 
-    MaxSpareServers <?php echo $maxpar_p; ?>
+	MaxSpareServers <?php echo $maxpar_p; ?>
 
-    ServerLimit <?php echo $maxpar_p; ?>
+	ServerLimit <?php echo $maxpar_p; ?>
 
-    <IfVersion >= 2.4>
-        MaxRequestWorkers <?php echo $maxpar_p; ?>
+	<IfVersion >= 2.4>
+		MaxRequestWorkers <?php echo $maxpar_p; ?>
 
-        MaxConnectionsPerChild 4000
-    </IfVersion>
-    <IfVersion < 2.4>
-        MaxClients <?php echo $maxpar_p; ?>
+		MaxConnectionsPerChild 4000
+	</IfVersion>
+	<IfVersion < 2.4>
+		MaxClients <?php echo $maxpar_p; ?>
 
-        MaxRequestsPerChild 4000
-    </IfVersion>
-    MaxMemFree 2
-    SendBufferSize 65536
-    ReceiveBufferSize 65536
+		MaxRequestsPerChild 4000
+	</IfVersion>
+	MaxMemFree 2
+	SendBufferSize 65536
+	ReceiveBufferSize 65536
 </IfModule>
 
 <IfModule worker.c>
-    StartServers 2
-    MinSpareThreads <?php echo $minpar_w; ?>
+	StartServers 2
+	MinSpareThreads <?php echo $minpar_w; ?>
 
-    MaxSpareThreads <?php echo $maxpar_w; ?>
+	MaxSpareThreads <?php echo $maxpar_w; ?>
 
-    ThreadsPerChild <?php echo $mcfactor; ?>
+	ThreadsPerChild <?php echo $mcfactor; ?>
 
-    ServerLimit <?php echo $maxpar_w; ?>
+	ServerLimit <?php echo $maxpar_w; ?>
 
-    <IfVersion >= 2.4>
-        MaxRequestWorkers <?php echo $maxpar_w * $mcfactor; ?>
+	<IfVersion >= 2.4>
+		MaxRequestWorkers <?php echo $maxpar_w * $mcfactor; ?>
 
-        MaxConnectionsPerChild 0
-    </IfVersion>
-    <IfVersion < 2.4>
-        MaxClients <?php echo $maxpar_w * $mcfactor; ?>
+		MaxConnectionsPerChild 0
+	</IfVersion>
+	<IfVersion < 2.4>
+		MaxClients <?php echo $maxpar_w * $mcfactor; ?>
 
-        MaxRequestsPerChild 0
-    </IfVersion>
+		MaxRequestsPerChild 0
+	</IfVersion>
 
-    SendBufferSize 65536
-    ReceiveBufferSize 65536
+	SendBufferSize 65536
+	ReceiveBufferSize 65536
 </IfModule>
 
 <IfModule event.c>
-    StartServers 2
-    MinSpareThreads <?php echo $minpar_w; ?>
+	StartServers 2
+	MinSpareThreads <?php echo $minpar_w; ?>
 
-    MaxSpareThreads <?php echo $maxpar_w; ?>
+	MaxSpareThreads <?php echo $maxpar_w; ?>
 
-    ThreadsPerChild <?php echo $mcfactor; ?>
+	ThreadsPerChild <?php echo $mcfactor; ?>
 
-    ServerLimit <?php echo $maxpar_w; ?>
+	ServerLimit <?php echo $maxpar_w; ?>
 
-    MaxRequestsPerChild 0
-    <IfVersion >= 2.4>
-        MaxRequestWorkers <?php echo $maxpar_w * $mcfactor; ?>
+	MaxRequestsPerChild 0
+	<IfVersion >= 2.4>
+		MaxRequestWorkers <?php echo $maxpar_w * $mcfactor; ?>
 
-        MaxConnectionsPerChild 0
-    </IfVersion>
-    <IfVersion < 2.4>
-        MaxClients <?php echo $maxpar_w * $mcfactor; ?>
+		MaxConnectionsPerChild 0
+	</IfVersion>
+	<IfVersion < 2.4>
+		MaxClients <?php echo $maxpar_w * $mcfactor; ?>
 
-        MaxRequestsPerChild 0
-    </IfVersion>
+		MaxRequestsPerChild 0
+	</IfVersion>
 
-    SendBufferSize 65536
-    ReceiveBufferSize 65536
+	SendBufferSize 65536
+	ReceiveBufferSize 65536
 </IfModule>
 
 <IfVersion >= 2.4>

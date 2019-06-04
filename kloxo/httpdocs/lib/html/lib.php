@@ -7265,7 +7265,7 @@ function getLinkCustomfile($path, $file)
 
 function getParseInlinePhp($template, $input)
 {
-	extract($input);
+	extract($input, EXTR_OVERWRITE);
 
 	$ret = null;
 
