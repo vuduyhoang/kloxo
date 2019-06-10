@@ -15,7 +15,7 @@ echo
 echo "- For help, type '$0 --help'"
 
 if [ "$#" == 0 ] ; then
-	echo "- No argument supplied. Defaulting to 'fpm'"
+	echo "- No argument supplied. Defaulting to 'fpm' and 'php56s'"
 	echo
 fi
 
@@ -32,7 +32,7 @@ fi
 	chmod 0440 /etc/sudoers.d/mount
 #fi
 
-if [ "${2}" = 0 ] ; then
+if [ "${2}" == "" ] ; then
 	echo "- No php selected. Defaulting to 'php56s'"
 	echo
 	echo "php56s" > /usr/local/lxlabs/kloxo/init/kloxo_php_active
