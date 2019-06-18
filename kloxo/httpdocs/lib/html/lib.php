@@ -6275,6 +6275,13 @@ function setInitialPureftpConfig($nolog = null)
 		lxshell_return("pure-pw", "mkdb");
 	}
 
+	// MR -- pure-ftpd high version (1.0.47+) didn't use pure-config.pl for reading config
+	// so make it compatible to old ones
+	if (!lxfile_exists("/usr/sbin/pure-config.pl")) {
+		log_cleanup("Create symlink for pure-config.pl from pure-ftpd", $nolog);
+		exec("ln -sf /usr/sbin/pure-ftpd /usr/sbin/pure-config.pl");
+	}
+
 	if (getServiceType('pure-ftpd') === 'init') {
 		lxfile_cp("../file/pure-ftpd/etc/init.d/pure-ftpd.init", "/etc/rc.d/init.d/pure-ftpd");
 	//	exec("chkconfig pure-ftpd on >/dev/null 2>&1; chmod 0755 /etc/rc.d/init.d/pure-ftpd");

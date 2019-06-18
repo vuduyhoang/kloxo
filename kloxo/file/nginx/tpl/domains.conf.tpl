@@ -169,7 +169,11 @@ if ($general_header) {
 	$x = array();
 
 	foreach ($gh as $k => $v) {
-		$x[] = "\tadd_header {$v};";
+		if (stripos($v, 'x-powered-by') !== false) {
+			// no action
+		} else {
+			$x[] = "\tadd_header {$v};";
+		}
 	}
 
 	$x[] = "\tadd_header X-Supported-By \"Kloxo-MR 7.0\";";
