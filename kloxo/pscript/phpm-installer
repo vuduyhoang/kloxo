@@ -111,7 +111,7 @@ if [ -f ${main_path}/version ] ; then
 		status="$?"
 
 		if [ "$?" != "12" ] ; then
-			x="- '${pack_name}-${pack_verrel}' already installed/updated"
+			x="- '${pack_name}-${pack_verrel}' already installed"
 			echo $x
 			echo $x >>${main_path}/${base_name}_install.log
 			. /script/counter-end.inc
