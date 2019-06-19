@@ -848,7 +848,7 @@ foreach ($certnamelist as $ip => $certname) {
 			ProxyErrorOverride On
 			ProxyPass /error !
 			ErrorDocument 500 /error/500.html
-			<Proxy "unix:/opt/configs/php-fpm/sock/<?=$phpselected;?> -apache.sock|fcgi://localhost">
+			<Proxy "unix:/opt/configs/php-fpm/sock/<?=$phpselected;?>-apache.sock|fcgi://localhost">
 				ProxySet timeout=<?=$timeout;?>
 
 				ProxySet connectiontimeout=<?=$timeout;?>
