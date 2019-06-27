@@ -43,5 +43,12 @@ for i in /etc/my.cnf /etc/my.cnf.d/server.cnf ; do
 		else
 			echo "Already exist 'maximum_max_allowed_packet for [mysqldump]' in ${i}"
 		fi
+
+		if [ "$(grep 'socket' ${i})" == "" ] ; then
+			echo "\n[mysqld]\nsocket=/var/lib/mysql.sock" >> ${i}
+			echo "Add 'socket=/var/lib/mysql.sock for [mysqld]' to ${i}"
+		else
+			echo "Already exist 'socket=/var/lib/mysql.sock for [mysqld]' in ${i}"
+		fi
 	fi
 done

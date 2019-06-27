@@ -47,7 +47,7 @@ class SslCert extends Lxdb
 	static $__desc_upload_v_file = array("", "", "ssl_file");
 	static $__desc_upload_v_text = array("", "", "ssl_text");
 	static $__desc_upload_v_letsencrypt = array("", "", "ssl_letsencrypt");
-	static $__desc_upload_v_startapi = array("", "", "ssl_startapi");
+//	static $__desc_upload_v_startapi = array("", "", "ssl_startapi");
 	static $__desc_upload_v_link = array("", "", "ssl_link");
 
 	static $__desc_warning = array("", "", "ssl_warning");
@@ -248,7 +248,7 @@ class SslCert extends Lxdb
 			$alist[] = "a=addform&c=$class&dta[var]=upload&dta[val]=file";
 			$alist[] = "a=addform&c=$class&dta[var]=upload&dta[val]=text";
 			$alist[] = "a=addform&c=$class&dta[var]=upload&dta[val]=letsencrypt";
-			$alist[] = "a=addform&c=$class&dta[var]=upload&dta[val]=startapi";
+		//	$alist[] = "a=addform&c=$class&dta[var]=upload&dta[val]=startapi";
 			$alist[] = "a=addform&c=$class&dta[var]=upload&dta[val]=link";
 		} else {
 			$alist[] = "a=addform&c=$class";
@@ -452,9 +452,9 @@ class SslCert extends Lxdb
 			case 'letsencrypt':
 				$this->createLetsencrypt();
 				break;
-			case 'startapi':
-				$this->createStartapi();
-				break;
+		//	case 'startapi':
+		//		$this->createStartapi();
+		//		break;
 			case 'link':
 				$this->createLink();
 				break;
@@ -567,6 +567,7 @@ class SslCert extends Lxdb
 
 				$vlist["ssl_data_b_s_subjectAltName_r"] = array('t', $san);
 				$vlist["ssl_data_b_s_emailAddress_r"] = array("m", "admin@{$d}");
+			/* MR -- disable StartAPI because stopped (https://www.startcomca.com/)
 			} else if ($typetd['val'] === 'startapi') {
 				$vlist['warning'] = $warning;
 				$vlist['nname'] = $nname;
@@ -574,6 +575,7 @@ class SslCert extends Lxdb
 				$vlist['ssl_data_b_s_key_bits_r'] = $keybits;
 				$vlist["ssl_data_b_s_subjectAltName_r"] =
 					array('t', "{$d} www.{$d} cp.{$d} stats.{$d} webmail.{$d} mail.{$d}");
+			*/
 			} else if ($typetd['val'] === 'link') {
 				$vlist['nname'] = $nname;
 

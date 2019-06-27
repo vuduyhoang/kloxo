@@ -8329,8 +8329,9 @@ function setAllSSLPortions($nolog = null)
 	log_cleanup("- Install acme.sh", $nolog);
 	setInstallAcmesh($nolog);
 
-	log_cleanup("- Install startapi.sh", $nolog);
-	setInstallStartapish($nolog);
+	// MR -- StartAPI already stopped. So disabled
+//	log_cleanup("- Install startapi.sh", $nolog);
+//	setInstallStartapish($nolog);
 
 	log_cleanup("- Fix SSL path", $nolog);
 	setFixSSLPath($nolog);

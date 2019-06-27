@@ -1,6 +1,6 @@
 php_yum="yum install -y --skip-broken"
 
-php_exclude="--exclude=*debuginfo* --exclude=php*-xcache* --exclude=php*-pecl-imagick* --exclude=php*-eaccelerator* --exclude=php*-pecl-zendopcache* --exclude=php*-pgsql84* --exclude=php*-opcache* --exclude=php*-fpm-httpd* --exclude=php*-fpm-nginx* --exclude=php*-pecl-sphinx*"
+php_exclude="--exclude=*debuginfo* --exclude=php*-xcache* --exclude=php*-eaccelerator* --exclude=php*-pecl-zendopcache* --exclude=php*-pgsql84* --exclude=php*-opcache* --exclude=php*-fpm-httpd* --exclude=php*-fpm-nginx* --exclude=php*-pecl-sphinx*"
 
 php53u_run="${php_yum} php53u-* ${php_exclude}"
 

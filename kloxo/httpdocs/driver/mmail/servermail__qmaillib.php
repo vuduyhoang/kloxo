@@ -103,8 +103,7 @@ class Servermail__Qmail  extends lxDriverClass
 			//	throw new lxException($login->getThrow('simscan_is_not_installed_for_virus_scan'), '', 'simscan-toaster');
 			}
 
-			lxshell_return("yum", "install", "-y", "clamav", "clamd");
-
+			exec("sh /script/clamav-installer");
 
 			// MR -- clamav from epel use clamd instead clamav init
 			if (isServiceExists("freshclam")) {

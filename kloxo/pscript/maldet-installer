@@ -3,6 +3,7 @@
 if [ ! -f /usr/local/maldetect/maldet ] ; then
 	cd /tmp
 
+	yum install inotify-tools -y
 	wget http://www.rfxn.com/downloads/maldetect-current.tar.gz
 	tar -zxvf maldetect-current.tar.gz
 	rm -rf maldetect-current.tar.gz
