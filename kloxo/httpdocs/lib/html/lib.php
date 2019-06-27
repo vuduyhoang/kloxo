@@ -8317,8 +8317,9 @@ function setAllSSLPortions($nolog = null)
 	log_cleanup("- Copy 'acme.sh' config Files", $nolog);
 	setCopyAcmeshConfFiles();
 
-	log_cleanup("- Copy 'startapi.sh' config Files", $nolog);
-	setCopyStartapishConfFiles();
+	// MR -- StartAPI already stopped. So disabled
+//	log_cleanup("- Copy 'startapi.sh' config Files", $nolog);
+//	setCopyStartapishConfFiles();
 
 //	log_cleanup("- Install Letsencrypt-auto", $nolog);
 //	setInstallLetsencrypt($nolog);
