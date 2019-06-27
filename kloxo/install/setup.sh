@@ -189,13 +189,13 @@ sh /script/disable-mysql-aio
 sh /script/set-mysql-default
 
 if [ "$(yum list|grep ^'php56u')" != "" ] ; then
-#	phpused="php56"
+	phpused="php56"
 #	yum -y install ${phpused}u-cli ${phpused}u-mysqlnd ${phpused}u-fpm
-	sh /script/php-branch-installer php56u
+	sh /script/php-branch-installer ${phpused}u
 else
-#	phpused="php54"
+	phpused="php54"
 #	yum -y install ${phpused}-cli ${phpused}-mysqlnd ${phpused}-fpm
-	sh /script/php-branch-installer php54u
+	sh /script/php-branch-installer ${phpused}u
 fi
 
 chkconfig php-fpm on >/dev/null 2>&1
