@@ -16,5 +16,5 @@ package-cleanup --problems
 package-cleanup --dupes
 
 # make possible using i686 for i386
-sed -i 's/exactarch\=1/exactarch=\0/g' /etc/yum.conf
+sed -i 's/exactarch\=1/exactarch\=0/g' /etc/yum.conf
 
