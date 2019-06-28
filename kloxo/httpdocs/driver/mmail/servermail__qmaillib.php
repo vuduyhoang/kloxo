@@ -123,7 +123,7 @@ class Servermail__Qmail  extends lxDriverClass
 
 			$cpath = "/var/qmail/supervise/clamd";
 	
-			if (file_exists($cpath)) {
+			if (file_exists("{$cpath}/down")) {
 				lxfile_mv("{$cpath}/down", "{$cpath}/run");
 				lxfile_mv("{$cpath}/log/down", "{$cpath}/log/run");
 			}
@@ -146,7 +146,7 @@ class Servermail__Qmail  extends lxDriverClass
 
 				$cpath = "/var/qmail/supervise/clamd";
 				
-				if (file_exists($cpath)) {
+				if (file_exists("{$cpath}/run")) {
 					lxfile_mv("{$cpath}/run", "{$cpath}/down");
 					lxfile_mv("{$cpath}/log/run", "{$cpath}/log/down");
 				}
