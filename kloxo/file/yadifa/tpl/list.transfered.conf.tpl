@@ -1,7 +1,8 @@
 <?php
-	$ypath = "/opt/configs/yadifa/conf/defaults";
+	$ypath = "/opt/configs/yadifa";
+	$npath = "/opt/configs/nsd";
 
-	$file = "{$ypath}/yadifa.acl.conf";
+	$file = "{$ypath}/conf/defaults/yadifa.acl.conf";
 
 	$text  ="<acl>\n";
 
@@ -21,9 +22,9 @@
 	// MR -- then merge files because trouble with 'include'
 
 	$afile = $file;
-	$mfile = "{$ypath}/yadifa.master.conf";
-	$sfile = "{$ypath}/yadifa.slave.conf";
-	$rfile = "{$ypath}/yadifa.reverse.conf";
+	$mfile = "{$ypath}/conf/defaults/yadifa.master.conf";
+	$sfile = "{$ypath}/conf/defaults/yadifa.slave.conf";
+	$rfile = "{$ypath}/conf/defaults/yadifa.reverse.conf";
 
 	exec("cat {$yfile} {$afile} {$mfile} {$sfile} {$rfile} > /etc/yadifad.conf");
 
@@ -37,4 +38,3 @@
 			exec("'rm' -rf {$cpath}/{$v}");
 		}
 	}
-
