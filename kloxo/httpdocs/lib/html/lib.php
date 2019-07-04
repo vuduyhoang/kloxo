@@ -37,7 +37,7 @@ function auto_update()
 
 		if ((date('d') == 10) && !checkIfLatest()) {
 			$latest = getLatestVersion();
-			$msg = "New Version $latest Available for $sgbl->__var_program_name";
+			$msg = "New Version $latest Available for {$sgbl->__var_program_name}";
 			send_mail_to_admin($msg, $msg);
 		}
 	}
@@ -1646,7 +1646,7 @@ function cp_fileserv($file)
 	}
 
 	$basebase = basename($file);
-	$base = basename(ltempnam("$sgbl->__path_serverfile", $basebase));
+	$base = basename(ltempnam($sgbl->__path_serverfile, $basebase));
 	$pass = md5($file . time());
 	$ar = array('filename' => $file, 'password' => $pass);
 	lfile_put_serialize("{$path}/$base", $ar);
@@ -1670,7 +1670,7 @@ function do_zip_to_fileserv($type, $arg, $logto = null)
 
 	$basebase = basename($arg[0]);
 
-	$base = basename(ltempnam("$sgbl->__path_serverfile/tmp", $basebase));
+	$base = basename(ltempnam("{$sgbl->__path_serverfile}/tmp", $basebase));
 
 	// Create the pass file now itself so that it isn't unwittingly created again.
 
@@ -1733,7 +1733,7 @@ function fileserv_unlink_if_tmp($file)
 
 	$base = dirname($file);
 
-	if (expand_real_root($base) === expand_real_root("$sgbl->__path_serverfile/tmp")) {
+	if (expand_real_root($base) === expand_real_root("{$sgbl->__path_serverfile}/tmp")) {
 		log_log("servfile", "Delete tmp servfile $file");
 		lunlink($file);
 	}
@@ -1791,7 +1791,7 @@ function doRealGetFromFileServ($cmd, $serv, $filepass, $copyto = null)
 		log_log("servfile", "get local file $realfile");
 
 		if (lxfile_exists($realfile) && lis_readable($realfile)) {
-			lunlink("$sgbl->__path_serverfile/$base");
+			lunlink($path);
 
 			if ($cmd === 'fileprint') {
 				slow_print($realfile);
@@ -2139,7 +2139,7 @@ function rrd_graph_server($type, $list, $time)
 
 			foreach ($list as $k => $file) {
 				$i++;
-				$fullpath = "$sgbl->__path_program_root/data/$type/$file.rrd";
+				$fullpath = "{$sgbl->__path_program_root}/data/{$type}/{$file}.rrd";
 				$arg[] = "DEF:dss$i=$fullpath:$type:AVERAGE";
 
 				if (isset($color[$i])) {
@@ -2365,7 +2365,7 @@ function lx_core_lock($file = null)
 		$file = basename($file);
 	}
 
-	$pidfile = "$sgbl->__path_program_root/pid/$file";
+	$pidfile = "{$sgbl->__path_program_root}/pid/{$file}";
 	$pid = null;
 
 	if (lxfile_exists($pidfile)) {
@@ -3152,7 +3152,7 @@ function get_title()
 	$title = null;
 
 	if ($login->isAdmin()) {
-		$title = $sgbl->__ver_major . "." . $sgbl->__ver_minor . "." . $sgbl->__ver_release . " " . $sgbl->__ver_extra;
+		$title = "{$sgbl->__ver_major}.{$sgbl->__ver_minor}.{$sgbl->__ver_release} {$sgbl->__ver_extra}";
 	}
 
 	if (check_if_many_server()) {
@@ -3223,7 +3223,7 @@ function callInChild($func, $arglist)
 	$name = tempnam("/tmp", "lxchild");
 	lxfile_generic_chmod($name, "700");
 	lfile_put_contents($name, serialize($res));
-	$var = lxshell_output("$sgbl->__path_php_path", "../bin/common/child.php", $name);
+	$var = lxshell_output($sgbl->__path_php_path, "../bin/common/child.php", $name);
 	$rmt = unserialize(base64_decode($var));
 
 	return $rmt;
@@ -3241,7 +3241,7 @@ function callInBackground($func, $arglist)
 	lxfile_generic_chmod($name, "700");
 	lfile_put_contents($name, serialize($res));
 
-	lxshell_background("$sgbl->__path_php_path", "../bin/common/background.php", $name);
+	lxshell_background($sgbl->__path_php_path, "../bin/common/background.php", $name);
 }
 
 function callObjectInBackground($object, $func)
@@ -3263,7 +3263,7 @@ function get_with_cache($file, $cmdarglist)
 
 	$stat = @ llstat($file);
 
-	lxfile_mkdir("$sgbl->__path_program_root/cache");
+	lxfile_mkdir("{$sgbl->__path_program_root}/cache");
 
 	$tim = 120;
 
@@ -4288,7 +4288,7 @@ function securityBlanketExec($table, $nname, $variable, $func, $arglist)
 	lxfile_generic_chmod($name, "700");
 	lfile_put_contents($name, serialize($rem));
 
-	lxshell_background("$sgbl->__path_php_path", "../bin/common/securityblanket.php", $name);
+	lxshell_background($sgbl->__path_php_path, "../bin/common/securityblanket.php", $name);
 }
 
 function checkClusterDiskQuota()
@@ -4443,7 +4443,7 @@ function do_serve_file($fd, $rem)
 	$file = $rem->filename;
 
 	$file = basename($file);
-	$file = "$sgbl->__path_serverfile/$file";
+	$file = "{$sgbl->__path_serverfile}/{$file}";
 
 	if (!lxfile_exists($file)) {
 		log_log("servfile", "datafile $file dosn't exist, exiting");
@@ -4471,8 +4471,8 @@ function do_serve_file($fd, $rem)
 	if (is_dir($realfile)) {
 		// This should neverhappen. The directories are zipped at cp-fileserv and tar_to_filserved then itself.
 		$b = basename($realfile);
-		lxfile_mkdir("$sgbl->__path_serverfile/tmp/");
-		$tfile = tempnam("$sgbl->__path_serverfile/tmp/", "$b.tar");
+		lxfile_mkdir("{$sgbl->__path_serverfile}/tmp/");
+		$tfile = tempnam("{$sgbl->__path_serverfile}/tmp/", "{$b}.tar");
 		$list = lscandir_without_dot($realfile);
 		lxshell_tar($realfile, $tfile, $list);
 		$realfile = $tfile;
@@ -4604,7 +4604,7 @@ function createMultipLeVps($param)
 	$base = $param['vps_basename_f'];
 	$count = $param['vps_count_f'];
 
-	lxshell_background("$sgbl->__path_php_path", "../bin/multicreate.php", "--admin-password=$adminpass", "--v-template_name=$template", "--count=$count", "--basename=$base", "--v-one_ipaddress=$one_ip");
+	lxshell_background($sgbl->__path_php_path, "../bin/multicreate.php", "--admin-password={$adminpass}", "--v-template_name={$template}", "--count=$count", "--basename=$base", "--v-one_ipaddress=$one_ip");
 }
 
 function collect_quota_later()
@@ -4900,7 +4900,7 @@ function addcustomername()
 {
 	global $sgbl;
 
-	lxshell_return("$sgbl->__path_php_path", "../bin/misc/addcustomername.php");
+	lxshell_return($sgbl->__path_php_path, "../bin/misc/addcustomername.php");
 }
 
 function fix_phpini($nolog = null)
@@ -4910,7 +4910,7 @@ function fix_phpini($nolog = null)
 	log_cleanup("Fix php.ini", $nolog);
 	log_cleanup("- Fix process", $nolog);
 
-	lxshell_return("$sgbl->__path_php_path", "../bin/fix/fixphpini.php");
+	lxshell_return($sgbl->__path_php_path, "../bin/fix/fixphpini.php");
 }
 
 function switchtoaliasnext()
@@ -6275,11 +6275,18 @@ function setInitialPureftpConfig($nolog = null)
 		lxshell_return("pure-pw", "mkdb");
 	}
 
-	// MR -- pure-ftpd high version (1.0.47+) didn't use pure-config.pl for reading config
-	// so make it compatible to old ones
+	// MR -- pure-ftpd high version (1.0.47+) pure-config.pl didn't exists
+
+	if (is_link("/usr/sbin/pure-config.pl")) {
+		unlink("/usr/sbin/pure-config.pl");
+	}
+
 	if (!lxfile_exists("/usr/sbin/pure-config.pl")) {
-		log_cleanup("Create symlink for pure-config.pl from pure-ftpd", $nolog);
-		exec("ln -sf /usr/sbin/pure-ftpd /usr/sbin/pure-config.pl");
+		$sfile = "{$sgbl->__path_program_root}/httpdocs/file/pure-ftd/usr/sbin/pure-config.pl";
+		log_cleanup("Copy pure-config.pl to /usr/sbin", $nolog);
+		copy($sfile, "/usr/sbin/pure-config.pl");
+		chown($sfile, "root:root");
+		chmod($sfile, 0755);
 	}
 
 	if (getServiceType('pure-ftpd') === 'init') {
@@ -8052,7 +8059,7 @@ function getTimeZoneList()
 function trimming($data)
 {
 	if (gettype($data) == 'array') {
-		return array_map("trimming", $data);
+		return array_map("trim", $data);
 	} else {
 		return trim($data);
 	}
