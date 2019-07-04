@@ -10,4 +10,4 @@ chmod 755 /etc/init.d/freshclam
 # for clamd scan (under qmail's clamd)
 sed -i '/^Example/d' /etc/clamd.d/scan.conf
 sed -i '/^Example/d' /etc/freshclam.conf
-sed -i '/^Example/d' /etc/clamd.conf
+#sed -i '/^Example/d' /etc/clamd.conf

@@ -371,7 +371,7 @@ kloxo_install_before_bye() {
 
 kloxo_install_bye() {
 	## MR -- use '-i' instead '-I' because not exists in CentOS 5
-	this_ip=$(hostname -i|awk '{print $1}')
+	this_ip=$(ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*$/\1/p')
 	len=${#this_ip}
 
 	https_spc=""
