@@ -175,7 +175,7 @@ function getIPs_from_ipaddr($withV6 = true)
 		}
 	}
 
-	return array_values($a);
+	return array_values(array_unique($a));
 }
 
 // Bug #797 - Failed identify ip on apache

@@ -314,7 +314,7 @@ abstract class Lxclient extends Lxdb
 		}
 		
 		$this->boxpos["{$class}_show"] = $ret;
-		
+
 		return $param;
 	}
 
@@ -681,9 +681,9 @@ abstract class Lxclient extends Lxdb
 		if ($res) {
 			throw new lxException($login->getThrow('already_exists'), '', $this->nname);
 		}
-		
+
 		$gbl->__this_redirect = '/display.php?frm_action=resource';
-		
+
 		return $param;
 	}
 

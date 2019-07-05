@@ -1330,6 +1330,7 @@ class Web extends Lxdb
 		$this->webmisc_b->execcgi = $param['webmisc_b-execcgi'];
 		$this->webmisc_b->disable_openbasedir = $param['webmisc_b-disable_openbasedir'];
 	*/
+	
 		return $param;
 	}
 
