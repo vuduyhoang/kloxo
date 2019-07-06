@@ -6259,7 +6259,7 @@ function setInitialPureftpConfig($nolog = null)
 
 	if (lxfile_exists("/etc/xinetd.d/pureftp")) {
 		log_cleanup("- Remove /etc/xinetd.d/pureftp service file", $nolog);
-		@lxfile_rm("/etc/xinetd.d/pureftp");
+		lxfile_rm("/etc/xinetd.d/pureftp");
 		exec("service xinetd restart");
 	}
 
@@ -6273,6 +6273,14 @@ function setInitialPureftpConfig($nolog = null)
 		log_cleanup("Make pure-ftpd user database", $nolog);
 		lxfile_touch("/etc/pure-ftpd/pureftpd.passwd");
 		lxshell_return("pure-pw", "mkdb");
+	}
+
+	if (!lxfile_exists("/etc/ssl/private/pure-ftpd-dhparams.pem")) {
+		if (!lxfile_exists("/etc/ssl/private")) {
+			mkdir("/etc/ssl/private");
+		fi
+
+		lxfile_cp("../file/openssl/tpl/dhparam_2048.pem", "/etc/ssl/private/pure-ftpd-dhparams.pem");
 	}
 
 	// MR -- pure-ftpd high version (1.0.47+) pure-config.pl didn't exists
