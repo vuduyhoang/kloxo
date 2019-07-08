@@ -15,6 +15,6 @@ sleep 1
 
 echo "  - Process: restart"
 service ${prog} stop
-pkill -9 ${prog}
-pkill -9 mysqld_safe
+#pkill -9 ${prog}
+#pkill -9 mysqld_safe
 service ${prog} start

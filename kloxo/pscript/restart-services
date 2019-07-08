@@ -6,7 +6,11 @@ else
 	. /script/restart-list.inc
 fi
 
-list=${list_services[*]}
+if [ "$1" != "" ] ; then
+	list=$($1)
+else
+	list=${list_services[*]}
+fi
 
 if [ -f /script/custom.restart.inc ] ; then
 	. /script/custom.restart.inc

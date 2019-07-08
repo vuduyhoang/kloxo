@@ -1,26 +1,27 @@
 #!/bin/sh
 
-cfile='/etc/ssh/ssh_config'
+cfile='/etc/ssh/sshd_config'
 
-if [ "(grep '^Protocol 2' {$cfile}" == "" ] ; then
-	echo "\nProtocol 2" >> $cfile
+if [ "$(grep '^Protocol 2' {$cfile})" == "" ] ; then
+	echo "Protocol 2" >> $cfile
 	echo "Add 'Protocol 2' to ${cfile}"
 else
 	echo "Already exists 'Protocol 2' in ${cfile}"
 fi
 
-if [ "(grep -i '^hostkey /etc/ssh/ssh_host_ed25519_key' {$cfile}" == "" ] ; then
+if [ "$(grep -i '^hostkey /etc/ssh/ssh_host_ed25519_key' ${cfile})" == "" ] ; then
 	echo "Hostkey /etc/ssh/ssh_host_ed25519_key" >> $cfile
 	echo "Add 'Hostkey /etc/ssh/ssh_host_ed25519_key' to ${cfile}"
 else
 	echo "Already exists 'Hostkey /etc/ssh/ssh_host_ed25519_key' in ${cfile}"
 fi
 
-if [ "(grep -i '^hostkey /etc/ssh/ssh_host_rsa_key' {$cfile}" == "" ] ; then
+if [ "$(grep -i '^hostkey /etc/ssh/ssh_host_rsa_key' ${cfile})" == "" ] ; then
 	echo "Hostkey /etc/ssh/ssh_host_rsa_key" >> $cfile
 	echo "Add 'Hostkey /etc/ssh/ssh_host_rsa_key' to ${cfile}"
 else
 	echo "Already exists 'Hostkey /etc/ssh/ssh_host_rsa_key' in ${cfile}"
 fi
 
-sh /script/restart-service pure-ftpd
+service sshd restart
+service pure-ftpd restart

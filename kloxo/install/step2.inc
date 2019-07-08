@@ -189,15 +189,7 @@ kloxo_install_step1() {
 
 	echo ">>> Add certain components (like curl/contabs/rkhunter) <<<"
 
-	## MR -- install curl-devel (need by php-common) will be install curl-devel
-	## in CentOS 5 and libcurl-devel in CentOS 6
-	yum -y install tnef which gcc cpp gcc-c++ zip unzip curl-devel libcurl-devel autoconf \
-		 automake make libtool openssl-devel pure-ftpd yum-protectbase \
-		 yum-plugin-replace crontabs make glibc-static net-snmp tmpwatch \
-		 rkhunter quota xinetd screen telnet ncdu sysstat net-tools \
-		 xz xz-libs p7zip p7zip-plugins rar unrar lxjailshell --skip-broken
-
-	rkhunter --update
+	sh /script/rkhunter-installer
 
 	echo ">>> Add Standard PHP components and Hiawatha <<<"
 	## MR -- xcache, zend, ioncube, suhosin and zts not default install
