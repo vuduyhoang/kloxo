@@ -6278,7 +6278,7 @@ function setInitialPureftpConfig($nolog = null)
 	if (!lxfile_exists("/etc/ssl/private/pure-ftpd-dhparams.pem")) {
 		if (!lxfile_exists("/etc/ssl/private")) {
 			mkdir("/etc/ssl/private");
-		fi
+		}
 
 		lxfile_cp("../file/openssl/tpl/dhparam_2048.pem", "/etc/ssl/private/pure-ftpd-dhparams.pem");
 	}
