@@ -2,7 +2,9 @@
 
 include_once "lib/html/include.php";
 
-$tpath = "/usr/local/lxlabs/kloxo/serverfile";
+// MR -- make trouble for reset password if serverfile dir not exists
+// $tpath = "/usr/local/lxlabs/kloxo/serverfile";
+$tpath = "/tmp";
 
 if (isset($argv[1])) {
 	$pass = $argv[1];

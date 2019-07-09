@@ -1,5 +1,11 @@
 #!/bin/sh
 
+sfdir='/usr/local/lxlabs/kloxo/serverfile'
+
+if [ ! -d $sfdir ] ; then
+	mkdir -p $sfdir
+fi
+
 if [ "$(rpm -qa yum-presto)" == "" ] ; then
 	if [ "$(yum list *yum*|grep '@')" != "" ] ; then
 		yum install -y yum-presto deltarpm >/dev/null 2>&1
