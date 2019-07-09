@@ -166,31 +166,27 @@ if (count($out) > 0) {
 if ($general_header) {
 	$gh = explode("\n", trim($general_header, "\n"));
 
-	$x = array();
+	$general_header_text = "";
 
 	foreach ($gh as $k => $v) {
 		if (stripos($v, 'x-powered-by') !== false) {
 			// no action
 		} else {
-			$x[] = "\tadd_header {$v};";
+			$general_header_text .= "\tadd_header {$v};\n";
 		}
 	}
 
-	$x[] = "\tadd_header X-Supported-By \"Kloxo-MR 7.0\";";
-
-	$general_header_text = implode("\n", $x);
+	$general_header_text .= "\tadd_header X-Supported-By \"Kloxo-MR 7.0\";";
 }
 
 if ($https_header) {
 	$hh = explode("\n", trim($https_header, "\n"));
 
-	$x = array();
+	$https_header_text = "";
 
 	foreach ($hh as $k => $v) {
-		$x[] = "\tadd_header {$v};";
+		$https_header_text .= "\tadd_header {$v};\n";
 	}
-
-	$https_header_text = implode("\n", $x);
 }
 
 if (intval($static_files_expire) > -1) {

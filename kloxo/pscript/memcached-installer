@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$(rpm -qa memcached)" != "" ] ; then
+if [ "$(rpm -qa memcached)" == "" ] ; then
 	yum install memcached -y
 	sh /script/enable-service memcached
 	echo "Install 'memcached'"
@@ -16,5 +16,4 @@ if [ -f $cfile ] ; then
 	echo "Add "OPTIONS=\"-l 127.0.0.1\"" to ${cfile} for DDOS protect"
 fi
 
-echo "Note:"
-echo "- Enable 'memcached' modules for php via 'PHP Modules Status' in Kloxo-MR panel"
+echo "Note: - Enable 'memcached' via 'PHP Modules Status' in Kloxo-MR panel"
