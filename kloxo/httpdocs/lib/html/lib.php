@@ -5688,8 +5688,10 @@ function setInitialDnsConfig($type, $nolog = null)
 		}
 
 		if ($type === 'bind') {
-			if (!file_exists("/var/log/named")) {
-				exec("mkdir -p /var/log/named");
+			$logf = '/var/log/named';
+
+			if (!file_exists($logf)) {
+				exec("mkdir -p {$logf}; chown named:named {$logf}; chmod 0755 {$logf}");
 			}
 		}
 	}

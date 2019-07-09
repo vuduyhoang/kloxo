@@ -13,6 +13,10 @@ else
 	echo "exclude=mysql5*" >> /etc/yum.conf
 fi
 
+if [ "$(cat /etc/yum.conf|grep '^assumeyes=1')" == "" ] ; then
+	echo "assumeyes=1" >> /etc/yum.conf
+fi
+
 if [ ! -L /usr/bin/chkconfig ] ; then
 	## MR -- fix issue if running restart in cron
 	ln -s /sbin/chkconfig /usr/bin/chkconfig
