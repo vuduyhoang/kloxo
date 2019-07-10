@@ -2,8 +2,6 @@
 
 <?php
 
-
-
 if (!isset($phpselected)) {
 	$phpselected = 'php';
 }
@@ -106,7 +104,7 @@ if ($use_httpd24) {
 	copy($custom_conf, "{$trgtcpath}/httpd.conf");
 }
 
-$modlist = array("~lxcenter", "ssl", "__version", "perl", "rpaf", "define", "_inactive_");
+$modlist = array("~lxcenter", "ssl", "__version", "rpaf", "define", "_inactive_");
 
 foreach ($modlist as $k => $v) {
 	$custom_conf = getLinkCustomfile($srccdpath, "{$v}.conf");
