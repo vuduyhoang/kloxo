@@ -414,7 +414,7 @@ abstract class Lxclient extends Lxdb
 		return implode("\n", $total);
 	*/
 
-		$input = new array();
+		$input = array();
 
 		$input['name'] = $object->nname;
 		$input['clientname'] = $object->getParentName();

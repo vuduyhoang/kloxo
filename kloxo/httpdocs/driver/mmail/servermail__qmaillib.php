@@ -111,7 +111,7 @@ class Servermail__Qmail  extends lxDriverClass
 			//	os_service_manage("freshclam", "restart");
 				exec("sh /script/enable-service freshclam restart");
 			}
-	
+
 			// MR -- clamav from epel use clamd instead clamav init
 			if (isServiceExists("clamd")) {
 				exec("sh /script/disable-service clamd stop");
@@ -145,7 +145,7 @@ class Servermail__Qmail  extends lxDriverClass
 				lxshell_return("yum", "remove", "-y", "simscan-toaster");
 
 				$cpath = "/var/qmail/supervise/clamd";
-				
+
 				if (file_exists("{$cpath}/run")) {
 					lxfile_mv("{$cpath}/run", "{$cpath}/down");
 					lxfile_mv("{$cpath}/log/run", "{$cpath}/log/down");

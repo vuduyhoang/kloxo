@@ -7,7 +7,7 @@ yum install clamav* clamd --exclude=clamav-milter* --exclude=clamav-unofficial* 
 if [ -z "$(id -u 'clamav' 2>/dev/null)" ] ; then
 	groupadd clamav
 	useradd -g clamav -s /sbin/nologin -c "Clam AntiVirus" clamav
-file
+fi
 
 'cp' -f /etc/clamd.d/scan.conf /etc/clamd.conf
 'cp' -f /usr/local/lxlabs/kloxo/file/clamav/etc/init.d/freshclam.init /etc/init.d/freshclam

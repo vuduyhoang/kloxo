@@ -31,7 +31,7 @@ if (isServiceExists('mysqld')) {
 
 print("MySQL ROOT password reset...\n");
 sleep(10);
-system("mysqld_safe --skip-grant-tables --init-file={$tpath}/reset-mysql-password.sql >/dev/null 2>&1 &");
+system("mysqld_safe --no-auto-restart --skip-grant-tables --init-file={$tpath}/reset-mysql-password.sql >/dev/null 2>&1 &");
 sleep(15);
 
 print("Start MySQL service...\n");
