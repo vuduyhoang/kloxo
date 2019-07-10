@@ -2,14 +2,7 @@
 
 <?php
 
-// MR -- disable cgi module
-if (file_exists('/etc/httpd/conf.modules.d/01-cgi.conf')) {
-	exec("'cp' -f /opt/configs/apache/etc/conf.modules.d/01-cgi.conf /etc/httpd/conf.modules.d/01-cgi.conf");
-}
 
-if (!file_exists("/var/run/letsencrypt/.well-known/acme-challenge")) {
-	exec("mkdir -p /var/run/letsencrypt/.well-known/acme-challenge");
-}
 
 if (!isset($phpselected)) {
 	$phpselected = 'php';
@@ -31,8 +24,17 @@ $trgtcmdpath = "/etc/httpd/conf.modules.d";
 $sslpath = "/home/kloxo/ssl";
 $kloxopath = "/usr/local/lxlabs/kloxo";
 
+// MR -- disable cgi module
+if (file_exists($cfile = "{$trgtcmdpath}/01-cgi.conf")) {
+	copy("{$srccmdpath}/01-cgi.conf", $cfile);
+}
+
+if (!file_exists($afile = "/var/run/letsencrypt/.well-known/acme-challenge")) {
+	mkdir($afile, 0755, true);
+}
+
 // MR -- fix error 'Directory / is not owned by admin' for suphp
-exec("chown root.root /");
+chown("/", "root"); chgrp("/", "root");
 
 // MR -- mod_ruid2 from epel use mod_ruid2.conf
 foreach (glob("{$trgtcdpath}/mod_*.conf") as $file)
@@ -55,7 +57,7 @@ $mpmlist = array('prefork', 'itk', 'event', 'worker');
 if (file_exists("{$kloxopath}/etc/flag/use_apache24.flg")) {
 	$use_httpd24 = true;
 
-	exec("'cp' -f {$srccpath}/httpd24.conf /{$trgtcpath}/httpd.conf");
+	copy("{$srccpath}/httpd24.conf", "{$trgtcpath}/httpd.conf");
 
 	if (file_exists("{$trgtcmdpath}/00-base.conf")) {
 		exec("sed -i 's/^LoadModule deflate_module/#LoadModule deflate_module/' {$trgtcmdpath}/00-base.conf");
@@ -64,7 +66,7 @@ if (file_exists("{$kloxopath}/etc/flag/use_apache24.flg")) {
 	foreach ($mpmlist as $k => $v) {
 		if (strpos($phptype, $v) !== false) {
 			if (file_exists("{$trgtcmdpath}/00-mpm.conf")) {
-				exec("echo 'LoadModule mpm_{$v}_module modules/mod_mpm_{$v}.so' > {$trgtcmdpath}/00-mpm.conf");
+				file_put_contents("{$trgtcmdpath}/00-mpm.conf", "LoadModule mpm_{$v}_module modules/mod_mpm_{$v}.so");
 				break;
 			}
 		}
@@ -76,18 +78,18 @@ if (file_exists("{$kloxopath}/etc/flag/use_apache24.flg")) {
 	}
 	
 	// MR -- make blank content
-	exec("echo '' > /etc/sysconfig/httpd");
+	file_put_contents("/etc/sysconfig/httpd", "");
 } else {
 	$use_httpd24 = false;
 
-	exec("'cp' -f {$srccpath}/httpd.conf {$trgtcpath}/httpd.conf");
+	copy("{$srccpath}/httpd.conf", "{$trgtcpath}/httpd.conf");
 
 	// as 'httpd' as default mpm
-	exec("echo 'HTTPD=/usr/sbin/httpd' > /etc/sysconfig/httpd");
+	file_put_contents("/etc/sysconfig/httpd", "HTTPD=/usr/sbin/httpd");
 
 	foreach ($mpmlist as $k => $v) {
 		if (strpos($phptype, $v) !== false) {
-			exec("echo 'HTTPD=/usr/sbin/httpd.{$v}' > /etc/sysconfig/httpd");
+			file_put_contents("/etc/sysconfig/httpd", "HTTPD=/usr/sbin/httpd.{$v}");
 			break;
 		}
 	}
@@ -214,7 +216,7 @@ foreach ($certnamelist as $ip => $certname) {
 ?>
 
 <IfVersion < 2.4>
-	Define global::port <?=$ports[0]; ?>
+	Define global::port <?=$ports[0];?>
 
 	Define global::portssl <?=$ports[1];?>
 
@@ -393,7 +395,8 @@ foreach ($certnamelist as $ip => $certname) {
 
 				ProxySet connectiontimeout=<?=$timeout;?>
 
-				#ProxySet enablereuse=on
+				# need 'disablereuse=on' for 'ondemand'
+				ProxySet disablereuse=on
 				ProxySet max=25
 				ProxySet retry=0
 			</Proxy>

@@ -6,7 +6,7 @@ if (file_exists($altconf)) {
 	return;
 }
 ?>
-### begin - web of '<?= $domainname; ?>' - do not remove/modify this line
+### begin - web of '<?=$domainname;?>' - do not remove/modify this line
 
 <?php
 
