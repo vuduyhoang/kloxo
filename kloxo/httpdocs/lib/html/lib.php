@@ -793,7 +793,7 @@ function validate_domain_name($name, $bypass = null)
 		throw new lxException($login->getThrow('add_without_www'), '', $name);
 	}
 
-	if (!preg_match('/^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+(([a-z]{2,16})|(xn--[a-z0-9]{4,14}))$/i', $name)) {
+	if (!preg_match('/^([a-z0-9_]([a-z0-9-]{0,61}[a-z0-9])?\.)+(([a-z]{2,16})|(xn--[a-z0-9]{4,14}))$/i', $name)) {
 		throw new lxException($login->getThrow('invalid_domain_name'), '', $name);
 	}
 
