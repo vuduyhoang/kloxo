@@ -14,6 +14,7 @@ if (isset($argv[1])) {
 
 $text = <<<EOF
 UPDATE mysql.user SET Password=PASSWORD('PASSWORD') WHERE User='USER';
+UPDATE mysql.user SET authentication_string=PASSWORD('PASSWORD') WHERE User='USER';
 FLUSH PRIVILEGES;
 EOF;
 
@@ -31,7 +32,7 @@ if (isServiceExists('mysqld')) {
 
 print("MySQL ROOT password reset...\n");
 sleep(10);
-system("mysql --no-auto-restart --skip-grant-tables --init-file={$tpath}/reset-mysql-password.sql >/dev/null 2>&1 &");
+exec("mysqld_safe --skip-grant-tables --init-file={$tpath}/reset-mysql-password.sql >/dev/null 2>&1 &");
 sleep(15);
 
 print("Start MySQL service...\n");
@@ -56,3 +57,5 @@ $conn->close();
 $a['mysql']['dbpassword'] = $pass;
 
 slave_save_db("dbadmin", $a);
+
+exec("mysql -u root -p{$pass} kloxo -e \"UPDATE dbadmin SET dbpassword='{$pass}' WHERE dbadmin_name='root';\"");

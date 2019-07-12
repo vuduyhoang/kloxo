@@ -559,12 +559,13 @@ class lxbackup extends Lxdb
 		$parent = $this->getParentO();
 
 		$bpath = "{$sgbl->__path_program_home}/{$parent->get__table()}/{$parent->nname}/__backup";
-		$bfile = $bpath . "/" . $this->createBackupFileName($param['backup_to_file_f']) . "." . $parent->getZiptype();
+		$bfile = $this->createBackupFileName($param['backup_to_file_f']);
+		$fbfile = "{$bpath}/{$bfile}.{$parent->getZiptype()}";
 
 		if ($parent->isSimpleBackup()) {
-			$parent->doSimpleBackup($bfile, $param);
+			$parent->doSimpleBackup($fbfile, $param);
 		} else {
-			$parent->doCoreBackup($bfile, $param);
+			$parent->doCoreBackup($fbfile, $param);
 		}
 
 		$object = clone($this);
@@ -574,9 +575,9 @@ class lxbackup extends Lxdb
 		if ($object->upload_to_ftp === 'on') {
 			try {
 				if ($parent->isClient() || $parent->isLocalhost()) {
-					self::upload_to_server($bfile, basename($bfile), $object);
+					self::upload_to_server($fbfile, basename($fbfile), $object);
 				} else {
-					rl_exec_get(null, $parent->syncserver, array('lxbackup', 'upload_to_server'), array($bfile, basename($bfile), $object));
+					rl_exec_get(null, $parent->syncserver, array('lxbackup', 'upload_to_server'), array($fbfile, basename($fbfile), $object));
 				}
 			} catch (Exception $e) {
 				$text1 = "$cprogname Backup Upload Failed on " . date('Y-M-d') . " at " . date('H') . " Hours";
