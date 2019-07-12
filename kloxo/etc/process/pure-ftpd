@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "*** Process for Pure-FTPD service ***"
+
+prog='pure-ftpd'
+
+./service.inc

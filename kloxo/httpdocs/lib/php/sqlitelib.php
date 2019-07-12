@@ -418,7 +418,7 @@ class Sqlite
 					}
 
 					$ret[$key] = implode(",", $namelist);
-					dprint("in Coma {$key} ".$ret[$key]<br> ");
+					dprint("in Coma {$key} ".$ret[$key]."<br> ");
 
 					$ret[$key] = ",".$ret[$key].",";
 				} else {
