@@ -12,4 +12,4 @@ fi
 
 prog='lighttpd'
 
-./service.inc
+. /usr/local/lxlabs/kloxo/etc/process/service.inc

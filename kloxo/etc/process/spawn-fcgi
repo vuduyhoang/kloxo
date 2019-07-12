@@ -8,4 +8,6 @@ fi
 
 prog='spawn-fcgi'
 
-./service.inc
+. /script/directory
+
+. ../etc/process/service.inc

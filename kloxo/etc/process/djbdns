@@ -16,5 +16,5 @@ fi
 
 prog='djbdns'
 
-./service.inc
+. /usr/local/lxlabs/kloxo/etc/process/service.inc
 

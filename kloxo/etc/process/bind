@@ -10,7 +10,7 @@ fi
 
 prog='named'
 
-./service.inc
+. /usr/local/lxlabs/kloxo/etc/process/service.inc
 
 ## Note: possible transfer zone with 'rndc retranfer' but need each zone - it's not practice
 

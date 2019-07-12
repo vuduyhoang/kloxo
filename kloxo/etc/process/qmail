@@ -2,10 +2,10 @@
 
 echo "*** Restart for QMAIL service ***"
 
-#qmailctl stop
-#sleep 2
-#qmailctl start
+qmailctl stop
+sleep 2
+qmailctl start
 
-prog='qmail'
+#prog='qmail'
 
-./service.inc
+#./service.inc

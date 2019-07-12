@@ -10,4 +10,6 @@ fi
 
 prog='xinetd'
 
-./service.inc
+. /script/directory
+
+. ../etc/process/service.inc

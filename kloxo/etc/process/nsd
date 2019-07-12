@@ -10,5 +10,7 @@ fi
 
 prog='nsd'
 
-./service.inc
+. /script/directory
+
+. ../etc/process/service.inc
 

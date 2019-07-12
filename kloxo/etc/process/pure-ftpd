@@ -4,4 +4,6 @@ echo "*** Process for Pure-FTPD service ***"
 
 prog='pure-ftpd'
 
-./service.inc
+. /script/directory
+
+. ../etc/process/service.inc

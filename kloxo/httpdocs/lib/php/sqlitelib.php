@@ -106,8 +106,7 @@ class Sqlite
 	{
 		global $sgbl;
 
-	//	return $this->rawQuery("set password=Password('{$newp}');");
-		return $this->rawQuery("UPDATE mysql.user SET Password=PASSWORD('{$newp}') WHERE User='{$sgbl->__var_admin_user}'");
+		return $this->rawQuery("set password=Password('{$newp}');");
 	}
 
 	function database_query($res, $string)
