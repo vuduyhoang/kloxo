@@ -2,6 +2,10 @@
 
 echo "*** Process for Pure-FTPD service ***"
 
+if [ "$(pgrep ^pure-upload-script)" == "" ] ; then
+	pure-uploadscript -B -r /etc/pure-ftpd/clamscan.sh
+fi
+
 prog='pure-ftpd'
 
 . /script/directory

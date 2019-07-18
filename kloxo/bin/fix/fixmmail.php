@@ -42,11 +42,9 @@ foreach($list as $c) {
 
 			log_cleanup("- '{$ml->nname}' ('{$c->nname}') at '{$mmail->syncserver}'", $nolog);
 			$spam->setUpdateSubaction('full_update');
-
 			$spam->was();
 
 			$ml->setUpdateSubaction('full_update');
-
 			$ml->was();
 		}
 	}

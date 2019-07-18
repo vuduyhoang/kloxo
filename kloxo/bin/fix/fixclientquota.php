@@ -12,6 +12,5 @@ os_createUserQuota();
 
 foreach($list as $l) {
 	$l->setUpdateSubaction('change_disk_usage');
-
 	$l->was();
 }

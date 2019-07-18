@@ -2,6 +2,14 @@
 
 <?php
 
+if (!file_exists("/usr/sbin/php-cgi")) {
+	exec("ln -sf /usr/bin/php-cgi /usr/sbin/php-cgi");
+}
+
+if (!empty($fcgilist = glob("/home/kloxo/client/*.fcgi"))) {
+	exec("'rm' -f /home/kloxo/client/*.fcgi; 'rm' -f /home/kloxo/client/*/*.fcgi");
+}
+
 if (!isset($phpselected)) {
 	$phpselected = 'php';
 }
@@ -130,8 +138,13 @@ foreach ($typelist as $k => $v) {
 	}
 
 	if (strpos($phptype, "{$w}") !== false) {
-		$custom_conf = getLinkCustomfile($srccdpath, "{$v}.conf");
-		copy($custom_conf, "{$trgtcdpath}/{$v}.conf");
+		if ($v === 'proxy_fcgi') {
+			$custom_conf = getLinkCustomfile($srccmdpath, "00-proxy.conf");
+			copy($custom_conf, "{$trgtcmdpath}/00-proxy.conf");
+		} else {
+			$custom_conf = getLinkCustomfile($srccdpath, "{$v}.conf");
+			copy($custom_conf, "{$trgtcdpath}/{$v}.conf");
+		}
 	} else {
 		if ($v === 'proxy_fcgi') {
 			$custom_conf = getLinkCustomfile($srccmdpath, "_inactive_.conf");
@@ -374,7 +387,7 @@ foreach ($certnamelist as $ip => $certname) {
 							<FilesMatch \.php$>
 								SetHandler fcgid-script
 							</FilesMatch>
-							FCGIWrapper /home/kloxo/client/php.fcgi .php
+							FCGIWrapper /usr/sbin/<?=$phpselected;?>-cgi .php
 						</Directory>
 					</IfModule>
 				</IfModule>

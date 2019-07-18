@@ -122,7 +122,8 @@ abstract class Lxclass
 		if ($this->inheritSynserverFromParent() && $parent) {
 			if (!$this->isClass('ssession')) {
 				$this->syncserver = $parent->getSyncServerForChild($this->getClass());
-				log_log("syncserveriherit", "Adding syncserver $this->syncserver to $this->nname {$this->getclass()} from {$parent->getClName()}");
+				log_log("syncserveriherit", "Adding syncserver $this->syncserver to $this->nname ".
+					"{$this->getclass()} from {$parent->getClName()}");
 			}
 		}
 	}
@@ -259,7 +260,8 @@ abstract class Lxclass
 		}
 
 		// Don't need this. Ruins the appearance <b> [</b>{$obj->getShowInfo()}<b>] </b>
-		return "{$desc}  <span title=\"{$desc} is Configured {$descr} on {$obj->__driverappclass}\"> {$str} {$switch} &#x00bb; <span style='font-weight: normal'>{$obj->__driverappclass}<span> </span>";
+		return "{$desc}  <span title=\"{$desc} is Configured {$descr} on {$obj->__driverappclass}\"> ".
+			"{$str} {$switch} &#x00bb; <span style='font-weight: normal'>{$obj->__driverappclass}<span> </span>";
 
 	}
 
@@ -379,49 +381,60 @@ abstract class Lxclass
 
 		$acto = $login->getObject('general')->customaction_b;
 
-		$var = "{$this->get__table()}__{$this->dbaction}__{$this->subaction}";
+		$avar = array();
 
-		if (isset($acto->$var) && $acto->$var) {
-			$action = $acto->$var;
-			$action = str_replace('%contactemail%', $this->contactemail, $action);
-			$action = str_replace('%nname%', $this->nname, $action);
-			lxshell_direct($action);
-		}
-
-		if (!$this->isClass('vps')) {
-			return;
-		}
-
-		$sq = new Sqlite(null, 'customaction');
-
-		if ($this->dbaction === 'add') {
-			$query = "action = '$this->dbaction' AND class = '{$this->getClass()}'";
+		if (!is_array($this->subaction)) {
+			$avar[] = $this->subaction;
 		} else {
-			$query = "action = '$this->dbaction' AND subaction = '$this->subaction' AND class = '{$this->getClass()}'";
+			$avar = $this->subaction;
 		}
 
-		$this->__var_custom_exec = null;
+		foreach($avar as $key => $value) {
+			$var = "{$this->get__table()}__{$this->dbaction}__{$value}";
 
-		dprint($query . "\n");
+			if (isset($acto->$var) && $acto->$var) {
+				$action = $acto->$var;
+				$action = str_replace('%contactemail%', $this->contactemail, $action);
+				$action = str_replace('%nname%', $this->nname, $action);
+				lxshell_direct($action);
+			}
 
-		$list = $sq->getRowsWhere($query);
+			if (!$this->isClass('vps')) {
+				return;
+			}
 
-		if (!$list) {
-			return;
-		}
+			$sq = new Sqlite(null, 'customaction');
 
-		dprintr($list . "\n");
-
-		foreach ($list as $k => $l) {
-			$ex = $l['exec'];
-			$ex = str_replace('%contactemail%', $this->contactemail, $ex);
-			$ex = str_replace('%nname%', $this->nname, $ex);
-			$ex = str_replace('%hostname%', $this->hostname, $ex);
-			$ex = str_replace('%vpsid%', $this->vpsid, $ex);
-			if ($l['where_to_exec'] === 'master') {
-				lxshell_direct($ex);
+			if ($this->dbaction === 'add') {
+				$query = "action = '$this->dbaction' AND class = '{$this->getClass()}'";
 			} else {
-				$this->__var_custom_exec = $ex;
+				$query = "action = '$this->dbaction' AND subaction = '$this->subaction' AND ".
+					"class = '{$this->getClass()}'";
+			}
+
+			$this->__var_custom_exec = null;
+
+			dprint($query . "\n");
+
+			$list = $sq->getRowsWhere($query);
+
+			if (!$list) {
+				return;
+			}
+
+			dprintr($list . "\n");
+
+			foreach ($list as $k => $l) {
+				$ex = $l['exec'];
+				$ex = str_replace('%contactemail%', $this->contactemail, $ex);
+				$ex = str_replace('%nname%', $this->nname, $ex);
+				$ex = str_replace('%hostname%', $this->hostname, $ex);
+				$ex = str_replace('%vpsid%', $this->vpsid, $ex);
+				if ($l['where_to_exec'] === 'master') {
+					lxshell_direct($ex);
+				} else {
+					$this->__var_custom_exec = $ex;
+				}
 			}
 		}
 	}
@@ -677,7 +690,8 @@ abstract class Lxclass
 			}
 		}
 
-		// If it is pserver, then when it is initialized don't create the driver, since the driver system is not in place at all.
+		// If it is pserver, then when it is initialized don't create the driver,
+		// since the driver system is not in place at all.
 		if ($this->get__table() !== 'pserver') {
 			if ($this->hasDriverClass()) {
 				$this->createSyncClass();
@@ -1056,7 +1070,8 @@ abstract class Lxclass
 			$obj = exec_class_method($class, 'initThisObject', $this, $class);
 		}
 
-		// If the object doesn't exist and is newly created, then assign it fully to the current guy. WIhtout this, it becomes impossible to delete the object if it doesn't exist in the db.
+		// If the object doesn't exist and is newly created, then assign it fully to the current guy.
+		// Without this, it becomes impossible to delete the object if it doesn't exist in the db.
 		if (!$obj) {
 			$obj = new $class($this->__masterserver, $this->__readserver, $name);
 			$obj->get();
@@ -1201,6 +1216,7 @@ abstract class Lxclass
 
 		return true;
 
+	/*
 		if (!$filter) {
 			return 1;
 		}
@@ -1230,6 +1246,7 @@ abstract class Lxclass
 		}
 
 		return $res;
+	*/
 	}
 
 	static function isTreeForDelete()
@@ -1239,6 +1256,8 @@ abstract class Lxclass
 
 	function getDefaultQuery($class, $result)
 	{
+		$query = null;
+
 		if (is_array($result)) {
 			foreach ($result as &$k) {
 				if (is_array($k)) {
@@ -1342,7 +1361,7 @@ abstract class Lxclass
 
 	function inNoBackuplist()
 	{
-		global $gbl, $sgbl, $login, $ghtml;
+	//	global $gbl, $sgbl, $login, $ghtml;
 	}
 
 	function loadBackupAll()
@@ -3104,7 +3123,9 @@ abstract class Lxclass
 
 	function getVariable($var)
 	{
-		return $this->$var;
+		if (isset($this->$var)) {
+			return $this->$var;
+		}
 	}
 
 	static function exec_collectQuota()

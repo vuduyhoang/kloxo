@@ -13,7 +13,7 @@ $nolog  = (isset($list['nolog'])) ? $list['nolog'] : null;
 $login->loadAllObjects('client');
 $list = $login->getList('client');
 
-log_cleanup("Fixing php.ini/php-fpm.conf/php.fcgi/.htaccess", $nolog);
+log_cleanup("Fixing php.ini/php-fpm.conf/.htaccess", $nolog);
 
 $clist = array();
 
@@ -57,7 +57,7 @@ foreach($plist as $s) {
 				$php->setUpdateSubaction('ini_update');
 
 				log_cleanup("- '/home/kloxo/client/{$c->nname}/php.ini' at '{$php->syncserver}'", $nolog);
-				log_cleanup("- '/home/kloxo/client/{$c->nname}/php.fcgi' at '{$php->syncserver}'", $nolog);
+			//	log_cleanup("- '/home/kloxo/client/{$c->nname}/php.fcgi' at '{$php->syncserver}'", $nolog);
 				log_cleanup("- '/home/kloxo/client/{$c->nname}/prefork.inc' at '{$php->syncserver}'", $nolog);
 				log_cleanup("- '/etc/php-fpm.d/{$c->nname}.conf' (also for 'multiple php') at '{$php->syncserver}'", $nolog);
 
@@ -90,7 +90,7 @@ foreach($plist as $s) {
 	log_cleanup("- Fix 'extension_dir' path in php.ini at '{$php->syncserver}'", $nolog);
 
 	log_cleanup("- '/etc/php-fpm.d/default.conf' at '{$php->syncserver}'", $nolog);
-	log_cleanup("- '/home/kloxo/client/php.fcgi' at '{$php->syncserver}'", $nolog);
+//	log_cleanup("- '/home/kloxo/client/php.fcgi' at '{$php->syncserver}'", $nolog);
 
 	$php->was();
 

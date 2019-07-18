@@ -1152,53 +1152,65 @@ function dprint_r($var, $type = 0)
 	}
 }
 
-function xprint($var)
+function debug_print($var, $note = null)
 {
 	global $sgbl;
 
-	if ($sgbl->__running_in_cli) {
-	//	print("\n---begin xprint_r---\n");
-		print("\n");
-	} else {
-	//	print("<pre>---begin xprint_r---\n");
-		print("<pre>");
-	}
-
-	if (is_object($var) && method_exists($var, "clearChildrenAndParent")) {
-		$newvar = myclone($var);
-		lxclass::clearChildrenAndParent($newvar);
-		$newvar->driverApp = 'unset for printing';
-		$newvar->__parent_o = 'unset for printing';
-
-		$class = $newvar->get__table();
-		
-		if (csb($class, "sp_")) {
-			$bclass = strfrom($class, "sp_") . "_b";
-			$newvar->$bclass->__parent_o = 'unset for printing';
-		}
-		
-		print_r($newvar);
-	} else {
-		if (is_array($var)) {
-			print_r($var);
+	if ($type <= $sgbl->dbg) {
+		if ($sgbl->__running_in_cli) {
+			print("\n---begin xprint---\n");
+			if ($note) {
+				print("* Note: {$note}");
+			}
+			print("\n");
 		} else {
-			print($var);
+			print("<pre>---begin xprint---\n");
+			if ($note) {
+				print("* Note: {$note}");
+			}
+			print("<pre>");
 		}
-	}
 
-	if ($sgbl->__running_in_cli) {
-	//	print("\n---end xprint_r---\n");
-		print("\n");
-	} else {
-	//	print("\n---end xprint_r---</pre>");
-		print("</pre>");
+	//	if (is_object($var) && method_exists($var, "clearChildrenAndParent")) {
+		if (is_object($var)) {
+			$newvar = myclone($var);
+
+			if (method_exists($var, "clearChildrenAndParent")) {
+				lxclass::clearChildrenAndParent($newvar);
+				$newvar->driverApp = 'unset for printing';
+				$newvar->__parent_o = 'unset for printing';
+
+				$class = $newvar->get__table();
+
+				if (csb($class, "sp_")) {
+					$bclass = strfrom($class, "sp_") . "_b";
+					$newvar->$bclass->__parent_o = 'unset for printing';
+				}
+			}
+
+			print_r($newvar);
+		} else {
+			if (is_array($var)) {
+				print_r($var);
+			} else {
+				print($var);
+			}
+		}
+
+		if ($sgbl->__running_in_cli) {
+			print("\n---end xprint---\n");
+			print("\n");
+		} else {
+			print("\n---end xprint---</pre>");
+			print("</pre>");
+		}
 	}
 }
 
-function get_xprint($var)
+function get_debug_print($var, $note = null)
 {
 	ob_start();
-	eval(xprint($var));
+	eval(debug_print($var));
 	$x = ob_get_contents();
 	ob_end_clean();
 

@@ -4723,7 +4723,13 @@ function lxguard_main($clearflag = false, $since = false)
 {
 	global $sgbl;
 
-	$hl_file = "/home/kloxo/lxguard/hitlist.info";
+	$lxgpath = "{$sgbl->__path_home_root}/lxguard";
+
+	if (!file_exists($lxgpath)) {
+		lxfile_mkdir($lxgpath);
+	}
+
+	$hl_file = "{$lxgpath}/hitlist.info";
 
 	if ((file_exists($hl_file)) && (strpos(file_get_contents($hl_file), "\n\"") !== false)) {
 		exec("sh /script/fix-lxguardhit-db");
@@ -4731,9 +4737,6 @@ function lxguard_main($clearflag = false, $since = false)
 	}
 
 	include "./lib/html/lxguardincludelib.php";
-
-	$lxgpath = "{$sgbl->__path_home_root}/lxguard";
-	lxfile_mkdir($lxgpath);
 
 	$newtime = time();
 
@@ -4749,13 +4752,22 @@ function lxguard_main($clearflag = false, $since = false)
 		}
 	}
 
-	$rmt =  array_map('trim', lfile_get_unserialize("{$lxgpath}/hitlist.info"));
+	// MR -- array_map to object may error
+//	$rmt =  array_map('trim', lfile_get_unserialize("{$lxgpath}/hitlist.info"));
+
+	$t = toArray(lfile_get_unserialize("{$lxgpath}/hitlist.info"));
+	$r = new Remote();
+	$rmt = toObject(array_map($t), $r);
 
 	if ($rmt) {
 		$oldtime = max((int)$oldtime, (int)$rmt->ddate);
 	}
 
-	$list = array_map('trim', lfile_get_unserialize("{$lxgpath}/access.info"));
+//	$list = array_map('trim', lfile_get_unserialize("{$lxgpath}/access.info"));
+
+	$t2 = toArray(lfile_get_unserialize("{$lxgpath}/access.info"));
+	$r2 = new Remote();
+	$list = toObject(array_map($t2), $r2);
 
 	$type = array('sshd' => '/var/log/secure', 'pure-ftpd' => '/var/log/messages', 'vpopmail' => '/var/log/maillog');
 
@@ -8775,4 +8787,47 @@ function safefilerewrite($fileName, $dataToSave)
 
 		fclose($fp);
 	}
+}
+
+// MR -- https://likegeeks.com/convert-array-to-object-using-php/
+function toObject(array $array, $object)
+{
+	$class = get_class($object);
+	$methods = get_class_methods($class);
+
+	foreach ($methods as $method) {
+		preg_match(' /^(set)(.*?)$/i', $method, $results);
+
+		$pre = $results[1] ? $results[1] : '';
+		$k = $results[2] ? $results[2] : '';
+		$k = strtolower(substr($k, 0, 1)) . substr($k, 1);
+
+		if ($pre == 'set' && !empty($array[$k])) {
+			$object->$method($array[$k]);
+		}
+	}
+
+	return $object;
+}
+
+// MR -- https://likegeeks.com/convert-array-to-object-using-php/
+function toArray($object)
+{
+	$array = array();
+	$class = get_class($object);
+	$methods = get_class_methods($class);
+
+	foreach ($methods as $method) {
+		preg_match(' /^(get)(.*?)$/i', $method, $results);
+
+		$pre = $results[1]  ?? '';
+		$k = $results[2]  ?? '';
+		$k = strtolower(substr($k, 0, 1)) . substr($k, 1);
+
+		if ($pre == 'get') {
+			$array[$k] = $object->$method();
+		}
+	}
+
+	return $array;
 }

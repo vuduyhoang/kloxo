@@ -282,7 +282,8 @@ function kloxo_vpopmail()
 
 	print(">>> Fixing Vpopmail settings <<<\n");
 
-	file_put_contents("/etc/sysconfig/spamassassin", "SPAMDOPTIONS=\" -v -d -p 783 -u vpopmail\"");
+	// file_put_contents("/etc/sysconfig/spamassassin", "SPAMDOPTIONS=\" -v -d -p 783 -u vpopmail\"");
+	copy("/usr/local/lxlabs/kloxo/file/spamassassin/etc/sysconfig/spamassassin", "/etc/sysconfig/spamassassin");
 
 	// MR -- until Kloxo-MR 6.5.1, still using the same mail path
 	@system("mkdir -p /home/lxadmin/mail/domains");

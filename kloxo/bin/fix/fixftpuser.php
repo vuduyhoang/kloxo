@@ -51,7 +51,6 @@ foreach($list as $c) {
 
 	//	$fl->dbaction = 'syncadd';
 		$fl->setUpdateSubaction('fix');
-
 		$fl->was();
 	}
 }

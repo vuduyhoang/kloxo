@@ -279,6 +279,8 @@ if [ "${base_name}" != "php" ] ; then
 			ln -sf ${main_path}/custom/php-${i}.sh /usr/sbin/${base_name}-${i} >/dev/null 2>&1
 		fi
 	done
+else
+	ln -sf /usr/bin/php-cgi /usr/sbin/php-cgi >/dev/null 2>&1
 fi
 
 if [ "${uname_m}" == "64" ] ; then

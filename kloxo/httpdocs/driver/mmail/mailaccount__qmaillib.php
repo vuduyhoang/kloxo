@@ -369,7 +369,7 @@ class Mailaccount__Qmail extends lxDriverClass
 
  /**
  *  Trains Spamassassin or bogofilter 
- *  (detects if spamassassin isinstalled and uses sa-learn if it is)
+ *  (detects if spamassassin is installed and uses sa-learn if it is)
  */
 	function trainAsSpam()
 	{
@@ -404,7 +404,7 @@ class Mailaccount__Qmail extends lxDriverClass
 				do_exec_system("vpopmail", null, $cmd, $out, $err, $ret, null);
 			}
 		} else {
-		
+
 			if (csb($this->main->subaction, "train_as_system_")) {
 				$optstring = null;
 			} else {
