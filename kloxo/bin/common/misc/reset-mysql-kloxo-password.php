@@ -31,5 +31,9 @@ if (!$result) {
 
 $conn->close();
 
+if (!file_exists("../etc/conf")) {
+	mkdir("../etc/conf");
+}
+
 file_put_contents("../etc/conf/$program.pass", $mysqlpass);
 
