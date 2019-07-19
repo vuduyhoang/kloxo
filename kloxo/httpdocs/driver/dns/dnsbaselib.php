@@ -383,6 +383,9 @@ abstract class Dnsbase extends Lxdb
 		$this->addRec("fcname", "imap", "mail.$this->nname");
 		$this->addRec("mx", "10", "mail.$this->nname");
 
+		// MR -- special CN record for letsencrypt wildcards domains ssl
+		$this->addRec("cn", "_acme-challenge", "myalias");
+
 		return;
 	}
 

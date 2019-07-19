@@ -123,7 +123,7 @@ install_others() {
 	echo ">>> Install OTHER services <<<"
 
 	yum -y install pure-ftpd webalizer cronie cronie-anacron crontabs vixie-cron \
-		rpmdevtools yum-utils --skip-broken
+		rpmdevtools yum-utils procps-ng psmisc --skip-broken
 }
 
 kloxo_vpopmail() {

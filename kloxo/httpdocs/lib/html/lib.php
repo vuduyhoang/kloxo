@@ -6512,7 +6512,7 @@ function setInitialServer($nolog = null)
 
 	$list = implode(" ", $packages);
 
-	exec("yum -y install $list >/dev/null 2>&1");
+	exec("yum -y install $list --exclude=*afterlogic8* >/dev/null 2>&1");
 
 	exec("sh /script/fixlxphpexe");
 

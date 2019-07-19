@@ -39,7 +39,7 @@ if [ "${status}" == "12" ] ; then
 
 	pass=$(lxphp.exe ../bin/common/mp.php)
 
-	mysql_upgrade -u root -p${pass}
+	mysql_upgrade -u root -p${pass} --force
 
 	sh /script/restart-mysql
 
