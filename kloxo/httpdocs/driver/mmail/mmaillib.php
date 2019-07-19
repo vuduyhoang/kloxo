@@ -527,7 +527,7 @@ class Mmail extends Lxdb
 		if ($this->subaction === 'remotelocalmail' || $this->subaction === 'webmail_select') {
 			$web = $this->getParentO()->getObject('web');
 			$web->setUpdateSubaction('addondomain');
-			$web-was();
+			$web->was();
 		}
 	}
 

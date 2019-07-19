@@ -46,6 +46,10 @@ class phpini__sync extends Lxdriverclass
 			lxfile_mkdir("/etc/php-fpm.d");
 		}
 
+		if (!file_exists("/opt/configs/php-fpm/sock")) {
+			exec("mkdir -p /opt/configs/php-fpm/sock");
+		}
+
 		$stlist[] = "###Start Kloxo PHP config Area";
 		$stlist[] = "###Start Lxdmin Area";
 		$stlist[] = "###Start Kloxo Area";
@@ -85,10 +89,6 @@ class phpini__sync extends Lxdriverclass
 
 			if (file_exists($suphp2_target)) {
 				file_put_contents($suphp2_target, $suphp2_parse);
-			}
-
-			if (!file_exists("/opt/configs/php-fpm/sock")) {
-				exec("mkdir -p /opt/configs/php-fpm/sock");
 			}
 
 			$phpfpm_path_etc = "/opt/configs/php-fpm/etc";
