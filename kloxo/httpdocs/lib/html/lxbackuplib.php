@@ -601,7 +601,10 @@ class lxbackup extends Lxdb
 			$tobackup = 'local backup';
 		}
 
-		$text1 = "$cprogname Backup on " . date('Y-M-d') . " at " . date('H') . " Hours";
+		// MR -- change format. Use '2019-07-20' instead '2019-jul-20'
+	//	$text1 = "$cprogname Backup on " . date('Y-M-d') . " at " . date('H') . " Hours";
+		$text1 = "$cprogname Backup on " . date('Y-m-d') . " at " . date('H') . " Hours";
+
 		$text2 = "$cprogname Backup Succeeded for '{$parent->nname}' to '{$tobackup}'";
 
 		lx_mail(null, $parent->contactemail, $text1, $text2 . "\n");
