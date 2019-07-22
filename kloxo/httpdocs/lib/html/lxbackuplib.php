@@ -542,7 +542,8 @@ class lxbackup extends Lxdb
 
 		$name = str_replace("/", "", $name);
 		$name = str_replace(";", "", $name);
-		$date = @ date('Y-M-d');
+	//	$date = @ date('Y-M-d');
+		$date = @ date('Y-m-d');
 		$time = time();
 		$bfile = "{$name}-{$parent->nname}-{$date}-{$time}";
 
@@ -580,7 +581,8 @@ class lxbackup extends Lxdb
 					rl_exec_get(null, $parent->syncserver, array('lxbackup', 'upload_to_server'), array($fbfile, basename($fbfile), $object));
 				}
 			} catch (Exception $e) {
-				$text1 = "$cprogname Backup Upload Failed on " . date('Y-M-d') . " at " . date('H') . " Hours";
+			//	$text1 = "$cprogname Backup Upload Failed on " . date('Y-M-d') . " at " . date('H') . " Hours";
+				$text1 = "$cprogname Backup Upload Failed on " . date('Y-m-d') . " at " . date('H') . " Hours";
 				$text2 = "$cprogname Backup upload Failed for '{$parent->nname}' due to '{$e->getMessage()}'";
 
 				lx_mail(null, $parent->contactemail, $text1, $text2 . "\n");
@@ -809,7 +811,8 @@ class lxbackup extends Lxdb
 		}
 
 		if (!$gbl->__var_list_flag) {
-			$text1 = "$cprogname Restore on " . date('Y-M-d') . " at " . date('H') . " Hours";
+		//	$text1 = "$cprogname Restore on " . date('Y-M-d') . " at " . date('H') . " Hours";
+			$text1 = "$cprogname Restore on " . date('Y-m-d') . " at " . date('H') . " Hours";
 			$text2 = "$cprogname Restore Succeeded for '{$parent->nname}' on '$parent->syncserver'";
 
 			lx_mail(null, $parent->contactemail, $text1, $text2 . "\n");

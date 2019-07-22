@@ -2097,6 +2097,10 @@ function init_language()
 	$g_language_desc->__description = $__description;
 }
 
+/*
+	MR - this function trouble if running on php 7.0+
+	TODO: still using til Kloxo-MR using php70s+
+*/
 function lx_error_handler($errno, $errstr, $file, $line)
 {
 	global $gbl, $sgbl, $login, $ghtml;
@@ -2162,7 +2166,10 @@ function check_password($unenc, $enc)
 
 	return false;
 }
-
+/*
+	MR - this function trouble if running on php 7.0+
+	TODO: still using til Kloxo-MR using php70s+
+*/
 function lx_exception_handler($e)
 {
 	global $gbl, $sgbl, $login, $ghtml;
@@ -2319,10 +2326,10 @@ function initProgramlib($ctype = null)
 	$progname = $sgbl->__var_program_name;
 	lfile_put_contents($sgbl->__var_error_file, "");
 	// MR -- disable because trouble in php7
-//	set_exception_handler("lx_exception_handler");
+	set_exception_handler("lx_exception_handler");
 //	xdebug_disable();
 	// MR -- disable because trouble in php7
-//	set_error_handler("lx_error_handler");
+	set_error_handler("lx_error_handler");
 
 //	setcookie("XDEBUG_SESSION", "sess");
 

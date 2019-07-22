@@ -34,11 +34,11 @@ file_put_contents("{$tpath}/reset-mysql-password.sql", $text);
 
 print("Stop MySQL service...\n");
 if (isServiceExists('mysqld')) {
-//	exec("service mysqld stop; killall -9 mysqld");
-	exec("service mysqld stop");
+//	exec("service mysqld stop");
+	exec("service mysqld stop; pkill mysqld; pkill mysqld_safe");
 } else {
-//	exec("service mysql stop; killall -9 mysqld");
-	exec("service mysql stop");
+//	exec("service mysql stop");
+	exec("service mysql stop; pkill mysqld; pkill mysqld_safe");
 }
 
 print("MySQL ROOT password reset...\n");
@@ -48,9 +48,9 @@ exec("mysqld_safe --defaults-file=/etc/my.cnf --init-file={$tpath}/reset-mysql-p
 
 print("Start MySQL service...\n");
 if (isServiceExists('mysqld')) {
-	exec("killall -9 mysqld; service mysqld start");
+	exec("pkill mysqld; pkill mysqld_safe; service mysqld start");
 } else {
-	exec("killall -9 mysqld; service mysql start;");
+	exec("pkill mysqld; pkill mysqld_safe; service mysql start");
 }
 
 exec("'rm' -f {$tpath}/reset-mysql-password.sql");

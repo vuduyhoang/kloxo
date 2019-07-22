@@ -324,28 +324,28 @@ class Sqlite
 		$result = $this->getColumnTypes();
 
 		foreach ($result as $key => $val) {
-			$string = $string . " $key,";
+			$string .= " $key,";
 		}
 
 		$string = preg_replace("/,$/i", "", $string);
-		$string = "{$string}) values(";
+		$string .= " values(";
 
 		foreach ($result as $key => $val) {
 			if ($key === 'realpass') {
 				$rp = $array[$key];
 				$rp = base64_encode($rp);
 				$rp = "__lxen:{$rp}";
-				$string = "{$string} '{$rp}',";
+				$string .= " '{$rp}',";
 
 				continue;
 			}
 
-			$string = "$string '".$this->escapeBack($key, $array[$key])."',";
+			$string .= " '" . $this->escapeBack($key, $array[$key]). "',";
 
 		}
 
 		$string = preg_replace("/,$/i", "", $string);
-		$string = $string . " )";
+		$string .= " )";
 
 		return $string;
 	}
