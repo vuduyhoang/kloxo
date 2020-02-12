@@ -21,10 +21,10 @@ else
 	fi
 fi
 
-mypass=$(mkpasswd -l 10)
+mypass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
 
 dbroot='root'
-dbpass=''
+dbpass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
 
 kloxo_service_init() {
 	echo ">>> Copy Kloxo-MR service <<<"
@@ -293,17 +293,14 @@ kloxo_install_step2() {
 			service mysql start
 		fi
 	fi
-
 	sh /script/reset-mysql-root-password ${dbpass}
-
 	if [ -f ${initdpath}/mysqld ] || [ -f ${systemdpath}/mysqld.service ] ; then
 		service mysqld restart
 	else
 		service mysql restart
 	fi
-
 	cd ${kloxopath}/httpdocs
-
+	sh /script/reset-mysql-kloxo-password ${mypass}
 	lxphp.exe ${kloxopath}/bin/install/create.php \
 		--install-type=${installtype} \
 		--db-rootuser=${dbroot} \
