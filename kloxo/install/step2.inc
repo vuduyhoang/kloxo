@@ -419,10 +419,7 @@ kloxo_install_bye() {
 
 install_yum_repo() {
 	echo ">>> Modified mratwork.repo and remove older repo names <<<"
-
-	sh /script/fixrepo
-
-	yum clean all
+	sh /script/fixrepo	
 }
 
 lxins_main() {

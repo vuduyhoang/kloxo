@@ -1,12 +1,11 @@
 #!/bin/sh
 
-yum clean all
+yum --disablerepo=* --enablerepo=mratwork* clean all
 
 if [ "$(rpm -qa|grep 'mratwork-')" != "" ] ; then
 	yum update mratwork* -y
 else
 	cd /tmp
-
 	'rm' -rf /etc/yum.repos.d/kloxo.repo
 	'rm' -rf /etc/yum.repos.d/kloxo-mr.repo
 	'rm' -rf /etc/yum.repos.d/kloxo-custom.repo

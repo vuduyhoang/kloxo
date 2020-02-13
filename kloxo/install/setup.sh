@@ -42,7 +42,7 @@ fi
 
 cd /
 
-yum clean all
+yum --disablerepo=* --enablerepo=mratwork* clean all
 
 if rpm -qa|grep 'mratwork-' >/dev/null 2>&1 ; then
 	yum update mratwork* -y
@@ -72,7 +72,7 @@ if [ "${checktmpfs}" != "" ] ; then
 	echo "Without remove, backup/restore may have a trouble."
 	exit
 fi
-
+APP_NAME='Kloxo-MR'
 echo
 echo "*** Ready to begin $APP_NAME setup. ***"
 echo
@@ -84,8 +84,6 @@ echo "  further instructions."
 echo
 #read -n 1 -p "Press any key to continue ..."
 echo
-
-APP_NAME='Kloxo-MR'
 
 if [ -f ${ppath}/etc/conf/slave-db.db ] ; then
 	APP_TYPE='slave'
@@ -149,11 +147,11 @@ fi
 echo
 
 # Start install
-
-if [ -d /script ] ; then
-	'rm' -rf /script
-	ln -sf ${ppath}/pscript /script
-fi
+##=> move this to spec file
+#if [ -d /script ] ; then
+#	'rm' -rf /script
+#	ln -sf ${ppath}/pscript /script
+#fi
 
 cd /
 
@@ -168,7 +166,6 @@ yum remove -y bind* nsd* pdns* mydns* yadifa* maradns djbdns* mysql-* mariadb-* 
 		httpd-* mod_* httpd24u* mod24u_* nginx* lighttpd* varnish* squid* trafficserver* \
 		*-toaster postfix* exim* opensmtpd* esmtp* libesmtp* libmhash*
 rpm -e pure-ftpd --noscripts
-userdel postfix
 rpm -e vpopmail-toaster --noscripts
 
 if id -u postfix >/dev/null 2>&1 ; then
@@ -188,15 +185,10 @@ chown mysql:mysql /var/lib/mysqltmp
 sh /script/disable-mysql-aio
 sh /script/set-mysql-default
 
-if [ "$(yum list|grep ^'php56u')" != "" ] ; then
-	phpused="php56"
+phpused="php56"
 #	yum -y install ${phpused}u-cli ${phpused}u-mysqlnd ${phpused}u-fpm
-	sh /script/php-branch-installer ${phpused}u
-else
-	phpused="php54"
-#	yum -y install ${phpused}-cli ${phpused}-mysqlnd ${phpused}-fpm
-	sh /script/php-branch-installer ${phpused}u
-fi
+sh /script/php-branch-installer ${phpused}u
+
 
 chkconfig php-fpm on >/dev/null 2>&1
 	
