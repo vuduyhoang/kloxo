@@ -36,9 +36,11 @@ print("Stop MySQL service...\n");
 if (isServiceExists('mysqld')) {
 //	exec("service mysqld stop");
 	exec("service mysqld stop; pkill mysqld; pkill mysqld_safe");
-} else {
+} elseif (isServiceExists('mysqld')) {
 //	exec("service mysql stop");
 	exec("service mysql stop; pkill mysqld; pkill mysqld_safe");
+}elseif (isServiceExists('mariadb')) {
+	exec("systemctl stop mariadb");
 }
 
 print("MySQL ROOT password reset...\n");

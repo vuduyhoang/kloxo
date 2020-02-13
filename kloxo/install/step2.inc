@@ -305,7 +305,7 @@ kloxo_install_step2() {
 	cd ${kloxopath}/httpdocs
 	
 	sh /script/reset-mysql-kloxo-password ${mypass}
-	
+	systemctl is-active mariadb
 	lxphp.exe ${kloxopath}/bin/install/create.php \
 		--install-type=${installtype} \
 		--db-rootuser=${dbroot} \
@@ -429,6 +429,7 @@ install_yum_repo() {
 
 lxins_main() {
 
+	##todo move log to /var/log/kloxomr
 	if [ ! -d ${kloxopath}/log ] ; then
 		## MR -- crucial because segfault if not exists
 		mkdir -p ${kloxopath}/log
@@ -482,5 +483,4 @@ lxins_main() {
 		kloxo_install_bye
 	fi
 }
-
 lxins_main
