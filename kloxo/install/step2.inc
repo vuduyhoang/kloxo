@@ -24,8 +24,8 @@ fi
 mypass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
 
 dbroot='root'
-dbpass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
-
+#dbpass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
+dbpass=''
 kloxo_service_init() {
 	echo ">>> Copy Kloxo-MR service <<<"
 
@@ -285,17 +285,17 @@ kloxo_install_step2() {
 		echo ${driverdata} > ${kloxopath}/etc/slavedb/driver
 	fi
 
-	if [ -f ${initdpath}/mysqld ] || [ -f ${systemdpath}/mysqld.service ] ; then
-		if [ "$(pgrep mysqld)" == "" ] ; then
-			service mysqld start
-		fi
-	else
-		if [ "$(pgrep mysql)" == "" ] ; then
-			service mysql start
-		fi
-	fi
+	#if [ -f ${initdpath}/mysqld ] || [ -f ${systemdpath}/mysqld.service ] ; then
+	#	if [ "$(pgrep mysqld)" == "" ] ; then
+	#		service mysqld start
+	#	fi
+	#else
+	#	if [ "$(pgrep mysql)" == "" ] ; then
+	#		service mysql start
+	#	fi
+	#fi
 	
-	sh /script/reset-mysql-root-password ${dbpass}
+	#sh /script/reset-mysql-root-password ${dbpass}
 	
 	#if [ -f ${initdpath}/mysqld ] || [ -f ${systemdpath}/mysqld.service ] ; then
 	#	service mysqld restart
@@ -304,7 +304,8 @@ kloxo_install_step2() {
 	#fi	
 	cd ${kloxopath}/httpdocs
 	
-	sh /script/reset-mysql-kloxo-password ${mypass}
+	#sh /script/reset-mysql-kloxo-password ${mypass}
+	systemctl start mariadb
 	systemctl is-active mariadb
 	lxphp.exe ${kloxopath}/bin/install/create.php \
 		--install-type=${installtype} \
