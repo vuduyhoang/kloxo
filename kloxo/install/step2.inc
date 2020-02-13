@@ -297,11 +297,11 @@ kloxo_install_step2() {
 	
 	sh /script/reset-mysql-root-password ${dbpass}
 	
-	if [ -f ${initdpath}/mysqld ] || [ -f ${systemdpath}/mysqld.service ] ; then
-		service mysqld restart
-	else
-		service mysql restart
-	fi
+	#if [ -f ${initdpath}/mysqld ] || [ -f ${systemdpath}/mysqld.service ] ; then
+	#	service mysqld restart
+	#else
+	#	service mysql restart
+	#fi	
 	cd ${kloxopath}/httpdocs
 	
 	sh /script/reset-mysql-kloxo-password ${mypass}

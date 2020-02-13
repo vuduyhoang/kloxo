@@ -42,15 +42,16 @@ if (isServiceExists('mysqld')) {
 }
 
 print("MySQL ROOT password reset...\n");
-//sleep(5);
+sleep(5);
 exec("mysqld_safe --defaults-file=/etc/my.cnf --init-file={$tpath}/reset-mysql-password.sql &");
-//sleep(5);
+sleep(5);
 
 print("Start MySQL service...\n");
 if (isServiceExists('mysqld')) {
-	exec("pkill mysqld; pkill mysqld_safe; service mysqld start");
+	##exec("pkill mysqld; pkill mysqld_safe; service mysqld start");
+	exec("pkill mysqld; pkill mysqld_safe; systemctl start mariadb");
 } else {
-	exec("pkill mysqld; pkill mysqld_safe; service mysql start");
+	exec("pkill mysqld; pkill mysqld_safe; systemctl start mariadb");
 }
 
 exec("'rm' -f {$tpath}/reset-mysql-password.sql");
@@ -59,7 +60,6 @@ $conn = new mysqli('localhost', 'root', $pass, 'mysql');
 
 if ($conn->connect_errno) {
 	printf("Connect failed: %s\n", $conn->connect_error);
-
 	exit();
 }
 

@@ -36,13 +36,12 @@ if [ ! -f /script/programname ] ; then
 	echo 'kloxo' > /script/programname
 fi
 
-if [ "$(rpm -qa lxphp)" != "" ] ; then
-	rpm -e lxphp --nodeps
-	rpm -e lxlighttpd --nodeps
-	rpm -e lxzend --nodeps
-	
-	'rm' -rf /usr/local/lxlabs/ext >/dev/null 2>&1
-fi
+##if [ "$(rpm -qa lxphp)" != "" ] ; then
+##	rpm -e lxphp --nodeps
+##	rpm -e lxlighttpd --nodeps
+##	rpm -e lxzend --nodeps	
+##	'rm' -rf /usr/local/lxlabs/ext >/dev/null 2>&1
+##fi
 
 if [ "$(rpm -qa mysql56u)" != "" ] ; then
 	echo "Already use mysql56u. No replace"
@@ -59,6 +58,7 @@ fi
 
 ppath="/usr/local/lxlabs/kloxo"
 
+##todo on spec or move /var/log/kloxomr/
 if ! [ -d ${ppath}/log ] ; then
 	### must create log path because without it possible segfault for php!
 	mkdir -p ${ppath}/log
@@ -84,11 +84,11 @@ if [ "$1" == "-y" ] || [ "$1" == "--force" ] || [ "$2" == "-y" ] || \
 		'rm' -f /etc/rc.d/init.d/qmail >/dev/null 2>&1
 		'rm' -f /usr/lib/systemd/system/qmail.service >/dev/null 2>&1
 	fi
-
+## todo tee to /var/log/kloxomr/install.log
 	sh ${ppath}/install/setup.sh $*  | tee ${ppath}/install/install.log
 
 	## MR -- running 'upcp -y ' make skin always use 'simplicity' skin
-	sh /script/skin-set-all-client >/dev/null 2>&1
+	sh /script/skin-set-for-all >/dev/null 2>&1
 else
 	if [ -d /var/lib/mysql/kloxo ] ; then
 		sh /script/cleanup

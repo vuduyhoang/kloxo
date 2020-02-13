@@ -1,5 +1,5 @@
 #/bin/sh
-
+echo "******** Start skin-set-for-all ****************************"
 if [ "$1" == "" ] ; then
 	skin="simplicity"
 else
@@ -10,3 +10,4 @@ for i in $(sh /script/simplelist --resource=all_client) ; do
 	sh /script/update --class=sp_specialplay --name=client-${i} \
 		--subaction=skin --v-specialplay_b_s_skin_name=${skin} --v-specialplay_b_s_skin_color=default
 done
+echo "******** End skin-set-for-all ****************************"
