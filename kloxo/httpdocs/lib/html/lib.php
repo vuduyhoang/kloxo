@@ -4251,11 +4251,11 @@ function fix_all_mysql_root_password()
 function fix_mysql_root_password($server)
 {
 	global $login;
-
+	log_log("ladebug", $login);
 	$pass = $login->password;
 	$pass = fix_nname_to_be_variable($pass);
 	$pass = substr($pass, 3, 11);
-
+	log_log("ladebug", $pass);
 	$dbadmin = new Dbadmin(null, $server, "mysql___$server");
 	$dbadmin->get();
 
@@ -5096,7 +5096,9 @@ function fixMySQLRootPassword($nolog = null)
 	$dbadmin = new Dbadmin(null, 'localhost', "mysql___localhost");
 	$dbadmin->get();
 	$pass = $dbadmin->dbpassword;
+	log_log("ladebug", $dbadmin);
 	$a['mysql']['dbpassword'] = $pass;
+	log_cleanup("- slave_save_db $pass", $nolog);
 	slave_save_db("dbadmin", $a);
 }
 

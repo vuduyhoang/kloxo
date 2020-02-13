@@ -47,10 +47,10 @@ if [ ! -f ~/.rpmmacros ] || [ "$(cat ~/.rpmmacros|grep '_query_all_fmt')" == "" 
 fi
 
 ## MR -- remove 32bit packages in 64bit OS
-if [ "$(uname -m)" == "x86_64" ] ; then
-echo "Remove *.i386 *.i686"
-	yum remove -y *.i386 *.i686 >/dev/null
-fi
+#if [ "$(uname -m)" == "x86_64" ] ; then
+#echo "Remove *.i386 *.i686"
+#	yum remove -y *.i386 *.i686 >/dev/null
+#fi
 
 if [ "$(rpm -qa redhat-lsb)" == "" ] ; then
 echo "Install redhat-lsb"
