@@ -144,7 +144,7 @@ function doUpdates()
 //	setWatchdogDefaults();
 
 /*	Todo something is wrong here */
-//	fixMySQLRootPassword();
+	fixMySQLRootPassword();
 
 	save_admin_email();
 
