@@ -4272,7 +4272,6 @@ function fix_mysql_root_password($server)
 
 	if ($dbadmin->dbpassword) {
 		dprint("Mysql Password is not null\n");
-
 		return;
 	}
 
@@ -5098,7 +5097,6 @@ function fixMySQLRootPassword($nolog = null)
 	$dbadmin->get();
 	$pass = $dbadmin->dbpassword;
 	$a['mysql']['dbpassword'] = $pass;
-
 	slave_save_db("dbadmin", $a);
 }
 

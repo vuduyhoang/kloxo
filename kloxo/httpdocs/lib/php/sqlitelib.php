@@ -24,7 +24,7 @@ class Sqlite
 		$this->__sqtable = $table;
 		$this->__force = $force;
 
-		if (!empty ($readserver)) {
+		if (!empty($readserver)) {
 			$this->__readserver = 'localhost';
 		} else {
 			$this->__readserver = $readserver;
@@ -56,7 +56,7 @@ class Sqlite
 			// MR -- use unix socket instead tcp/ip socket
 			if ($mysqlsrv === 'localhost') {
 				// MR -- not use because found weird (like not work for fixweb)
-			//	$mysqlsrv = ':/var/lib/mysql/mysql.sock';
+				//	$mysqlsrv = ':/var/lib/mysql/mysql.sock';
 			}
 
 			$gbl->$fdbvar = new mysqli($mysqlsrv, $user, $pass, $db) or dprint("Could not connect and select select {$db} MySQL database.\n");
@@ -112,7 +112,7 @@ class Sqlite
 	function database_query($res, $string)
 	{
 		$error_message = 'unknown';
-	
+
 		if (self::$__database == 'mysql') {
 			// the old behavior was to reconnect. Not needed anymore.
 			$result = $res->query($string);
@@ -132,10 +132,10 @@ class Sqlite
 				$error_message = $pdo_error_info[2];
 			}
 		}
-	
+
 		if (!$result) {
 			dprint("Query error: {$error_message}\n");
-		log_database("Query failed: {$string}");
+			log_database("Query failed: {$string}");
 		}
 
 		return $result;
@@ -278,7 +278,7 @@ class Sqlite
 			} else {
 				$query = "select * from {$this->__sqtable} where nname = '__dummy__dummy__' ";
 			}
-		
+
 			$result = $this->database_query($gbl->$fdbvar, $query);
 
 			if (!$result) {
@@ -286,7 +286,7 @@ class Sqlite
 			}
 
 			$res = NULL;
-		
+
 			if ($sgbl->__var_database_type === 'mysql') {
 				while ($row = $result->fetch_assoc()) {
 					$res[$row['Field']] = $row['Field'];
@@ -302,7 +302,7 @@ class Sqlite
 					$res[$k] = $k;
 				}
 			}
-		
+
 			$this->__column_type = $res;
 		}
 
@@ -340,8 +340,7 @@ class Sqlite
 				continue;
 			}
 
-			$string .= " '" . $this->escapeBack($key, $array[$key]). "',";
-
+			$string .= " '" . $this->escapeBack($key, $array[$key]) . "',";
 		}
 
 		$string = preg_replace("/,$/i", "", $string);
@@ -377,7 +376,7 @@ class Sqlite
 				continue;
 			}
 
-			$strarray[] = "$key = '".$this->escapeBack($key, $array[$key])."'";
+			$strarray[] = "$key = '" . $this->escapeBack($key, $array[$key]) . "'";
 		}
 
 		$string = implode(",", $strarray);
@@ -390,13 +389,13 @@ class Sqlite
 		global $gbl, $sgbl, $login, $ghtml;
 
 		$countres = $this->rawquery("select count(*) from {$this->__sqtable} where ${query}");
-	
+
 		if ($sgbl->__var_database_type === 'mysql') {
 			$countres = $countres[0]['count(*)'];
 		} else {
 			$countres = $countres[0]['count(*)'];
 		}
-	
+
 		return $countres;
 	}
 
@@ -417,9 +416,9 @@ class Sqlite
 					}
 
 					$ret[$key] = implode(",", $namelist);
-					dprint("in Coma {$key} ".$ret[$key]."<br> ");
+					dprint("in Coma {$key} " . $ret[$key] . "<br> ");
 
-					$ret[$key] = ",".$ret[$key].",";
+					$ret[$key] = "," . $ret[$key] . ",";
 				} else {
 					$ret[$key] = '';
 				}
@@ -521,7 +520,7 @@ class Sqlite
 
 		$string = $this->createQueryStringAdd($array);
 
-	//	$insert = "insert into $this->__sqtable $string ;";
+		//	$insert = "insert into $this->__sqtable $string ;";
 		$insert = "insert ignore into {$this->__sqtable} {$string} ;";
 
 		if ($ins = $this->database_query($gbl->$fdbvar, $insert)) {
@@ -537,7 +536,7 @@ class Sqlite
 			// Let us just ignore the second time, but log it properly.
 
 			if ($sgbl->dbg > 0) {
-			//	throw new lxException($login->getThrow("db_add_failed"), '', "{$this->__sqtable}:{$array['nname']}");
+				//	throw new lxException($login->getThrow("db_add_failed"), '', "{$this->__sqtable}:{$array['nname']}");
 			}
 
 			return true;
