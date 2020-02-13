@@ -49,7 +49,7 @@ install_web() {
 		if [ "$(rpm -qa httpd)" != "" ] ; then
 			yum -y remove httpd* mod_*
 		fi
-
+	## ius ..
 		yum -y install httpd24u httpd24u-tools \
 			httpd24u-filesystem httpd24u-mod_security2 \
 			mod24u_ssl mod24u_session \
@@ -101,12 +101,17 @@ install_mail() {
 
 	echo ">>> Remove postfix user <<<"
 
-	## MR -- force remove postfix and their user
-	userdel postfix
-
+	## MR -- force remove postfix and their user	
+	if id -u postfix >/dev/null 2>&1 ; then
+		userdel postfix
+	fi
 	## MR -- force remove spamassassin, qmail and vpopmail (because using toaster)
-	userdel lxpopuser
-	groupdel lxpopgroup
+	if id -u lxpopuser >/dev/null 2>&1 ; then
+		userdel lxpopuser
+	fi
+	if id -g lxpopgroup >/dev/null 2>&1 ; then
+		groupdel lxpopgroup
+	fi
 
 	echo ">>> Install Mail services <<<"
 
@@ -161,11 +166,10 @@ kloxo_vpopmail() {
 
 kloxo_install_step1() {
 	echo ">>> Add System users and groups (nouser, nogroup and lxlabs, lxlabs) <<<"
-
-	groupadd nogroup
-	useradd nouser -g nogroup -s '/sbin/nologin'
-	groupadd lxlabs
-	useradd lxlabs -g lxlabs -s '/sbin/nologin'
+	getent group nogroup >/dev/null || groupadd -r nogroup
+	getent passwd nouser >/dev/null || useradd -s '/sbin/nologin' -g nogroup nouser
+	getent group lxlabs >/dev/null || groupadd -r lxlabs
+	getent passwd lxlabs >/dev/null || useradd -s /sbin/nologin -M -r -g lxlabs -d /home/lxlabs -c "Kloxo-MR Website Control Panel" lxlabs
 
 	echo ">>> Remove DJBDns components <<<"
 
@@ -178,15 +182,12 @@ kloxo_install_step1() {
 	fi
 
 	## MR -- remove lxphp, lxlighttpd and lxzend
-	echo ">>> Remove 'old' lxphp/lxligttpd/lxzend/kloxo* <<<"
-
-	ullepath="/usr/local/lxlabs/ext"
-
-	yum remove -y lxphp lxlighttpd lxzend kloxo-*
-
-	if [ -d ${ullepath} ] ; then
-		'rm' -f ${ullepath}
-	fi
+	##echo ">>> Remove 'old' lxphp/lxligttpd/lxzend/kloxo* <<<"
+	#ullepath="/usr/local/lxlabs/ext"
+	#yum remove -y lxphp lxlighttpd lxzend kloxo-*
+	#if [ -d ${ullepath} ] ; then
+	#	'rm' -f ${ullepath}
+	#fi
 
 	echo ">>> Add certain components (like curl/contabs/rkhunter) <<<"
 
@@ -293,14 +294,18 @@ kloxo_install_step2() {
 			service mysql start
 		fi
 	fi
+	
 	sh /script/reset-mysql-root-password ${dbpass}
+	
 	if [ -f ${initdpath}/mysqld ] || [ -f ${systemdpath}/mysqld.service ] ; then
 		service mysqld restart
 	else
 		service mysql restart
 	fi
 	cd ${kloxopath}/httpdocs
+	
 	sh /script/reset-mysql-kloxo-password ${mypass}
+	
 	lxphp.exe ${kloxopath}/bin/install/create.php \
 		--install-type=${installtype} \
 		--db-rootuser=${dbroot} \

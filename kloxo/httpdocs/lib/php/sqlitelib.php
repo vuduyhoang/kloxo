@@ -119,9 +119,7 @@ class Sqlite
 
 			if (!$result) {
 				$error_message = $res->connect_errno;
-			}
-
-			return $result;
+			}			
 		} else {
 			$result = $res->prepare($string);
 
@@ -137,7 +135,6 @@ class Sqlite
 			dprint("Query error: {$error_message}\n");
 			log_database("Query failed: {$string}");
 		}
-
 		return $result;
 	}
 

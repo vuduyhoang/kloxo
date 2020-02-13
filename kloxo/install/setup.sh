@@ -23,11 +23,6 @@
 # Version: 1.0 (2013-01-11 - by Mustafa Ramadhan <mustafa@bigraf.com>)
 #
 
-## MR -- prohibit to install to CentOS 5 (EOL since 31 Mar 2017)
-if [ "$(yum list|grep ^yum|awk '{print $3}'|grep '@')" == "" ] ; then
-	echo "*** No permit to install to CentOS 5 (because EOL since 31 Mar 2017)"
-	exit
-fi
 
 ppath="/usr/local/lxlabs/kloxo"
 
@@ -189,8 +184,8 @@ phpused="php56"
 #	yum -y install ${phpused}u-cli ${phpused}u-mysqlnd ${phpused}u-fpm
 sh /script/php-branch-installer ${phpused}u
 
-
-chkconfig php-fpm on >/dev/null 2>&1
+systemctl enable php-fpm.service
+#chkconfig php-fpm on >/dev/null 2>&1
 	
 if [ "$(uname -m)" == "x86_64" ] ; then
 	ln -sf /usr/lib64/php /usr/lib/php

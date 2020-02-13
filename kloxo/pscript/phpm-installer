@@ -86,6 +86,7 @@ else
 	v=""
 fi
 
+## move to spec
 if [ "$(rpm -qa yum-utils)" == "" ] ; then
 	yum install yum-utils -y
 fi

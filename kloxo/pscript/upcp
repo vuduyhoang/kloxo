@@ -44,18 +44,6 @@ if [ "$(rpm -qa lxphp)" != "" ] ; then
 	'rm' -rf /usr/local/lxlabs/ext >/dev/null 2>&1
 fi
 
-if [ "$(rpm -qa php52s)" != "" ] ; then
-	yum remove php52s -y
-	sh /script/phpm-installer php53s
-fi
-
-if [ "$(rpm -qa php53s)" != "" ] ; then
-	yum remove php53s* -y
-	rpm -e php53s-fpm --noscript
-
-	sh /script/phpm-installer php53s
-fi
-
 if [ "$(rpm -qa mysql56u)" != "" ] ; then
 	echo "Already use mysql56u. No replace"
 elif [ "$(rpm -qa mysql55)" != "" ] ; then
