@@ -1,5 +1,5 @@
 #!/bin/sh
-
+echo "******** Start fixrepo ****************************"
 yum --disablerepo=* --enablerepo=mratwork* clean all
 
 if [ "$(rpm -qa|grep 'mratwork-')" != "" ] ; then
@@ -19,3 +19,4 @@ else
 fi
 
 . /script/fix-urgent
+echo "******** End fixrepo ****************************"

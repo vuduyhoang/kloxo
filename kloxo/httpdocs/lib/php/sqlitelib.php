@@ -133,7 +133,7 @@ class Sqlite
 
 		if (!$result) {
 			dprint("Query error: {$error_message}\n");
-			log_database("Query failed: {$string}");
+			log_database("Query failed: {$string} => {$error_message}");
 		}
 		return $result;
 	}

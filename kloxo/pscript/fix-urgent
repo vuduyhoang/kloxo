@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "-- /script/fix-urgent --"
+echo "******** Start fix-urgent ****************************"
 sfdir='/usr/local/lxlabs/kloxo/serverfile'
 
 if [ ! -d $sfdir ] ; then
@@ -84,3 +84,4 @@ if [ "$(lxphp.exe -v 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,3)" ==
 fi
 
 sh /script/fix-limits
+echo "******** End fix-urgent ****************************"
