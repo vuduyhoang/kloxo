@@ -36,11 +36,12 @@ if [ -e /var/run/yum.pid ] ; then
 fi
 
 cd /
-
-yum --disablerepo=* --enablerepo=mratwork* clean all
+echo "Clean yum meta data"
+yum --disablerepo=* --enablerepo=mratwork* clean all >/dev/null
 
 if rpm -qa|grep 'mratwork-' >/dev/null 2>&1 ; then
-	yum update mratwork* -y
+echo "Update mratwork-release"
+	yum update mratwork* -y >/dev/null
 else
 	cd /tmp
 	rpm -Uvh https://github.com/mustafaramadhan/kloxo/raw/rpms/release/neutral/noarch/mratwork-release-0.0.1-1.noarch.rpm
@@ -152,14 +153,16 @@ cd /
 
 'rm' -rf *.rpm
 
-#yum clean all
+echo "Install get zip unzip yum-utils yum-priorities yum-plugin-replace vim-minimal subversion curl sudo expect"
 
 yum -y install wget zip unzip yum-utils yum-priorities yum-plugin-replace \
 	vim-minimal subversion curl sudo expect --skip-broken
-
+echo "Remove bind* nsd* pdns* mydns* yadifa* maradns djbdns* mysql-* mariadb-* MariaDB-* php*"
+echo "Remove httpd-* mod_* httpd24u* mod24u_* nginx* lighttpd* varnish* squid* trafficserver*"
+echo "Remove *-toaster postfix* exim* opensmtpd* esmtp* libesmtp* libmhash*"
 yum remove -y bind* nsd* pdns* mydns* yadifa* maradns djbdns* mysql-* mariadb-* MariaDB-* php* \
 		httpd-* mod_* httpd24u* mod24u_* nginx* lighttpd* varnish* squid* trafficserver* \
-		*-toaster postfix* exim* opensmtpd* esmtp* libesmtp* libmhash*
+		*-toaster postfix* exim* opensmtpd* esmtp* libesmtp* libmhash* >/dev/null
 rpm -e pure-ftpd --noscripts
 rpm -e vpopmail-toaster --noscripts
 
@@ -168,6 +171,7 @@ if id -u postfix >/dev/null 2>&1 ; then
 fi
 
 #yum -y install mysql55 mysql55-server mysql55-libs
+echo "Install MariaDB MariaDB-shared"
 yum -y install MariaDB MariaDB-shared
 yum -y install mysqlclient* --exclude=*devel* --exclude=*debuginfo*
 if ! [ -d /var/lib/mysqltmp ] ; then

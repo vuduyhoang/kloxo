@@ -13,7 +13,7 @@ if [ "$(hostname -f)" == "$(hostname -s)" ] ; then
 	echo
 	exit
 fi
-
+##todo to spec
 if [ "$(rpm -qa yum-plugin-replace)" == "" ] ; then
 	yum -y install yum-plugin-replace
 fi
