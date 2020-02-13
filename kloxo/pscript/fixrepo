@@ -1,10 +1,10 @@
 #!/bin/sh
 echo "******** Start fixrepo ****************************"
-echo "\nyum --disablerepo=* --enablerepo=mratwork* clean all"
+echo "yum --disablerepo=* --enablerepo=mratwork* clean all"
 yum --disablerepo=* --enablerepo=mratwork* clean all >/dev/null
 
 if [ "$(rpm -qa|grep 'mratwork-')" != "" ] ; then
-echo "\nyum update mratwork* -y"
+echo "yum update mratwork* -y"
 	yum update mratwork* -y
 else
 	cd /tmp

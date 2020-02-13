@@ -325,7 +325,7 @@ class Sqlite
 		}
 
 		$string = preg_replace("/,$/i", "", $string);
-		$string .= " values(";
+		$string .= ") values(";
 
 		foreach ($result as $key => $val) {
 			if ($key === 'realpass') {
