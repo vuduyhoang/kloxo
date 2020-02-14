@@ -21,7 +21,7 @@ if [ "$#" == 0 ] ; then
 	echo
 	exit
 fi
-
+echo ">>>>>>>>>>>> Start phpm-config-setup [$1]  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
 base_name="${1}"
 
 if [ "${base_name}" == "php" ] ; then
@@ -47,16 +47,13 @@ else
 fi
 
 x="- Disable certain modules (rename to .nonini) in 'php.d' and 'php-zts.d'"
-echo ${x}
-echo ${x} >>${main_path}/${base_name}_install.log
+echo ${x} | tee -a ${main_path}/${base_name}_install.log
 
 for j in php.d php-zts.d ; do
 	if [ -d ${main_path}/etc/${j} ] ; then
 		for a in $(dir -l ${main_path}/etc/${j}|egrep "(\.ini|\.nonini)$"|awk '{print $9}'|tr '\n' ' ') ; do
 			x="-- Fix 'extension' path of '${a}' in '/etc/${base_name}/etc/${j}'"
-			echo $x
-			echo $x >>${main_path}/${base_name}_install.log
-
+			echo $x | tee -a ${main_path}/${base_name}_install.log
 			## MR -- remove path in 'extension='
 			sed -i 's:extension = /:extension=/:' ${main_path}/etc/${j}/${a}
 
@@ -102,9 +99,7 @@ for j in php.d php-zts.d ; do
 
 					for d in $c ; do
 						x="-- Disable '${i}' in '/etc/${base_name}/etc/${j}'"
-						echo $x
-						echo $x >>${main_path}/${base_name}_install.log
-
+						echo $x | tee -a ${main_path}/${base_name}_install.log						
 						'mv' -f ${main_path}/etc/${j}/${d} ${main_path}/etc/${j}/${d%.ini}.nonini
 					done
 				done
@@ -126,8 +121,7 @@ for j in php.d php-zts.d ; do
 		for i in $(dir -l ${main_path}/etc/${j}|grep "\.ini"|awk '{print $9}') ; do
 			if [ -f ${main_path}/etc/${j}/${i%.ini}_unused.nonini ] ; then
 				x="-- Remove '${i}' in '/etc/${base_name}/etc/${j}'"
-				echo $x
-				echo $x >>${main_path}/${base_name}_install.log
+				echo $x | tee -a ${main_path}/${base_name}_install.log				
 
 				'rm' -f ${main_path}/etc/${j}/${i}
 			fi
@@ -140,9 +134,7 @@ for j in php.d php-zts.d ; do
 		for i in $(dir -l ${main_path}/etc/${j}|grep "\.nonini"|awk '{print $9}') ; do
 			if [ -f ${main_path}/etc/${j}/${i%.nonini}_used.ini ] ; then
 				x="-- Remove '${i}' in '/etc/${base_name}/etc/${j}'"
-				echo $x
-				echo $x >>${main_path}/${base_name}_install.log
-
+				echo $x | tee -a ${main_path}/${base_name}_install.log	
 				'rm' -f ${main_path}/etc/${j}/${i}
 			fi
 		done
@@ -154,8 +146,7 @@ cd ${main_path}
 mkdir -p ${main_path}/custom >/dev/null 2>&1
 
 x="- Copy certain files to '${main_path}/custom'"
-echo ${x}
-echo ${x} >>${main_path}/${base_name}_install.log
+echo ${x} | tee -a ${main_path}/${base_name}_install.log
 
 'rm' -f  ${main_path}/custom/php5* >/dev/null 2>&1
 
@@ -164,8 +155,7 @@ eripath="/etc/rc.d/init.d"
 ulspath="/usr/lib/systemd/system"
 
 x="-- Processing for 'php.ini.base'"
-echo ${x}
-echo ${x} >>${main_path}/${base_name}_install.log
+echo ${x} | tee -a ${main_path}/${base_name}_install.log
 
 'rm' -f  ${main_path}/custom/php5* >/dev/null 2>&1
 
@@ -216,8 +206,7 @@ else
 fi
 
 x="-- Processing for 'php-cgi.sh/php-cli.sh/php-fpm.sh/php-ls.sh'"
-echo ${x}
-echo ${x} >>${main_path}/${base_name}_install.log
+echo ${x} | tee -a ${main_path}/${base_name}_install.log
 
 for i in php-cgi.sh php-cli.sh php-fpm.sh php-ls.sh ; do
 	if [ -f ${kpath}/init/custom.${i}.base ] ; then
@@ -230,8 +219,7 @@ for i in php-cgi.sh php-cli.sh php-fpm.sh php-ls.sh ; do
 done
 
 x="-- Processing for 'php52-fpm.conf.base/php53-fpm.conf.base'"
-echo ${x}
-echo ${x} >>${main_path}/${base_name}_install.log
+echo ${x} | tee -a ${main_path}/${base_name}_install.log
 
 if [ "${base_name}" == "php52s" ] || [ "${base_name}" == "php52m" ] ; then
 	if [ -f ${kpath}/init/custom.php52-fpm.conf.base ] ; then
@@ -252,28 +240,24 @@ else
 fi
 
 x="- Setting .sh to 755"
-echo ${x}
-echo ${x} >>${main_path}/${base_name}_install.log
+echo ${x} | tee -a ${main_path}/${base_name}_install.log
 
 chmod 755 ${main_path}/custom/*.sh
 
 if [ "${base_name}" != "php" ] ; then
 	x="- Creating .sh symlink"
-	echo ${x}
-	echo ${x} >>${main_path}/${base_name}_install.log
+	echo ${x}| tee -a ${main_path}/${base_name}_install.log	
 
 	for i in cgi cli ls fpm ; do
 		if [ -f ${main_path}/custom/php-${i}.sh ] ;  then
 			x="-- From '${main_path}/custom/php-${i}.sh' to '/usr/bin/${base_name}-${i}'"
-			echo ${x}
-			echo ${x} >>${main_path}/${base_name}_install.log
+			echo ${x}| tee -a ${main_path}/${base_name}_install.log			
 
 			'rm' -f /usr/bin/${base_name}-${i} >/dev/null 2>&1
 			ln -sf ${main_path}/custom/php-${i}.sh /usr/bin/${base_name}-${i} >/dev/null 2>&1
 
 			x="-- From '${main_path}/custom/php-${i}.sh' to '/usr/sbin/${base_name}-${i}'"
-			echo ${x}
-			echo ${x} >>${main_path}/${base_name}_install.log
+			echo ${x}| tee -a ${main_path}/${base_name}_install.log			
 
 			'rm' -f /usr/sbin/${base_name}-${i} >/dev/null 2>&1
 			ln -sf ${main_path}/custom/php-${i}.sh /usr/sbin/${base_name}-${i} >/dev/null 2>&1
@@ -285,8 +269,7 @@ fi
 
 if [ "${uname_m}" == "64" ] ; then
 	x="- Create symlink from ${main_path}/usr/lib64 to ${main_path}/usr/lib"
-	echo ${x}
-	echo ${x} >>${main_path}/${base_name}_install.log
+	echo ${x}| tee -a ${main_path}/${base_name}_install.log	
 
 	if [ -d ${main_path}/usr/lib ] ; then
 		ln -sf ${main_path}/usr/lib64/php ${main_path}/usr/lib/php >/dev/null 2>&1
@@ -362,13 +345,10 @@ fi
 if [ "${base_name}" == "php" ] ; then
 	'cp' -f ${kpath}/file/php-fpm/etc/php-fpm.d/www.conf ${main_path}/etc/php-fpm.d/www.conf >/dev/null 2>&1
 	'cp' -f ${kpath}/file/php-fpm/etc/php-fpm.d/default.conf ${main_path}/etc/php-fpm.d/default.conf >/dev/null 2>&1
-
 	fpmpath="/opt/configs/php-fpm/conf/php"
-
 	if [ ! -d ${fpmpath}/php-fpm.d ] ; then
 		mkdir -p ${fpmpath}/php-fpm.d
 	fi
-
 	'cp' -f ${kpath}/file/php-fpm/etc/php53-fpm.conf ${fpmpath}/php-fpm.conf >/dev/null 2>&1
 	'cp' -f ${kpath}/file/php-fpm/etc/php-fpm.d/www.conf ${fpmpath}/php-fpm.d/www.conf >/dev/null 2>&1
 	'cp' -f ${kpath}/file/php-fpm/etc/php-fpm.d/default.conf ${fpmpath}/php-fpm.d/default.conf >/dev/null 2>&1

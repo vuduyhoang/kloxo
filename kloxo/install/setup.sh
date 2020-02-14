@@ -153,7 +153,7 @@ cd /
 
 'rm' -rf *.rpm
 
-echo "Install get zip unzip yum-utils yum-priorities yum-plugin-replace vim-minimal subversion curl sudo expect"
+echo "Install wget zip unzip yum-utils yum-priorities yum-plugin-replace vim-minimal subversion curl sudo expect"
 
 yum -y install wget zip unzip yum-utils yum-priorities yum-plugin-replace \
 	vim-minimal subversion curl sudo expect --skip-broken
@@ -167,6 +167,7 @@ rpm -e pure-ftpd --noscripts
 rpm -e vpopmail-toaster --noscripts
 
 if id -u postfix >/dev/null 2>&1 ; then
+echo "Delete user postfix"
 	userdel postfix
 fi
 

@@ -8481,18 +8481,21 @@ function setAllWebServerInstall($nolog = null)
 		'httpd' => 'mod_ssl mod_rpaf mod_ruid2 mod_suphp mod_fastcgi mod_fcgid mod_define',
 		'httpd24u' => 'mod24u_ssl mod24u_session mod24u_suphp mod24u_ruid2 mod24u_fcgid mod24u_fastcgi mod24u_evasive'
 	);
-
+	$msg_apache24="NA";
 	if (file_exists("../etc/flag/use_apache24.flg")) {
 		$use_apache24 = true;
+		$msg_apache24="OK";
 	} else {
 		if (version_compare(getRpmVersion('httpd'), '2.4.0', '>')) {
 			$use_apache24 = true;
+			$msg_apache24="OK";
 			touch("../etc/flag/use_apache24.flg");
 		} else {
+			$msg_apache24="FAILED";
 			$use_apache24 = false;
 		}
-	}
-	log_cleanup("- Use apache24 [$use_apache24] ", $nolog);
+	}	
+	log_cleanup("- Use apache24 [$msg_apache24] ", $nolog);
 	foreach ($list as $k => $v) {
 		$confpath = "/opt/configs/{$v}/etc/conf";
 

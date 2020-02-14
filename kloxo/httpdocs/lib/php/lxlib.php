@@ -745,7 +745,8 @@ function myPcntl_fork()
 function log_log($file, $mess, $id = null)
 {
 	if (!is_string($mess)) {
-		$mess = var_export($mess, true);
+		//$mess = var_export($mess, true);
+		$mess=print_r($mess,true);
 	}
 
 	$mess = trim($mess);
