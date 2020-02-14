@@ -938,7 +938,7 @@ function resetDBPassword()
 {
 	global $dbpass;
 
-	@system("sh /script/reset-mysql-root-password {$dbpass}");
+	system("sh /script/reset-mysql-root-password {$dbpass}");
 }
 
 // taken from lxlib.php

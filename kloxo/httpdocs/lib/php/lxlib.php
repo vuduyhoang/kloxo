@@ -892,8 +892,7 @@ function expand_real_root($root)
 
 /**
  * @return void
- * @param unknown
- * @param unknown
+ * @param string $name
  * @desc the function that does the redefining of fundamental file access functions. Note the double use of 'eval'. hey hey, nothing is impossible in php. Never ever repeat the code; Make it unreadable instead. :-)
  */
 function kill_and_save_pid($name)

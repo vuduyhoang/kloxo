@@ -58,17 +58,22 @@ function updatecleanup_main()
 
 	// MR -- mysql not start after kloxo slave install
 	log_cleanup("Prepare MySQL/MariaDB service");
-
-	if (isServiceExists('mysqld')) {
-		log_cleanup("- MySQL activated");
-		exec("chkconfig mysql off >/dev/null 2>&1");
-		exec("chkconfig mysqld on >/dev/null 2>&1");
-	
-	} else {
-		log_cleanup("- MariaDB activated");
-		exec("chkconfig mysqld off >/dev/null 2>&1");
-		exec("chkconfig mysql on >/dev/null 2>&1");
-	}
+	if (isServiceExists('mariadb')) {
+			log_cleanup("- MariaDB activated");
+			exec("chkconfig mysql off >/dev/null 2>&1");
+			exec("chkconfig mysqld off >/dev/null 2>&1");		
+			exec("systemctl enable mariadb");
+		}
+#	if (isServiceExists('mysqld')) {
+#		log_cleanup("- MySQL activated");
+#		exec("chkconfig mysql off >/dev/null 2>&1");
+#		exec("chkconfig mysqld on >/dev/null 2>&1");
+#	
+#	} else {
+#		log_cleanup("- MariaDB activated");
+#		exec("chkconfig mysqld off >/dev/null 2>&1");
+#		exec("chkconfig mysql on >/dev/null 2>&1");
+#	}
 
 	log_cleanup("- Updating Main services");
 

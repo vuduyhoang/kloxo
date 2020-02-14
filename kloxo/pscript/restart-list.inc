@@ -12,7 +12,7 @@ fi
 list_web=(varnish trafficserver squid spawn-fcgi memcached lighttpd nginx hiawatha httpd htcacheclean)
 list_web=("${list_phpfpm[@]}" "${list_web[@]}")
 
-list_mysql=(mysql mysqld)
+list_mysql=(mariadb)
 list_mail=(qmail)
 list_ftp=(pure-ftpd)
 list_dns=(named djbdns pdns nsd yadifad)
