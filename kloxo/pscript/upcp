@@ -85,7 +85,7 @@ if [ "$1" == "-y" ] || [ "$1" == "--force" ] || [ "$2" == "-y" ] || \
 		'rm' -f /usr/lib/systemd/system/qmail.service >/dev/null 2>&1
 	fi
 ## todo tee to /var/log/kloxomr/install.log
-	sh ${ppath}/install/setup.sh $*  | tee ${ppath}/install/install.log
+	sh ${ppath}/install/setup.sh $* 2>&1 | tee ${ppath}/install/install.log
 
 	## MR -- running 'upcp -y ' make skin always use 'simplicity' skin
 	sh /script/skin-set-for-all >/dev/null 2>&1
@@ -93,7 +93,7 @@ else
 	if [ -d /var/lib/mysql/kloxo ] ; then
 		sh /script/cleanup
 	else
-		sh ${ppath}/install/setup.sh $*  | tee ${ppath}/install/install.log
+		sh ${ppath}/install/setup.sh $* 2>&1 | tee ${ppath}/install/install.log
 	fi
 fi
 
