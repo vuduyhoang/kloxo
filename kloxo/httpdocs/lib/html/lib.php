@@ -7157,7 +7157,7 @@ function updatecleanup($nolog = null)
 	log_cleanup("Initialize awstats dirdata", $nolog);
 	log_cleanup("- Initialize process", $nolog);
 	lxfile_mkdir("/home/kloxo/httpd/awstats/dirdata");
-
+	exec("systemctl restart mariadb");
 	log_cleanup("Update Kloxo database", $nolog);
 	log_cleanup("- Update process", $nolog);
 	update_database();
