@@ -36,8 +36,8 @@ function lxins_main()
 		@mkdir("{$kloxopath}/log");
 	}
 
-//	$arch = trim( `arch` );
-//	$arch = php_uname('m');
+	//	$arch = trim( `arch` );
+	//	$arch = php_uname('m');
 
 	// MR -- to make sure /tmp ready for all; found mysql not able to start if not 1777
 	system("chmod 1777 /tmp");
@@ -98,7 +98,7 @@ function lxins_main()
 		//--- Create temporary flags for install
 		@system("mkdir -p /var/cache/kloxo/");
 
-		for ($x=0; $x<1000; $x++) {
+		for ($x = 0; $x < 1000; $x++) {
 			if (!file_exists("{$kloxopath}.old{$x}")) {
 				system("'cp' -rf {$kloxopath} {$kloxopath}.old{$x}");
 				break;
@@ -129,7 +129,6 @@ function lxins_main()
 		kloxo_service_init();
 		kloxo_install_bye();
 	}
-
 }
 
 function kloxo_service_init()
@@ -169,19 +168,18 @@ function install_web()
 	exec("yum list|grep ^httpd24u", $test);
 
 	if (count($test) > 0) {
+		print("-- Using httpd24u (ius)\n");
 		system("yum remove -y httpd-* mod_*");
 		system("yum install -y httpd24u httpd24u-tools httpd24u-filesystem httpd24u-mod_security2 " .
 			"mod24u_ssl mod24u_session mod24u_suphp mod24u_ruid2 mod24u_fcgid mod24u_fastcgi mod24u_evasive");
 		if (!file_exists("{$kloxopath}/etc/flag")) {
 			system("mkdir -p  {$kloxopath}/etc/flag");
-		}
-
-		system("echo '' > {$kloxopath}/etc/flag/use_apache24.flg");
+		}		
+		touch("{$kloxopath}/etc/flag/use_apache24.flg");
 	} else {
 		system("yum install -y httpd httpd-tools " .
 			"mod_rpaf mod_ssl mod_ruid2 mod_fastcgi mod_fcgid mod_suphp mod_perl mod_define perl-Taint*");
 	}
-
 	system("yum install -y hiawatha");
 }
 
@@ -192,7 +190,7 @@ function install_php()
 
 	// MR -- for accept for php and apache branch rpm
 	$phpbranch = getPhpBranch();
-	
+
 	system("sh /script/php-branch-installer {$phpbranch}");
 }
 
@@ -204,9 +202,9 @@ function install_database()
 
 	if (strpos($mysql, 'MariaDB') !== false) {
 		// MR -- need separated becuase 'yum install MariaDB' will be install Galera
-	//	system("yum -y install {$mysql}-server {$mysql}-shared");
+		//	system("yum -y install {$mysql}-server {$mysql}-shared");
 		// MR -- already fix by MariaDB
-	//	system("yum -y install {$mysql} {$mysql}-shared");		
+		//	system("yum -y install {$mysql} {$mysql}-shared");		
 	} else {
 		system("yum -y install {$mysql} {$mysql}-server {$mysql}-libs");
 	}
@@ -228,7 +226,7 @@ function install_dns()
 		@exec("'rm' -f /etc/rndc.conf");
 	}
 
-//	@exec("sed -i 's/rndckey/rndc-key/' /etc/rndc.key");
+	//	@exec("sed -i 's/rndckey/rndc-key/' /etc/rndc.key");
 }
 
 function install_mail()
@@ -276,7 +274,7 @@ function kloxo_vpopmail()
 	print(">>> Creating Vpopmail database <<<\n");
 
 	if (file_exists("/home/vpopmail/etc")) {
-	//	system("sh /usr/local/lxlabs/kloxo/bin/misc/vpop.sh $dbroot \"$dbpass\" vpopmail $mypass");
+		//	system("sh /usr/local/lxlabs/kloxo/bin/misc/vpop.sh $dbroot \"$dbpass\" vpopmail $mypass");
 		system("sh /script/fixvpop");
 	}
 
@@ -291,7 +289,7 @@ function kloxo_vpopmail()
 	@system("chmod 755 /home/lxadmin/mail");
 	@system("chmod 755 /home/lxadmin/mail/domains");
 
-//	if (isRpmInstalled('qmail-toaster')) {
+	//	if (isRpmInstalled('qmail-toaster')) {
 	@system("chmod 755 /home/vpopmail");
 	@system("chmod 755 /home/vpopmail/domains");
 
@@ -299,7 +297,7 @@ function kloxo_vpopmail()
 	rm_if_exists("/etc/rc.d/init.d/clamav");
 	rm_if_exists("/etc/xinetd.d/smtp_lxa");
 	rm_if_exists("/etc/xinetd.d/kloxo_smtp_lxa");
-//	}
+	//	}
 
 	@system("chmod -R 755 /var/log/httpd/");
 	@system("mkdir -p /var/log/kloxo/");
@@ -335,7 +333,7 @@ function kloxo_install_step1()
 	}
 
 	print(">>> Adding certain components (like curl/contabs/rkhunter) <<<\n");
-/*
+	/*
 	// MR -- xcache, zend, ioncube, suhosin and zts not default install
 	// install curl-devel (need by php-common) will be install curl-devel in CentOS 5 and libcurl-devel in CentOS 6
 	$packages = array("tnef", "which", "gcc", "cpp", "gcc-c++", "zip", "unzip", "curl-devel", "libcurl-devel", "autoconf",
@@ -401,7 +399,7 @@ function kloxo_install_step1()
 
 	@system("chown -R lxlabs:lxlabs {$lxlabspath}");
 
-//	setUsingMyIsam();
+	//	setUsingMyIsam();
 
 	if (!isMysqlRunning()) {
 		actionMySql('start');
@@ -443,7 +441,7 @@ function kloxo_install_step2()
 		$driverdata = 'O:6:"Remote":1:{s:4:"data";a:3:{s:3:"web";s:6:"apache";' .
 			's:4:"spam";s:10:"bogofilter";s:3:"dns";s:4:"bind";' .
 			's:4:"pop3";s:7:"courier";s:4:"smtp";s:5:"qmail";}}';
-	//	system("echo '{$driverdata}' > {$kloxopath}/etc/slavedb/driver");
+		//	system("echo '{$driverdata}' > {$kloxopath}/etc/slavedb/driver");
 	}
 
 	check_default_mysql();
@@ -523,53 +521,53 @@ function kloxo_install_before_bye()
 function kloxo_install_bye()
 {
 	global $kloxostate, $installtype, $installstep;
-//	$ip = gethostbyname(gethostname());
+	//	$ip = gethostbyname(gethostname());
 	$ip = gethostbyname(php_uname('n'));
 	$l = strlen($ip);
-	
+
 	$t  = "\n";
-	$t .= " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/ "."\n";
-	$t .= " _/                                                                          _/ "."\n";
-	$t .= " _/ Congratulations. Kloxo-MR has been installed succesfully as 'MASTER'     _/ "."\n";
-	$t .= " _/                                                                          _/ "."\n";
+	$t .= " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/ " . "\n";
+	$t .= " _/                                                                          _/ " . "\n";
+	$t .= " _/ Congratulations. Kloxo-MR has been installed succesfully as 'MASTER'     _/ " . "\n";
+	$t .= " _/                                                                          _/ " . "\n";
 
 	if ($installtype === 'master') {
-		$t .= " _/ You can connect to the server at:                                        _/ "."\n";
-		$t .= " _/     https://{$ip}:7777 - secure ssl connection, or" . str_repeat(" ", 28 - $l) . "_/ "."\n";
-		$t .= " _/     http://{$ip}:7778 - normal one." . str_repeat(" ", 43 - $l) . "_/ "."\n";
-		$t .= " _/                                                                          _/ "."\n";
-		$t .= " _/ The login and password are 'admin' and 'admin' for new install.          _/ "."\n";
-		$t .= " _/ After Logging in, you will have to change your password to               _/ "."\n";
-		$t .= " _/ something more secure.                                                   _/ "."\n";
-		$t .= " _/                                                                          _/ "."\n";
+		$t .= " _/ You can connect to the server at:                                        _/ " . "\n";
+		$t .= " _/     https://{$ip}:7777 - secure ssl connection, or" . str_repeat(" ", 28 - $l) . "_/ " . "\n";
+		$t .= " _/     http://{$ip}:7778 - normal one." . str_repeat(" ", 43 - $l) . "_/ " . "\n";
+		$t .= " _/                                                                          _/ " . "\n";
+		$t .= " _/ The login and password are 'admin' and 'admin' for new install.          _/ " . "\n";
+		$t .= " _/ After Logging in, you will have to change your password to               _/ " . "\n";
+		$t .= " _/ something more secure.                                                   _/ " . "\n";
+		$t .= " _/                                                                          _/ " . "\n";
 	} else {
-		$t .= " _/ You should open the port 7779 on this server, since this is used for     _/ "."\n";
-		$t .= " _/ the communication between master and slave                               _/ "."\n";
-		$t .= " _/                                                                          _/ "."\n";
-		$t .= " _/ To access this slave, to go admin->servers->add server,                  _/ "."\n";
-		$t .= " _/ give the ip/machine name of this server. The password is 'admin'.        _/ "."\n";
-		$t .= " _/                                                                          _/ "."\n";
-		$t .= " _/ The slave will appear in the list of slaves, and you can access it       _/ "."\n";
-		$t .= " _/ just like you access localhost                                           _/ "."\n";
-		$t .= " _/                                                                          _/ "."\n";
+		$t .= " _/ You should open the port 7779 on this server, since this is used for     _/ " . "\n";
+		$t .= " _/ the communication between master and slave                               _/ " . "\n";
+		$t .= " _/                                                                          _/ " . "\n";
+		$t .= " _/ To access this slave, to go admin->servers->add server,                  _/ " . "\n";
+		$t .= " _/ give the ip/machine name of this server. The password is 'admin'.        _/ " . "\n";
+		$t .= " _/                                                                          _/ " . "\n";
+		$t .= " _/ The slave will appear in the list of slaves, and you can access it       _/ " . "\n";
+		$t .= " _/ just like you access localhost                                           _/ " . "\n";
+		$t .= " _/                                                                          _/ " . "\n";
 	}
 
 	if ($kloxostate !== 'none') {
-		$t .= " _/ - Need running 'sh /script/cleanup' for update                           _/ "."\n";
+		$t .= " _/ - Need running 'sh /script/cleanup' for update                           _/ " . "\n";
 	}
 
-//	if ($installstep === '2') {
-		//	$t .= " _/ - Better reboot for fresh install                                        _/ "."\n";
-		$t .= " _/ - Run 'sh /script/mysql-convert --engine=myisam' to minimize MySQL       _/ "."\n";
-		$t .= " _/   memory usage. Or, go to 'Webserver Configure'                          _/ "."\n";
-		$t .= " _/ - Run 'sh /script/make-slave' for change to 'SLAVE'                      _/ "."\n";
-//	}
+	//	if ($installstep === '2') {
+	//	$t .= " _/ - Better reboot for fresh install                                        _/ "."\n";
+	$t .= " _/ - Run 'sh /script/mysql-convert --engine=myisam' to minimize MySQL       _/ " . "\n";
+	$t .= " _/   memory usage. Or, go to 'Webserver Configure'                          _/ " . "\n";
+	$t .= " _/ - Run 'sh /script/make-slave' for change to 'SLAVE'                      _/ " . "\n";
+	//	}
 
 	if (isRpmInstalled('qmail')) {
-		$t .= " _/ - Run 'sh /script/convert-to-qmailtoaster' to convert qmail-toaster      _/ "."\n";
+		$t .= " _/ - Run 'sh /script/convert-to-qmailtoaster' to convert qmail-toaster      _/ " . "\n";
 	}
 
-	$t .= " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/ "."\n";
+	$t .= " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/ " . "\n";
 	$t .= "\n";
 
 	print($t);
@@ -622,7 +620,7 @@ function char_search_beg($haystack, $needle)
 function install_yum_repo()
 {
 	print(">>> Modified mratwork.repo and remove older repo names <<<\n");
-/*
+	/*
 	if (!file_exists("/etc/yum.repos.d")) {
 		print("- No yum.repos.d dir detected!\n");
 
@@ -707,7 +705,7 @@ function get_yes_no($question, $default = 'n')
 
 	$ret = 'n';
 
-	for (; ;) {
+	for (;;) {
 		print $question;
 		flush();
 		$input = fgets(STDIN, 255);
@@ -745,11 +743,11 @@ function addLineIfNotExist($filename, $pattern, $comment)
 // MR -- taken from lib.php
 function getPhpBranch()
 {
-//	$a = array('php', 'php52', 'php53', 'php53u', 'php54', 'php55u', 'php56u',
-//		'php52w', 'php53w', 'php54w', 'php55w', 'php56w');
+	//	$a = array('php', 'php52', 'php53', 'php53u', 'php54', 'php55u', 'php56u',
+	//		'php52w', 'php53w', 'php54w', 'php55w', 'php56w');
 
 	$a = explode(",", file_get_contents('/usr/local/lxlabs/kloxo/etc/list/set.php.lst'));
-	
+
 	foreach ($a as &$e) {
 		if (isRpmInstalled("{$e}-cli")) {
 			return $e;
@@ -892,12 +890,12 @@ function copy_script()
 		file_put_contents("/script/programname", 'kloxo');
 		system("chmod 0775 /script");
 	*/
-//	print(">>> Symlink '{$kloxopath}/pscript' to '/script' path <<<\n");
-//	unlink("/script");
-//	symlink("{$kloxopath}/pscript", "/script");
+	//	print(">>> Symlink '{$kloxopath}/pscript' to '/script' path <<<\n");
+	//	unlink("/script");
+	//	symlink("{$kloxopath}/pscript", "/script");
 
 	// MR -- move to setup/installer.sh
-//	@exec("'rm' -rf /script; ln -sf {$kloxopath}/pscript /script");
+	//	@exec("'rm' -rf /script; ln -sf {$kloxopath}/pscript /script");
 }
 
 function getKloxoType()
@@ -957,7 +955,9 @@ function randomString($length)
 
 function exec_out($input)
 {
-	if (!$input) { return; }
+	if (!$input) {
+		return;
+	}
 
 	@exec($input, $out);
 

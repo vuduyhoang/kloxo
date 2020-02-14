@@ -97,7 +97,7 @@ function file_put_between_comments($username, $stlist, $endlist, $startstring, $
 
 	$startcomment = '';
 
-//	if ($nowarning !== true) {
+	//	if ($nowarning !== true) {
 	if ($nowarning !== false) {
 		// no action
 	} else {
@@ -113,7 +113,7 @@ function file_put_between_comments($username, $stlist, $endlist, $startstring, $
 	$outstring = null;
 	$afterstring = null;
 	$afterend = false;
-	
+
 
 	if (lxfile_exists($file)) {
 		$list = lfile_trim($file);
@@ -256,11 +256,11 @@ function log_load()
 	}
 	$mess = trim($mess);
 
-//	$rf = "__path_program_root/log/$file";
+	//	$rf = "__path_program_root/log/$file";
 
 	$endstr = "\n";
 
-	lfile_put_contents("/var/log/loadvg.log", time() . ' ' . @ date("H:i:M/d/Y") . ": $mess$endstr", FILE_APPEND);
+	lfile_put_contents("/var/log/loadvg.log", time() . ' ' . @date("H:i:M/d/Y") . ": $mess$endstr", FILE_APPEND);
 }
 
 function lxGetTimeFromString($line)
@@ -290,7 +290,7 @@ function recursively_get_file($dir, $file)
 		}
 	}
 
-//	return recursively_get_file("$dir/$l", $file);
+	//	return recursively_get_file("$dir/$l", $file);
 }
 
 function get_com_ob($obj)
@@ -312,8 +312,8 @@ function make_hidden_if_one($dlist)
 
 function addtoEtcHost($request, $ip)
 {
-//	$iplist = os_get_allips();
-//	$ip = $iplist[0];
+	//	$iplist = os_get_allips();
+	//	$ip = $iplist[0];
 
 	$comment = "added by kloxo dnsless preview";
 	lfile_put_contents("/etc/hosts", "$ip $request #$comment\n", FILE_APPEND);
@@ -369,7 +369,7 @@ function createHtpasswordFile($object, $sdir, $list)
 	$fstr = null;
 
 	foreach ($list as $k => $p) {
-		$cr = crypt($p, '$1$'.randomString(8).'$');
+		$cr = crypt($p, '$1$' . randomString(8) . '$');
 		$fstr .= "$k:$cr\n";
 	}
 
@@ -431,8 +431,8 @@ function changeDriverFunc($server, $class, $pgm)
 
 	$server = $login->getFromList('pserver', $server);
 
-//	$os = $server->ostype;
-//	include "../file/driver/$os.inc";
+	//	$os = $server->ostype;
+	//	include "../file/driver/$os.inc";
 
 	include "../file/driver/rhel.inc";
 
@@ -465,9 +465,9 @@ function changeDriverFunc($server, $class, $pgm)
 
 function slave_get_db_pass()
 {
-//	global $login;
+	//	global $login;
 
-//	$rmt = rl_exec_get('localhost', $login->syncserver, 'lfile_get_unserialize', array('../etc/slavedb/dbadmin'));
+	//	$rmt = rl_exec_get('localhost', $login->syncserver, 'lfile_get_unserialize', array('../etc/slavedb/dbadmin'));
 
 	$rmt = lfile_get_unserialize("../etc/slavedb/dbadmin");
 
@@ -476,9 +476,9 @@ function slave_get_db_pass()
 
 function slave_get_driver($class)
 {
-//	global $login;
+	//	global $login;
 
-//	$rmt = rl_exec_get('localhost', $login->syncserver, 'lfile_get_unserialize', array('../etc/slavedb/driver'));
+	//	$rmt = rl_exec_get('localhost', $login->syncserver, 'lfile_get_unserialize', array('../etc/slavedb/driver'));
 
 	$rmt = lfile_get_unserialize("../etc/slavedb/driver");
 
@@ -487,9 +487,9 @@ function slave_get_driver($class)
 
 function slave_get_db_contactemail()
 {
-//	global $login;
+	//	global $login;
 
-//	$rmt = rl_exec_get('localhost', $login->syncserver, 'lfile_get_unserialize', array('../etc/slavedb/contactemail'));
+	//	$rmt = rl_exec_get('localhost', $login->syncserver, 'lfile_get_unserialize', array('../etc/slavedb/contactemail'));
 
 	$rmt = lfile_get_unserialize("../etc/slavedb/contactemail");
 
@@ -640,24 +640,23 @@ FTC;
 	lxfile_generic_chown($tmp, "root:root");
 	lxfile_generic_chmod($tmp, "0710");
 
-//	exec("pkill -f fetchmail");
-//	sleep(10);
+	//	exec("pkill -f fetchmail");
+	//	sleep(10);
 	exec_with_all_closed("fetchmail -d0 -e 15 -f $tmp; rm -rf $tmp");
-//	sleep(20);
-//	lunlink($tmp);
+	//	sleep(20);
+	//	lunlink($tmp);
 }
 
 function send_system_monitor_message_to_admin($prog)
 {
 	$hst = trim(`hostname`);
-	$dt = @ date('M-d h:i');
+	$dt = @date('M-d h:i');
 	$mess = "Host: $hst\nDate: $dt\n$prog\n\n\n";
 	$rmt = new Remote();
 	$rmt->cmd = "sendemail";
 	$rmt->subject = "System Monitor on $hst";
 	$rmt->message = $mess;
 	send_to_master($rmt);
-
 }
 
 function check_if_port_on($port)
@@ -676,7 +675,6 @@ function check_if_port_on($port)
 				fclose($socket);
 
 				$ret = true;
-
 			}
 		} elseif (strpos($v, '.pid') !== false) {
 			if (filesize($v) !== 0) {
@@ -685,8 +683,8 @@ function check_if_port_on($port)
 		} elseif (strpos($v, ' status') !== false) {
 			exec($v, $out, $ret);
 
-		//	if (strpos($out[0], '(pid ') !== false) {
-		//	if (strpos($out[0], 'running') !== false) {
+			//	if (strpos($out[0], '(pid ') !== false) {
+			//	if (strpos($out[0], 'running') !== false) {
 			if (count($out) > 0) {
 				$ret = true;
 			}
@@ -705,7 +703,6 @@ function check_if_port_on($port)
 
 				$ret = true;
 			}
-
 		}
 	}
 
@@ -741,7 +738,6 @@ function EasyinstallerPHP($var, $cmd)
 	}
 	exec($cmd);
 	dprint("\n*************************************************************************\n");
-
 }
 
 function validate_ipaddress($name, $ret = null)
@@ -750,9 +746,8 @@ function validate_ipaddress($name, $ret = null)
 
 	// Validates both ipv4 and ipv6
 	if (!preg_match('/^(?:(?>(?>([a-f0-9]{1,4})(?>:(?1)){7})|(?>(?!(?:.*[a-f0-9](?>:|$)){8,})((?1)(?>:' .
-			'(?1)){0,6})?::(?2)?))|(?>(?>(?>(?1)(?>:(?1)){5}:)|(?>(?!(?:.*[a-f0-9]:){6,})((?1)(?>:(?1)){0,4})?:' .
-			':(?>(?3):)?))?(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(?>\.(?4)){3}))$/iD', $name)
-	) {
+		'(?1)){0,6})?::(?2)?))|(?>(?>(?>(?1)(?>:(?1)){5}:)|(?>(?!(?:.*[a-f0-9]:){6,})((?1)(?>:(?1)){0,4})?:' .
+		':(?>(?3):)?))?(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(?>\.(?4)){3}))$/iD', $name)) {
 		if ($ret) {
 			return false;
 		} else {
@@ -875,7 +870,7 @@ function validate_domain_owned($name)
 	global $login;
 
 	// MR -- idn_to_ascii only work in php 5.3.0+
-//	if (checkdnsrr(idn_to_ascii($name), "MX")) {
+	//	if (checkdnsrr(idn_to_ascii($name), "MX")) {
 	if (checkdnsrr($name, "MX")) {
 		throw new lxException($login->getThrow('domain_is_already_owned'), '', $name);
 	}
@@ -921,7 +916,6 @@ function validate_filename($filename)
 	if (!preg_match('/[^a-zA-Z0-9-_\.]$/', $filename)) {
 		throw new lxException($login->getThrow('invalid_filename'), '', $filename);
 	}
-
 }
 
 // MR -- as the same as validate_client_name except throw message
@@ -1038,7 +1032,6 @@ function getRealPidlist($arg)
 	}
 
 	return $nlist;
-
 }
 
 function get_double_hex($i)
@@ -1337,7 +1330,7 @@ function testAllServers()
 		}
 	}
 
-/*
+	/*
 	if ($flist) {
 		throw new lxException($e->getMessage(), '', $flist);
 	}
@@ -1394,7 +1387,7 @@ function do_actionlog($login, $object, $action, $subaction)
 		return;
 	}
 
-//	if (!$object->is__table('domain') && !$object->is__table('client') && !$object->is__table('vps')) {
+	//	if (!$object->is__table('domain') && !$object->is__table('client') && !$object->is__table('vps')) {
 	if ($object->getClass() !== 'domain' && $object->getClass() !== 'client' && $object->getClass() !== 'vps') {
 		return;
 	}
@@ -1428,7 +1421,6 @@ function validate_email($email)
 
 function make_sure_directory_is_lxlabs($file)
 {
-
 }
 
 function addToUtmp($ses, $dbaction)
@@ -1670,7 +1662,7 @@ function cp_fileserv($file)
 	lxfile_generic_chown("{$path}/$base", "lxlabs");
 	$res['file'] = $base;
 	$res['pass'] = $pass;
-//	$stat = llstat("{$path}/$base");
+	//	$stat = llstat("{$path}/$base");
 	$res['size'] = lxfile_size($file);
 
 	return $res;
@@ -1796,8 +1788,8 @@ function doRealGetFromFileServ($cmd, $serv, $filepass, $copyto = null)
 	global $sgbl;
 
 	$file = $filepass['file'];
-//	$pass = $filepass['pass'];
-//	$size = $filepass['size'];
+	//	$pass = $filepass['pass'];
+	//	$size = $filepass['size'];
 	$base = basename($file);
 
 	$path = "{$sgbl->__path_serverfile}/{$base}";
@@ -1826,7 +1818,6 @@ function doRealGetFromFileServ($cmd, $serv, $filepass, $copyto = null)
 		} else {
 			log_log("servfile", "is Not system user, can't access so will get $realfile through backend");
 		}
-
 	}
 
 	$fd = null;
@@ -1881,7 +1872,7 @@ function trimSpaces($val)
 function execRrdTraffic($filename, $tot, $inc, $out)
 {
 	global $global_dontlogshell;
-//	global $global_shell_error, $global_shell_ret, $global_shell_out;
+	//	global $global_shell_error, $global_shell_ret, $global_shell_out;
 
 	$global_dontlogshell = true;
 
@@ -1980,7 +1971,7 @@ function get_kloxo_port($type)
 function execRrdSingle($name, $func, $filename, $tot)
 {
 	global $global_dontlogshell;
-//	global $global_shell_error, $global_shell_ret, $global_shell_out;
+	//	global $global_shell_error, $global_shell_ret, $global_shell_out;
 
 	$global_dontlogshell = true;
 
@@ -2104,12 +2095,14 @@ function rrd_graph_server($type, $list, $time)
 
 	$graphfile = ltempnam("/tmp", "lx_graph");
 
-	$color = array("000000", "b54f6f", "00bb00", "a0ad00", "0090bf", "56a656", "00bbbf",
+	$color = array(
+		"000000", "b54f6f", "00bb00", "a0ad00", "0090bf", "56a656", "00bbbf",
 		"bfbfbf", "458325", "f04050", "a0b2c5", "cf0f00", "a070ad", "cf8085", "af93af",
 		"90bb9f", "00d500", "00ff00", "aaffaa", "00ffff", "aa00ff", "ffff00", "aaff00",
 		"faff00", "0aff00", "6aff00", "eaffa0", "abff0a", "afffaa", "deab3d", "333333",
 		"894367", "234567", "fbdead", "fadec1", "fa3d9c", "f54398", "f278d3", "f512d3",
-		"43f3f9", "f643f9");
+		"43f3f9", "f643f9"
+	);
 
 	if ($time >= 7 * 24 * 3600) {
 		$grid = 'HOUR:12:DAY:2:WEEK:8:0:%X';
@@ -2142,7 +2135,6 @@ function rrd_graph_server($type, $list, $time)
 				} else {
 					$arg[] = "LINE1:dss$i#000000:$k";
 				}
-
 			}
 
 			$arglist = array('rrdtool', 'graph', $graphfile, '--start', "-$time", '-w', '600', '-h', '200', '--x-grid', $grid, '--vertical-label=Bytes/s');
@@ -2166,7 +2158,6 @@ function rrd_graph_server($type, $list, $time)
 				} else {
 					$arg[] = "LINE1:dss$i#000000:$k";
 				}
-
 			}
 
 			$arglist = array('rrdtool', 'graph', $graphfile, '--start', "-$time", '-w', '600', '-h', '200', '--x-grid', $grid, "--vertical-label=$type");
@@ -2712,9 +2703,9 @@ function vg_diskfree($vgname)
 
 function lvm_disksize($lvmpath)
 {
-//	$out = exec_with_all_closed_output("lvdisplay -c /dev/$vgname/$lvmname");
-//	$out = explode(":", $out);
-//	return $out[6] / 1024;
+	//	$out = exec_with_all_closed_output("lvdisplay -c /dev/$vgname/$lvmname");
+	//	$out = explode(":", $out);
+	//	return $out[6] / 1024;
 
 	$out = exec_with_all_closed_output("/usr/sbin/lvs --nosuffix --units b --noheadings -o lv_size $lvmpath");
 	$out = trim($out);
@@ -2809,7 +2800,7 @@ function install_if_package_not_exist($name, $nolog = null)
 		return;
 	}
 
-//	$ret = lxshell_return("rpm", "-q", $name);
+	//	$ret = lxshell_return("rpm", "-q", $name);
 	$ret = lxshell_return("yum", "list", "installed", $name);
 
 
@@ -2894,7 +2885,6 @@ function getLatestVersion()
 	}
 
 	return $ver;
-
 }
 
 function getInstalledVersion()
@@ -3063,7 +3053,7 @@ function se_submit($contact, $dom, $email)
 
 	lunlink($tmpfile);
 
-//	lx_mail("kloxo", $contact, "Search Submission Info", $var);
+	//	lx_mail("kloxo", $contact, "Search Submission Info", $var);
 	callInBackground("lx_mail", array(null, $contact, "Search Submission Info", $var));
 
 	lfile_put_contents("/tmp/mine", $var);
@@ -3231,7 +3221,7 @@ function createDatabaseInterfaceTemplate($nolog = null)
 
 	exec("mysql -u kloxo -p`cat ../etc/conf/kloxo.pass` kloxo < ../file/interface/interface_template.dump");
 
-//	exec("sh /script/fix-missing-admin");
+	//	exec("sh /script/fix-missing-admin");
 }
 
 function callInChild($func, $arglist)
@@ -3283,7 +3273,7 @@ function get_with_cache($file, $cmdarglist)
 {
 	global $sgbl;
 
-	$stat = @ llstat($file);
+	$stat = @llstat($file);
 
 	lxfile_mkdir("{$sgbl->__path_program_root}/cache");
 
@@ -3384,13 +3374,13 @@ function dogetParentNameAndClass($pclname)
 		$string = "_s_vv_p_";
 	}
 
-//	$vlist = explode("_s_vv_p_", $pclname);
+	//	$vlist = explode("_s_vv_p_", $pclname);
 	$vlist = explode($string, $pclname);
 	$pclass = array_shift($vlist);
-//	$pname = implode("_s_vv_p_", $vlist);
+	//	$pname = implode("_s_vv_p_", $vlist);
 	$pname = implode($string, $vlist);
 
-//	dprint($pclass);
+	//	dprint($pclass);
 
 	return array($pclass, $pname);
 }
@@ -3403,13 +3393,13 @@ function doOldgetParentNameAndClass($pclname)
 		$string = "-";
 	}
 
-//	$vlist = explode("_s_vv_p_", $pclname);
+	//	$vlist = explode("_s_vv_p_", $pclname);
 	$vlist = explode($string, $pclname);
 	$pclass = array_shift($vlist);
-//	$pname = implode("_s_vv_p_", $vlist);
+	//	$pname = implode("_s_vv_p_", $vlist);
 	$pname = implode($string, $vlist);
 
-//	dprint($pclass);
+	//	dprint($pclass);
 
 	return array($pclass, $pname);
 }
@@ -3431,7 +3421,6 @@ function if_not_admin_complain_and_exit()
 	send_mail_to_admin("$progname Warning: Unauthorized Access by $login->nname", $message);
 
 	exit(0);
-
 }
 
 function initProgram($ctype = null)
@@ -3441,7 +3430,7 @@ function initProgram($ctype = null)
 
 function getKBOrMB($val)
 {
-	$val = (float)$val;
+	$val = (float) $val;
 
 	if ($val > 1014) {
 		return round($val / 1024, 2) . " MB";
@@ -3452,8 +3441,8 @@ function getKBOrMB($val)
 
 function getGBOrMB($val)
 {
-//	$val = (isset($val)) ? $val : 0;
-	$val = (float)$val;
+	//	$val = (isset($val)) ? $val : 0;
+	$val = (float) $val;
 
 	if ($val > 1048576) {
 		return number_format(round($val / 1048576, 2), 2) . " TB";
@@ -3539,7 +3528,7 @@ function get_domain_client_temp_list($class)
 {
 	global $login;
 
-	$temp = Array();
+	$temp = array();
 	$list = $login->getList($class);
 
 	foreach ($list as $d) {
@@ -3633,8 +3622,8 @@ function FindRightPosition($fp, $fsize, $oldtime, $newtime, $func)
 
 	if ($newtime < $begtime) {
 		dprint("End time $newtime < $begtime Less than Beginning. \n");
-//		print("Date: " . @ date('Y-m-d: H:i:s', $newtime) . " " . @ date('Y-m-d: h:i:s', $begtime) . "\n");
-		print("<div align='center'>Date: " . @ date('Y-m-d: h:i:s', $begtime) . "(begin) - " . @ date('Y-m-d: H:i:s', $newtime) . " (end)</div>\n");
+		//		print("Date: " . @ date('Y-m-d: H:i:s', $newtime) . " " . @ date('Y-m-d: h:i:s', $begtime) . "\n");
+		print("<div align='center'>Date: " . @date('Y-m-d: h:i:s', $begtime) . "(begin) - " . @date('Y-m-d: H:i:s', $newtime) . " (end)</div>\n");
 
 		return -1;
 	}
@@ -3655,7 +3644,7 @@ function FindRightPosition($fp, $fsize, $oldtime, $newtime, $func)
 	$endtime = call_user_func($func, $string);
 
 	if ($oldtime > $endtime) {
-		$ot = @ date("Y-m-d:h-i", $oldtime);
+		$ot = @date("Y-m-d:h-i", $oldtime);
 		dprint(" $ot $oldtime $string More than End. \n");
 
 		return -1;
@@ -3780,12 +3769,12 @@ function lxlabsFindRightPosition($fp, $fsize, $oldtime, $newtime)
 
 	if ($newtime < $begtime) {
 		dprint("ENd time $newtime < $begtime Less than Beginning. \n");
-		print("Date: " . @ date('Y-m-d: H:i:s', $newtime) . " " . @ date('Y-m-d: h:i:s', $begtime) . "\n");
+		print("Date: " . @date('Y-m-d: H:i:s', $newtime) . " " . @date('Y-m-d: h:i:s', $begtime) . "\n");
 
 		return -1;
 	}
 
-/*
+	/*
 	 // This logic is actually wrong. This is returning if the oldtime is less than first time,
 	 // but that isn't is a necessary criteria. The file could be so small as to start from middle of the day.
 	 if ($time < $readtime) {
@@ -3801,7 +3790,7 @@ function lxlabsFindRightPosition($fp, $fsize, $oldtime, $newtime)
 
 	$endtime = lxlabs_marker_getime($string);
 	if ($oldtime > $endtime) {
-		$ot = @ date("Y-m-d:h-i", $oldtime);
+		$ot = @date("Y-m-d:h-i", $oldtime);
 		dprint(" $ot $oldtime $string More than End. \n");
 
 		return -1;
@@ -3876,8 +3865,10 @@ function intToMonth($month)
 
 function MonthList()
 {
-	return array("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+	return array(
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	);
 }
 
 function readfirstline($file)
@@ -3896,7 +3887,7 @@ function getNotexistingFile($dir, $file)
 		}
 	}
 
-//	return $dir . "/" . $file . "-" . $i;
+	//	return $dir . "/" . $file . "-" . $i;
 }
 
 function clearLxbackup($backup)
@@ -3958,7 +3949,7 @@ function fixResourcePlan()
 			$l->setUpdateSubaction();
 			$l->write();
 
-		//	$write = false;
+			//	$write = false;
 		}
 	}
 }
@@ -4007,7 +3998,7 @@ function db_set_default_variable($table, $variable, $default, $extra = null)
 
 	$sq->rawQuery("update $table set $variable = $default where $variable = '' $extra");
 	$sq->rawQuery("update $table set $variable = $default where $variable is null $extra");
-//	$sq->rawQuery("update $table set $variable = $default where $variable = '-' $extra");
+	//	$sq->rawQuery("update $table set $variable = $default where $variable = '-' $extra");
 }
 
 function updateTableProperly($__db, $table, $rr, $content)
@@ -4198,7 +4189,6 @@ function addLineIfNotExistPattern($filename, $searchpattern, $pattern)
 	} else {
 		dprint("Pattern '$searchpattern' Already present in $filename\n");
 	}
-
 }
 
 function remove_line($filename, $pattern)
@@ -4234,9 +4224,8 @@ function addLineIfNotExistInside($filename, $pattern, $comment)
 			lfile_put_contents($filename, "\n\n\n", FILE_APPEND);
 		}
 	} else {
-	//	dprint("Pattern '$pattern' Already present in $filename\n");
+		//	dprint("Pattern '$pattern' Already present in $filename\n");
 	}
-
 }
 
 function fix_all_mysql_root_password()
@@ -4250,10 +4239,10 @@ function fix_all_mysql_root_password()
 
 function fix_mysql_root_password($server)
 {
-	global $login;	
+	global $login;
 	$pass = $login->password;
 	$pass = fix_nname_to_be_variable($pass);
-	$pass = substr($pass, 3, 11);	
+	$pass = substr($pass, 3, 11);
 	$dbadmin = new Dbadmin(null, $server, "mysql___$server");
 	$dbadmin->get();
 
@@ -4284,7 +4273,7 @@ function fix_mysql_root_password($server)
 
 function slave_save_db($file, $list)
 {
-//	global $login;
+	//	global $login;
 
 	$rmt = new Remote();
 	$rmt->data = $list;
@@ -4292,8 +4281,8 @@ function slave_save_db($file, $list)
 	lxfile_mkdir("../etc/slavedb");
 	lfile_put_serialize("../etc/slavedb/$file", $rmt);
 
-//	rl_exec_get('localhost', $login->syncserver, 'lxfile_mkdir', array('../etc/slavedb'));
-//	rl_exec_get('localhost', $login->syncserver, 'lfile_put_serialize', array("../etc/slavedb/{$file}", $rmt));
+	//	rl_exec_get('localhost', $login->syncserver, 'lxfile_mkdir', array('../etc/slavedb'));
+	//	rl_exec_get('localhost', $login->syncserver, 'lfile_put_serialize', array("../etc/slavedb/{$file}", $rmt));
 }
 
 function securityBlanketExec($table, $nname, $variable, $func, $arglist)
@@ -4348,7 +4337,7 @@ function checkClusterDiskQuota()
 	dprint("\n");
 
 	if ($mess) {
-	//	lx_mail(null, $login->contactemail, "Filesystem Warning", $mess);
+		//	lx_mail(null, $login->contactemail, "Filesystem Warning", $mess);
 		callInBackground("lx_mail", array(null, $login->contactemail, "Filesystem Warning", $mess));
 	}
 
@@ -4551,11 +4540,11 @@ function trafficGetIndividualObjectTotal($list, $firstofmonth, $today, $name)
 {
 	$tot = 0;
 
-	foreach ((array)$list as $t) {
+	foreach ((array) $list as $t) {
 		list($nname, $oldtime, $newtime) = explode(":", $t->nname);
 
 		if ($oldtime >= $firstofmonth && $oldtime < $today) {
-			dprint(@ strftime("%c", "$oldtime") . ": ");
+			dprint(@strftime("%c", "$oldtime") . ": ");
 			dprint($t->traffic_usage);
 			dprint("\n");
 
@@ -4568,8 +4557,8 @@ function trafficGetIndividualObjectTotal($list, $firstofmonth, $today, $name)
 
 function get_last_month_and_year()
 {
-	$month = @ date("n");
-	$year = @ date("Y");
+	$month = @date("n");
+	$year = @date("Y");
 
 	if ($month == 1) {
 		$month = 12;
@@ -4586,7 +4575,7 @@ function add_to_log($file)
 	global $sgbl;
 
 	$string = time();
-	$d = @ date("Y-M-d H:i");
+	$d = @date("Y-M-d H:i");
 	$string = "{$string} {$d} {$sgbl->__lxlabs_marker}\n";
 
 	lfile_put_contents($file, $string, FILE_APPEND);
@@ -4600,8 +4589,10 @@ function findServerTraffic()
 	$list = $login->getList('pserver');
 
 	foreach ($list as $l) {
-		$res = $sq->getRowsWhere("syncserver = '$l->nname'",
-			array('used_q_traffic_usage', 'used_q_traffic_last_usage'));
+		$res = $sq->getRowsWhere(
+			"syncserver = '$l->nname'",
+			array('used_q_traffic_usage', 'used_q_traffic_last_usage')
+		);
 		$tusage = 0;
 		$tlastusage = 0;
 
@@ -4741,7 +4732,6 @@ function remove_scpid($cont)
 
 function lxguard_clear($list)
 {
-
 }
 
 function lxguard_main($clearflag = false, $since = false)
@@ -4758,7 +4748,6 @@ function lxguard_main($clearflag = false, $since = false)
 
 	if ((file_exists($hl_file)) && (strpos(file_get_contents($hl_file), "\n\"") !== false)) {
 		exec("sh /script/fix-lxguardhit-db");
-
 	}
 
 	include "./lib/html/lxguardincludelib.php";
@@ -4778,17 +4767,17 @@ function lxguard_main($clearflag = false, $since = false)
 	}
 
 	// MR -- array_map to object may error
-//	$rmt =  array_map('trim', lfile_get_unserialize("{$lxgpath}/hitlist.info"));
+	//	$rmt =  array_map('trim', lfile_get_unserialize("{$lxgpath}/hitlist.info"));
 
 	$t = toArray(lfile_get_unserialize("{$lxgpath}/hitlist.info"));
 	$r = new Remote();
 	$rmt = toObject(array_map($t), $r);
 
 	if ($rmt) {
-		$oldtime = max((int)$oldtime, (int)$rmt->ddate);
+		$oldtime = max((int) $oldtime, (int) $rmt->ddate);
 	}
 
-//	$list = array_map('trim', lfile_get_unserialize("{$lxgpath}/access.info"));
+	//	$list = array_map('trim', lfile_get_unserialize("{$lxgpath}/access.info"));
 
 	$t2 = toArray(lfile_get_unserialize("{$lxgpath}/access.info"));
 	$r2 = new Remote();
@@ -4819,7 +4808,7 @@ function lxguard_main($clearflag = false, $since = false)
 
 	get_total($list, $total);
 
-//	dprintr($list['192.168.1.11']);
+	//	dprintr($list['192.168.1.11']);
 
 	dprint_r("Debug: Total: " . count($total) . "\n");
 
@@ -4831,12 +4820,12 @@ function lxguard_main($clearflag = false, $since = false)
 	$str_tcprules = null;
 	$str_spamdyke = null;
 
-//	$note = "## blocked IP enough to use 'null routing'\n";
+	//	$note = "## blocked IP enough to use 'null routing'\n";
 
 	// MR -- remove blackhole blocked
 	exec("sh /script/remove-blackhole-block");
 
-//	exec("cat /etc/tcprules.d/tcp.smtp|grep -v ':deny'|grep -v '# MR'|grep -E ':allow,|:deny,'", $out);
+	//	exec("cat /etc/tcprules.d/tcp.smtp|grep -v ':deny'|grep -v '# MR'|grep -E ':allow,|:deny,'", $out);
 	exec("cat /etc/tcprules.d/tcp.smtp|grep -E ':allow,|:deny,' > /etc/tcprules.d/tcp.smtp2; mv -f /etc/tcprules.d/tcp.smtp2 /etc/tcprules.d/tcp.smtp");
 
 	foreach ($deny as $k => $v) {
@@ -4852,7 +4841,7 @@ function lxguard_main($clearflag = false, $since = false)
 
 		$str_host .= "ALL : $k\n";
 		$str_tcprules .= "$k:deny\n";
-	//	$str_tcprules .= "$k:allow,RBLSMTP=\"Your Are Blocked. Go away!\"\n";
+		//	$str_tcprules .= "$k:allow,RBLSMTP=\"Your Are Blocked. Go away!\"\n";
 		$str_spamdyke .= "$k\n";
 	}
 
@@ -4865,7 +4854,7 @@ function lxguard_main($clearflag = false, $since = false)
 
 	// MR -- no need this action where enough 'route host'
 	file_put_between_comments("root", $start_host, $end_host, $start_str_host, $end_str_host, "/etc/hosts.deny", $str_host);
-//	file_put_between_comments("root", $start_host, $end_host, $start_str_host, $end_str_host, "/etc/hosts.deny", $note);
+	//	file_put_between_comments("root", $start_host, $end_host, $start_str_host, $end_str_host, "/etc/hosts.deny", $note);
 
 	// MR -- no need this action where enough 'route host'
 	$start_tcprules[] = "###Start Program tcp.smtp config Area";
@@ -4874,12 +4863,12 @@ function lxguard_main($clearflag = false, $since = false)
 	$end_str_tcprules = $end_tcprules[0];
 
 	file_put_between_comments("root", $start_tcprules, $end_tcprules, $start_str_tcprules, $end_str_tcprules, "/etc/tcprules.d/tcp.smtp", $str_tcprules);
-//	file_put_between_comments("root", $start_tcprules, $end_tcprules, $start_str_tcprules, $end_str_tcprules, "/etc/tcprules.d/tcp.smtp", $note);
+	//	file_put_between_comments("root", $start_tcprules, $end_tcprules, $start_str_tcprules, $end_str_tcprules, "/etc/tcprules.d/tcp.smtp", $note);
 	exec("/usr/bin/qmailctl cdb");
 
 	// MR -- no need this action where enough 'route host'
 	file_put_contents('/var/qmail/spamdyke/blacklist_ip', $str_spamdyke);
-//	file_put_contents('/var/qmail/spamdyke/blacklist_ip', '');
+	//	file_put_contents('/var/qmail/spamdyke/blacklist_ip', '');
 
 	if ($clearflag) {
 		lxfile_rm("{$lxgpath}/access.info");
@@ -4962,7 +4951,6 @@ function switchtoaliasnext()
 
 	lxfile_cp("../file/lighttpd/lighttpd.conf", "/etc/lighttpd/lighttpd.conf");
 	lxshell_return($sgbl->__path_php_path, "../bin/fix/fixweb.php");
-
 }
 
 function fix_awstats($nolog = null)
@@ -5092,8 +5080,8 @@ function fixMySQLRootPassword($nolog = null)
 	fix_mysql_root_password('localhost');
 	$dbadmin = new Dbadmin(null, 'localhost', "mysql___localhost");
 	$dbadmin->get();
-	$pass = $dbadmin->dbpassword;	
-	$a['mysql']['dbpassword'] = $pass;	
+	$pass = $dbadmin->dbpassword;
+	$a['mysql']['dbpassword'] = $pass;
 	slave_save_db("dbadmin", $a);
 }
 
@@ -5138,25 +5126,25 @@ function changetoclient()
 {
 	global $sgbl;
 
-//	exec("service xinetd stop");
+	//	exec("service xinetd stop");
 	exec("service pure-ftpd stop");
 	lxshell_return($sgbl->__path_php_path, "../bin/changetoclientlogin.php");
-//	lxshell_return($sgbl->__path_php_path, "../bin/misc/fixftpuserclient.php");
+	//	lxshell_return($sgbl->__path_php_path, "../bin/misc/fixftpuserclient.php");
 	lxshell_return($sgbl->__path_php_path, "../bin/fix/fixftpuser.php");
-//	restart_service("xinetd");
+	//	restart_service("xinetd");
 	exec("service pure-ftpd start");
-//	$driverapp = $gbl->getSyncClass(null, 'localhost', 'web');
+	//	$driverapp = $gbl->getSyncClass(null, 'localhost', 'web');
 
-//	createRestartFile($driverapp);
+	//	createRestartFile($driverapp);
 	createRestartFile("restart-web");
 }
 
 function fix_dns_zones()
 {
-//	global $gbl, $sgbl, $login, $ghtml;
+	//	global $gbl, $sgbl, $login, $ghtml;
 
 	return;
-/*
+	/*
 	initProgram('admin');
 
 	$flag = "__path_program_root/etc/flag/dns_zone_fix.flag";
@@ -5251,12 +5239,12 @@ function installEasyinstaller($nolog = null)
 	}
 
 	if ($sgbl->is_this_master()) {
-	//	$gen = $login->getObject('general')->generalmisc_b;
-	//	$diflag = $gen->isOn('disableeasyinstaller');
+		//	$gen = $login->getObject('general')->generalmisc_b;
+		//	$diflag = $gen->isOn('disableeasyinstaller');
 		log_cleanup("- 'Easy Installer' is disabled by Flag", $nolog);
 		exec("echo 1 > ../etc/flag/disableeasyinstaller.flg");
 	} else {
-	//	$diflag = false;
+		//	$diflag = false;
 		log_cleanup("- 'Easy Installer' is not disabled by Flag", $nolog);
 		lxfile_rm("../etc/flag/disableeasyinstaller.flg");
 	}
@@ -5284,7 +5272,7 @@ function installEasyinstaller($nolog = null)
 
 		// Line below Removed in Kloxo 6.1.4
 		return;
-	/*
+		/*
 		log_cleanup("- Create easyinstaller dir", $nolog);
 		lxfile_mkdir("__path_kloxo_httpd_root/easyinstaller");
 
@@ -5312,14 +5300,14 @@ function setDefaultPages($nolog = null)
 
 	$pages = array("default", "disable", "webmail", "cp", "error");
 
-//	$newer = false;
+	//	$newer = false;
 
 	if (file_exists($sourcezip)) {
 		if (!checkIdenticalFile($sourcezip, $targetzip)) {
-		//	log_cleanup("- Copy $sourcezip to $targetzip", $nolog);
+			//	log_cleanup("- Copy $sourcezip to $targetzip", $nolog);
 			log_cleanup("- Copy $sourcezip to $httpdpath", $nolog);
 			exec("'cp' -rf $sourcezip $targetzip");
-		//	$newer = true;
+			//	$newer = true;
 		}
 	}
 
@@ -5339,7 +5327,6 @@ function setDefaultPages($nolog = null)
 
 		log_cleanup("- robots.txt for {$p} web page", $nolog);
 		lxfile_cp(getLinkCustomfile($filepath, "default_robots.txt"), "{$httpdpath}/{$p}/robots.txt");
-
 	}
 
 	setKloxoHttpdChownChmod($nolog);
@@ -5474,7 +5461,6 @@ function getRpmBranchInstalledOnList($rpm)
 				return $e;
 			}
 		}
-
 	}
 }
 
@@ -5483,7 +5469,7 @@ function getRpmBranchList($pname)
 	$p = "../etc/list";
 	$f = getLinkCustomfile($p, "{$pname}.lst");
 
-//	if (!file_exists($f)) { return; }
+	//	if (!file_exists($f)) { return; }
 	if (!file_exists($f)) {
 		$c = $pname;
 	} else {
@@ -5523,14 +5509,13 @@ function getRpmVersion($rpmname)
 
 function getRpmVersionFromYum($rpmname)
 {
+	$cmd = "yum list httpd | grep 'httpd.'| awk '{print $2}'|awk -F'-'  '{print $1}'";
 	exec("yum list {$rpmname}|grep '{$rpmname}.'|awk '{print \$2}'|awk -F'-'  '{print \$1}'", $ver);
-
 	if (strpos($ver[0], 'Error:') !== false) {
 		$ret = '0.0.0';
 	} else {
 		$ret = $ver[0];
 	}
-
 	return $ret;
 }
 
@@ -5610,7 +5595,7 @@ function isPhpModuleInstalled($module)
 
 function isPhpModuleActive($module, $ininamelist = null)
 {
-//	$srcpath = '/opt/configs/phpini/etc/php.d';
+	//	$srcpath = '/opt/configs/phpini/etc/php.d';
 	$trgtpath = '/etc/php.d';
 
 	$ininamelist = ($ininamelist) ? $ininamelist : array($module);
@@ -5660,7 +5645,7 @@ function setPhpModuleActive($module, $ininamelist = null)
 
 function setPhpModuleInactive($module, $ininamelist = null)
 {
-//	$srcpath = '/opt/configs/phpini/etc/php.d';
+	//	$srcpath = '/opt/configs/phpini/etc/php.d';
 	$trgtpath = '/etc/php.d';
 
 	$ininamelist = ($ininamelist) ? $ininamelist : array($module);
@@ -5769,8 +5754,10 @@ function setInitialWebConfig($type, $nolog = null)
 
 	log_cleanup("Initialize {$type} config", $nolog);
 
-	$newlist = array("{$eatpath}/conf.d", "{$htpath}/tpl",
-		"{$htpath}/conf", "{$htpath}/etc", "{$htpath}/etc/conf", "{$htpath}/etc/conf.d");
+	$newlist = array(
+		"{$eatpath}/conf.d", "{$htpath}/tpl",
+		"{$htpath}/conf", "{$htpath}/etc", "{$htpath}/etc/conf", "{$htpath}/etc/conf.d"
+	);
 
 	foreach ($newlist as &$n) {
 		if (!lxfile_exists("{$n}")) {
@@ -5794,9 +5781,11 @@ function setInitialWebConfig($type, $nolog = null)
 
 	exec("echo '## MR -- blank only' > {$htcpath}/domains/__blank__.conf");
 
-	$oldlist = array("{$htcpath}/redirects", "{$htcpath}/exclusive", "{$htcpath}/wildcards",
+	$oldlist = array(
+		"{$htcpath}/redirects", "{$htcpath}/exclusive", "{$htcpath}/wildcards",
 		"{$htcpath}/webmails", "{$htpath}/sock", "{$htpath}/socks", "{$eatpath}/conf/kloxo",
-		"{$htpath}/tmp", "{$htpath}/logs", "{$htpath}/cache");
+		"{$htpath}/tmp", "{$htpath}/logs", "{$htpath}/cache"
+	);
 
 	foreach ($oldlist as &$l) {
 		if (lxfile_exists("{$l}")) {
@@ -5817,7 +5806,7 @@ function setInitialWebConfig($type, $nolog = null)
 function setInitialAllWebCacheConfigs($nolog = null)
 {
 	$list = getAllRealWebCacheDriverList();
-	
+
 	foreach ($list as $k => $v) {
 		setInitialWebCacheConfig($v, $nolog);
 	}
@@ -5836,7 +5825,7 @@ function setInitialWebCacheConfig($type, $nolog = null)
 function setInitialPhpIniConfig($nolog = null)
 {
 	$fpath = "../file/phpini";
-//	$inipath = "/opt/configs/phpini";
+	//	$inipath = "/opt/configs/phpini";
 
 	exec("'cp' -rf {$fpath} /opt/configs");
 }
@@ -5873,7 +5862,6 @@ function getInitialPhpFpmConfig($nolog = null)
 
 			return $v;
 		}
-
 	}
 
 	return 'php';
@@ -5908,13 +5896,13 @@ function setKloxoHttpdChownChmod($nolog = null)
 {
 	$hkhpath = "/home/kloxo/httpd";
 
-//	log_cleanup("Set ownership and permissions for {$hkhpath} dir", $nolog);
+	//	log_cleanup("Set ownership and permissions for {$hkhpath} dir", $nolog);
 
 	$httpddirchmod = '771'; // need to change to 771 for nginx-proxy
 	$phpfilechmod = '644';
 	$domdirchmod = '755';
 
-//	$hkhown = 'lxlabs:lxlabs';
+	//	$hkhown = 'lxlabs:lxlabs';
 	$hkhown = 'apache:apache';
 
 	lxfile_unix_chown_rec("{$hkhpath}/", "{$hkhown}");
@@ -5953,7 +5941,7 @@ function setFixChownChmod($select, $nolog = null)
 
 	// --- for /home/kloxo/httpd dirs (defaults pages)
 
-//	log_cleanup("Fix file permission problems for defaults pages (chown/chmod files)", $nolog);
+	//	log_cleanup("Fix file permission problems for defaults pages (chown/chmod files)", $nolog);
 
 	setKloxoCexeChownChmod($nolog);
 	setKloxoHttpdChownChmod($nolog);
@@ -6023,7 +6011,7 @@ function setFixChownChmodWebPerUser($select, $user, $nolog = null)
 
 	$docrootlist = array();
 
-	foreach ((array)$dlist as $l) {
+	foreach ((array) $dlist as $l) {
 		$web = $l->getObject('web');
 		$docroot = $web->docroot;
 
@@ -6090,7 +6078,7 @@ function setFixChownChmodMailPerUser($select, $user, $nolog = null)
 	$mailfilechmod = "600";
 	$maildirchmod = "700";
 
-	foreach ((array)$dlist as $l) {
+	foreach ((array) $dlist as $l) {
 		$web = $l->getObject('web');
 		$dom = $web->nname;
 
@@ -6346,7 +6334,7 @@ function setInitialPureftpConfig($nolog = null)
 
 	if (getServiceType('pure-ftpd') === 'init') {
 		lxfile_cp("../file/pure-ftpd/etc/init.d/pure-ftpd.init", "/etc/rc.d/init.d/pure-ftpd");
-	//	exec("chkconfig pure-ftpd on >/dev/null 2>&1; chmod 0755 /etc/rc.d/init.d/pure-ftpd");
+		//	exec("chkconfig pure-ftpd on >/dev/null 2>&1; chmod 0755 /etc/rc.d/init.d/pure-ftpd");
 		exec("sh /script/enable-service pure-ftpd >/dev/null 2>&1; chmod 0755 /etc/rc.d/init.d/pure-ftpd");
 	}
 
@@ -6368,12 +6356,15 @@ function setInitialPhpMyAdmin($nolog = null)
 	$DbPass = file_get_contents("../etc/conf/kloxo.pass");
 	$phpMyAdminCfg = "../httpdocs/thirdparty/phpMyAdmin/config.inc.php";
 	$content = file_get_contents($phpMyAdminCfg);
-	$content = str_replace("# Kloxo-Marker",
+	$content = str_replace(
+		"# Kloxo-Marker",
 		"# Kloxo-Marker\n\$cfg['Servers'][\$i]['controlpass'] = '" .
-		$DbPass . "';", $content);
+			$DbPass . "';",
+		$content
+	);
 
 	lfile_put_contents($phpMyAdminCfg, $content);
-/*
+	/*
 	 // TODO: Need another way to do this (use root pass)
 	 log_cleanup("- phpMyAdmin: Import PMA Database and create tables if they do not exist", $nolog);
 	 exec("../sbin/kloxodb < ../httpdocs/sql/phpMyAdmin/phpMyAdmin.sql");
@@ -6432,16 +6423,18 @@ function setInitialBinary($nolog = null)
 
 function setCheckPackages($nolog = null)
 {
-//	$phpbranch = getRpmBranchInstalled('php');
+	//	$phpbranch = getRpmBranchInstalled('php');
 
 	log_cleanup("Check for rpm packages", $nolog);
 
 	// MR --remove spamdyke-utils because conflict with djbdns and not needed
 	// remove qmail-pop3d-toaster because pop3 already include in courier-imap/dovecot
-	$list = array("autorespond-toaster", "courier-imap-toaster", "dovecot-toaster", "daemontools-toaster",
+	$list = array(
+		"autorespond-toaster", "courier-imap-toaster", "dovecot-toaster", "daemontools-toaster",
 		"ezmlm-toaster", "libdomainkeys-toaster", "libsrs2-toaster", "maildrop-toaster",
 		"qmail-toaster", "ripmime", "ucspi-tcp-toaster", "vpopmail-toaster", "fetchmail", "bogofilter", "spamdyke",
-		"pure-ftpd", "webalizer", "dos2unix", "rrdtool", "xinetd", "lxjailshell");
+		"pure-ftpd", "webalizer", "dos2unix", "rrdtool", "xinetd", "lxjailshell"
+	);
 
 	foreach ($list as $l) {
 		if ($l === '') {
@@ -6767,7 +6760,6 @@ function installChooser($nolog = null)
 		$name = str_replace("{$path}/", "", $dir);
 		if ($name != "img" && $name != "images" && $name != "disabled" && is_dir($dir)) {
 			lfile_put_contents("{$path}/redirect-to-{$name}.php", "<?php\nheader(\"Location: /{$name}\");\n");
-
 		}
 	}
 
@@ -6893,7 +6885,7 @@ function changeColumn($tbl_name, $changelist)
 	dprint("Change Column.............\n");
 	$db = new Sqlite($tbl_name);
 	$columnold = $db->getColumnTypes();
-//	$oldcolumns = array_keys($columnold);
+	//	$oldcolumns = array_keys($columnold);
 	$conlist = array_flip($changelist);
 	$query = "select * from" . " " . $tbl_name;
 	$res = $db->rawQuery($query);
@@ -7061,7 +7053,7 @@ function setUpdateServices($list, $nolog = null)
 
 function setUpdateConfigWithVersionCheck($list, $servertype = null, $nolog = null)
 {
-//	$fixstr = null;
+	//	$fixstr = null;
 
 	foreach ($list as $k => $v) {
 		log_cleanup("- Fix {$v} services", $nolog);
@@ -7079,7 +7071,7 @@ function updatecleanup($nolog = null)
 	setPrepareKloxo($nolog);
 
 	// MR -- disable (from 'old' Kloxo style)
-//	install_bogofilter($nolog);
+	//	install_bogofilter($nolog);
 
 	setRemoveOldDirs($nolog);
 
@@ -7108,7 +7100,7 @@ function updatecleanup($nolog = null)
 		log_cleanup("- Remove process", $nolog);
 		lxfile_rm("phpinfo.php");
 	}
-/*
+	/*
 	log_cleanup("Kill gettraffic system process", $nolog);
 	log_cleanup("- Kill process", $nolog);
 	exec("pkill -f gettraffic");
@@ -7128,7 +7120,7 @@ function updatecleanup($nolog = null)
 	lxfile_unix_chmod("/home", "0755");
 
 	setKloxoHttpdChownChmod($nolog);
-/*
+	/*
 	log_cleanup("Enable xinetd service", $nolog);
 	log_cleanup("- Enable process", $nolog);
 	call_with_flag("enable_xinetd");
@@ -7161,7 +7153,7 @@ function updatecleanup($nolog = null)
 	log_cleanup("- Remove process", $nolog);
 	remove_ssh_self_host_key();
 
-//	installEasyinstaller($nolog);
+	//	installEasyinstaller($nolog);
 }
 
 function setConfigsServices($nolog = null)
@@ -7178,10 +7170,10 @@ function setInitialServices($nolog = null)
 {
 	// MR -- no needed because using disable temporal alias (\cp, \mv and \rm)
 	// -- not include rm because conflict with \r
-//	setRemoveAlias($nolog);
+	//	setRemoveAlias($nolog);
 
 	// MR -- disabled until auto-edit /etc/fstab
-//	setEnableQuota($nolog);
+	//	setEnableQuota($nolog);
 
 	setInitialServer($nolog);
 
@@ -7340,9 +7332,9 @@ function getParseInlinePhp($template, $input)
 
 	$ret = null;
 
-//	if (!ob_get_status()) {
-		ob_start();
-//	}
+	//	if (!ob_get_status()) {
+	ob_start();
+	//	}
 
 	eval('?>' . $template);
 
@@ -7380,9 +7372,9 @@ function setCopyDnsConfFiles($dnsdriver, $nolog = null)
 
 	if ($aliasdriver === 'djbdns') {
 		if (file_exists("/home/djbdns/tinydns")) {
-		//	lxfile_mv("/home/djbdns", "/opt/configs/djbdns");
+			//	lxfile_mv("/home/djbdns", "/opt/configs/djbdns");
 		}
-/*
+		/*
 	} elseif ($aliasdriver === 'maradns') {
 		$s = "mararc";
 		$t = getLinkCustomfile($pathdrv . "/etc", $s);
@@ -7421,7 +7413,6 @@ function setCopyDnsConfFiles($dnsdriver, $nolog = null)
 
 		log_cleanup("- Copy etc/conf/{$s} to {$pathtarget}/{$aliasdriver}.conf", $nolog);
 		lxfile_cp($t, "{$pathtarget}/{$aliasdriver}.conf");
-
 	} else {
 		$pathtarget = "{$pathetc}/{$aliasdriver}";
 
@@ -7526,8 +7517,10 @@ function setCopyWebConfFiles($webdriver, $nolog = null)
 	log_cleanup("- Copy etc/conf/{$s} to {$pathconf}/{$aliasdriver}.conf", $nolog);
 	if ($webdriver === 'apache') {
 		if (file_exists("../etc/flag/use_apache24.flg")) {
-			lxfile_cp(getLinkCustomfile("{$pathdrv}/etc/conf", "{$aliasdriver}{$addition}24.conf"),
-				"{$pathconf}/{$aliasdriver}.conf");
+			lxfile_cp(
+				getLinkCustomfile("{$pathdrv}/etc/conf", "{$aliasdriver}{$addition}24.conf"),
+				"{$pathconf}/{$aliasdriver}.conf"
+			);
 		} else {
 			lxfile_cp($t, "{$pathconf}/{$aliasdriver}{$addition}.conf");
 		}
@@ -7540,7 +7533,7 @@ function setCopyWebConfFiles($webdriver, $nolog = null)
 		lxfile_rm("{$pathdrv}/etc/conf.d/perl.conf");
 		lxfile_rm("{$pathdrv}/etc/conf.d/perl.conf.original");
 	}
-	
+
 	// MR -- make sure init.conf is right (especially for apache)
 	exec("sh /script/fixweb --target=defaults");
 }
@@ -7681,8 +7674,12 @@ function getAllRealWebDriverList()
 	$ret = array();
 
 	foreach ($list as $k => $v) {
-		if ($v === 'none') { continue; }
-		if (strpos($v, 'proxy') !== false) { continue; }
+		if ($v === 'none') {
+			continue;
+		}
+		if (strpos($v, 'proxy') !== false) {
+			continue;
+		}
 
 		$ret[] = $v;
 	}
@@ -7711,7 +7708,9 @@ function getAllRealWebCacheDriverList()
 	$ret = array();
 
 	foreach ($list as $k => $v) {
-		if ($v === 'none') { continue; }
+		if ($v === 'none') {
+			continue;
+		}
 
 		$ret[] = $v;
 	}
@@ -7740,7 +7739,9 @@ function getAllRealDnsDriverList()
 	$ret = array();
 
 	foreach ($list as $k => $v) {
-		if ($v === 'none') { continue; }
+		if ($v === 'none') {
+			continue;
+		}
 
 		$ret[] = $v;
 	}
@@ -7836,7 +7837,7 @@ function getKloxoType()
 function setHostsFile($nolog = null)
 {
 	log_cleanup("Add 'hostname' information to '/etc/hosts'", $nolog);
-/*
+	/*
 	$begincomment[] = "### begin - add by Kloxo-MR";
 	$endcomment[] = "### end - add by Kloxo-MR";
 
@@ -8037,9 +8038,9 @@ function isRemotePost()
 		// or possibly, count($_POST) > 0
 		$host = preg_replace('#^www\.#', '', $_SERVER['HTTP_HOST']);
 
-		if ($host AND $_SERVER['HTTP_REFERER']) {
+		if ($host and $_SERVER['HTTP_REFERER']) {
 			$refparts = @parse_url($_SERVER['HTTP_REFERER']);
-			$refhost = $refparts['host'] . ((int)$refparts['port'] ? ':' . (int)$refparts['port'] : '');
+			$refhost = $refparts['host'] . ((int) $refparts['port'] ? ':' . (int) $refparts['port'] : '');
 
 			if (strpos($refhost, $host) === false) {
 				//	die('POST requests are not permitted from "foreign" domains.');
@@ -8083,7 +8084,7 @@ function isCSRFTokenMatch()
 			$ret = false;
 		}
 	} else {
-	/*
+		/*
 		// MR -- disable for implementation because too much exception and include less of less risk
 		$action = $_GET['frm_action'];
 		$subaction = $_GET['frm_subaction'];
@@ -8166,10 +8167,12 @@ function setSyncDrivers($nolog = null)
 
 	log_cleanup("Synchronize driver between table and slavedb", $nolog);
 
-//	include "../file/driver/rhel.inc";
+	//	include "../file/driver/rhel.inc";
 
-	$classlist = array('web' => 'apache', 'webcache' => 'none', 'dns' => 'bind',
-		'pop3' => 'courier', 'smtp' => 'qmail', 'spam' => 'bogofilter');
+	$classlist = array(
+		'web' => 'apache', 'webcache' => 'none', 'dns' => 'bind',
+		'pop3' => 'courier', 'smtp' => 'qmail', 'spam' => 'bogofilter'
+	);
 
 	$nodriver = false;
 
@@ -8194,7 +8197,7 @@ function setSyncDrivers($nolog = null)
 		$driver_from_table = $gbl->getSyncClass(null, 'localhost', $key);
 
 		if ($driver_from_table !== $driver_from_slavedb) {
-		/*
+			/*
 			if (!$driver_from_table) {
 				$realval[$key] = $val;
 			} else {
@@ -8379,28 +8382,28 @@ function setAllSSLPortions($nolog = null)
 	log_cleanup("- Copy 'openssl' config Files", $nolog);
 	setCopyOpenSSLConfFiles();
 
-//	log_cleanup("- Copy 'letsencrypt-auto' config Files", $nolog);
-//	setCopyLetsEncryptConfFiles();
+	//	log_cleanup("- Copy 'letsencrypt-auto' config Files", $nolog);
+	//	setCopyLetsEncryptConfFiles();
 
 	log_cleanup("- Copy 'acme.sh' config Files", $nolog);
 	setCopyAcmeshConfFiles();
 
 	// MR -- StartAPI already stopped. So disabled
-//	log_cleanup("- Copy 'startapi.sh' config Files", $nolog);
-//	setCopyStartapishConfFiles();
+	//	log_cleanup("- Copy 'startapi.sh' config Files", $nolog);
+	//	setCopyStartapishConfFiles();
 
-//	log_cleanup("- Install Letsencrypt-auto", $nolog);
-//	setInstallLetsencrypt($nolog);
+	//	log_cleanup("- Install Letsencrypt-auto", $nolog);
+	//	setInstallLetsencrypt($nolog);
 
-//	log_cleanup("- Remove Letsencrypt-auto", $nolog);
-//	setRemoveLetsencrypt($nolog);
+	//	log_cleanup("- Remove Letsencrypt-auto", $nolog);
+	//	setRemoveLetsencrypt($nolog);
 
 	log_cleanup("- Install acme.sh", $nolog);
 	setInstallAcmesh($nolog);
 
 	// MR -- StartAPI already stopped. So disabled
-//	log_cleanup("- Install startapi.sh", $nolog);
-//	setInstallStartapish($nolog);
+	//	log_cleanup("- Install startapi.sh", $nolog);
+	//	setInstallStartapish($nolog);
 
 	log_cleanup("- Fix SSL path", $nolog);
 	setFixSSLPath($nolog);
@@ -8448,8 +8451,14 @@ function callWithSudo($res, $username = null)
 		log_log("sudo_action", "Running: " . serialize($res->robject) . " as $username ");
 	}
 
-	$var = lxshell_output("sudo", "-u", $username, "__path_php_path", "../bin/common/sudo_action.php",
-		escapeshellarg(base64_encode(serialize($res))));
+	$var = lxshell_output(
+		"sudo",
+		"-u",
+		$username,
+		"__path_php_path",
+		"../bin/common/sudo_action.php",
+		escapeshellarg(base64_encode(serialize($res)))
+	);
 
 	$rmt = unserialize(base64_decode($var));
 
@@ -8462,73 +8471,72 @@ function setAllWebServerInstall($nolog = null)
 
 	$list = getAllRealWebDriverList();
 
-	$ws = array('nginx' => 'nginx nginx-module* GeoIP spawn-fcgi fcgiwrap', 'lighttpd' => 'lighttpd lighttpd-fastcgi',
+	$ws = array(
+		'nginx' => 'nginx nginx-module* GeoIP spawn-fcgi fcgiwrap', 'lighttpd' => 'lighttpd lighttpd-fastcgi',
 		'hiawatha' => 'hiawatha hiawatha-addons', 'httpd' => 'httpd httpd-tools',
-		'httpd24u' => 'httpd24u httpd24u-tools httpd24u-filesystem httpd24u-mod_security2');
+		'httpd24u' => 'httpd24u httpd24u-tools httpd24u-filesystem httpd24u-mod_security2'
+	);
 
-	$hm = array('httpd' => 'mod_ssl mod_rpaf mod_ruid2 mod_suphp mod_fastcgi mod_fcgid mod_define',
-		'httpd24u' => 'mod24u_ssl mod24u_session mod24u_suphp mod24u_ruid2 mod24u_fcgid mod24u_fastcgi mod24u_evasive');
+	$hm = array(
+		'httpd' => 'mod_ssl mod_rpaf mod_ruid2 mod_suphp mod_fastcgi mod_fcgid mod_define',
+		'httpd24u' => 'mod24u_ssl mod24u_session mod24u_suphp mod24u_ruid2 mod24u_fcgid mod24u_fastcgi mod24u_evasive'
+	);
 
 	if (file_exists("../etc/flag/use_apache24.flg")) {
 		$use_apache24 = true;
 	} else {
 		if (version_compare(getRpmVersion('httpd'), '2.4.0', '>')) {
 			$use_apache24 = true;
-			exec("echo '' > ../etc/flag/use_apache24.flg");
+			touch("../etc/flag/use_apache24.flg");
 		} else {
 			$use_apache24 = false;
 		}
 	}
-
+	log_cleanup("- Use apache24 [$use_apache24] ", $nolog);
 	foreach ($list as $k => $v) {
 		$confpath = "/opt/configs/{$v}/etc/conf";
 
 		if ($v === 'apache') {
 			$a24mpath = "/etc/httpd/conf.modules.d";
-			if ($use_apache24) {
+			if ($use_apache24 === TRUE) {
 				if (isRpmInstalled('httpd')) {
 					if (file_exists("{$a24mpath}/00-base.conf")) {
 						exec("'mv' -f {$a24mpath}/00-base.conf {$a24mpath}/00-base.conf.rpmold");
 					}
-
+					log_cleanup("- Replace for 'apache' (to 'httpd24u')", $nolog);
 					exec("yum -y replace httpd --replace-with=httpd24u >/dev/null 2>&1;" .
 						"yum -y remove {$hm['httpd']} >/dev/null 2>&1;" .
 						"yum -y install {$hm['httpd24u']} >/dev/null 2>&1");
-
-					log_cleanup("- Replace for 'apache' (to 'httpd24u')", $nolog);
 				} else {
 					log_cleanup("- No process for 'apache' ('httpd24')", $nolog);
 				}
-
 				$conffile = getLinkCustomfile("{$confpath}", "httpd24.conf");
 				exec("'cp' -f {$conffile} /etc/httpd/conf/httpd.conf");
-			} else {
+			} else {				
 				if (isRpmInstalled('httpd24u')) {
 					if (file_exists("{$a24mpath}/00-base.conf")) {
 						exec("'mv' -f {$a24mpath}/00-base.conf {$a24mpath}/00-base.conf.rpmold");
 					}
-
 					exec("yum -y replace httpd24u --replace-with=httpd >/dev/null 2>&1;" .
 						"yum -y remove {$hm['httpd24u']} >/dev/null 2>&1;" .
 						"yum -y install {$hm['httpd']} >/dev/null 2>&1");
-
-					log_cleanup("- Replace for 'apache' (to 'httpd24u')", $nolog);
+					log_cleanup("- Replace for 'httpd24u' (to 'apache')", $nolog);
 				} else {
 					log_cleanup("- No process for 'apache' ('httpd')", $nolog);
 				}
-
 				$conffile = getLinkCustomfile("{$confpath}", "httpd.conf");
 				exec("'cp' -f {$conffile} /etc/httpd/conf/httpd.conf");
 			}
-
 			if (file_exists("../etc/flag/use_pagespeed.flg")) {
 				// MR -- this is a trick to use isRpmInstalled
 				if (!isRpmInstalled('| grep pagespeed')) {
 					exec("yum -y install mod-pagespeed-stable");
 				}
 
-				lxfile_cp(getLinkCustomfile("/opt/configs/apache/etc/conf.d", "pagespeed.conf"),
-					"/etc/httpd/conf.d/pagespeed.conf");
+				lxfile_cp(
+					getLinkCustomfile("/opt/configs/apache/etc/conf.d", "pagespeed.conf"),
+					"/etc/httpd/conf.d/pagespeed.conf"
+				);
 			} else {
 				lxfile_cp("/opt/configs/apache/etc/conf.d/_inactive_.conf", "/etc/httpd/conf.d/pagespeed.conf");
 			}
@@ -8595,20 +8603,22 @@ function setAllDnsServerInstall($nolog = null)
 
 	$list = getAllRealDnsDriverList();
 
-	$ds = array('bind' => 'bind bind-utils bind-libs', 'djbdns' => 'djbdns',
+	$ds = array(
+		'bind' => 'bind bind-utils bind-libs', 'djbdns' => 'djbdns',
 		'nsd' => 'nsd', 'pdns' => 'pdns pdns-backend-mysql pdns-tools pdns-geo',
-		'yadifa' => 'yadifa yadifa-tools');
+		'yadifa' => 'yadifa yadifa-tools'
+	);
 
 
 	foreach ($list as $k => $v) {
 		// MR -- remove because may conflict with djbdns
 		if ($v === 'djbdns') {
-			if (isRpmInstalled('spamdyke-utils')) { 
+			if (isRpmInstalled('spamdyke-utils')) {
 				setRpmRemovedViaYum("spamdyke-utils");
 			}
 		}
 
-	//	$confpath = "/opt/configs/{$v}/etc/conf";
+		//	$confpath = "/opt/configs/{$v}/etc/conf";
 
 		$t = $ds[$v];
 
@@ -8697,9 +8707,9 @@ function setCopyIndexFileToAwstatsDir($nolog = null)
 
 function getRemoteIp()
 {
-	if(!empty($_SERVER['HTTP_CLIENT_IP'])) { # check ip from share internet
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])) { # check ip from share internet
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
-	} elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) { # to check ip is pass from proxy
+	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) { # to check ip is pass from proxy
 		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	} else {
 		$ip = $_SERVER['REMOTE_ADDR'];
@@ -8711,7 +8721,8 @@ function getRemoteIp()
 function isServiceExists($target)
 {
 	if ((file_exists("/etc/rc.d/init.d/{$target}")) ||
-			(file_exists("/usr/lib/systemd/system/{$target}.service"))) {
+		(file_exists("/usr/lib/systemd/system/{$target}.service"))
+	) {
 		return true;
 	} else {
 		return false;
@@ -8737,7 +8748,7 @@ function isServiceEnabled($target)
 	if (count($val1) > 0) {
 		$ret = true;
 	}
-	
+
 	return $ret;
 }
 
@@ -8763,7 +8774,7 @@ function getServiceType($target = null)
 		}
 	} else {
 		exec("ps --no-headers -o comm 1", $test);
-		
+
 		$ret = $test[0];
 	}
 
@@ -8772,8 +8783,8 @@ function getServiceType($target = null)
 
 function isServiceRunning($srvc)
 {
-//	$ret = lxshell_return("service", $srvc, "status", "|", "grep", "'(pid'");
-//	$ret = lxshell_return("service", $srvc, "status", "|", "grep", "'running'");
+	//	$ret = lxshell_return("service", $srvc, "status", "|", "grep", "'(pid'");
+	//	$ret = lxshell_return("service", $srvc, "status", "|", "grep", "'running'");
 	$ret = lxshell_return("pgrep", "^'{$srvc}'");
 
 	if ($ret) {
@@ -8789,15 +8800,15 @@ function write_ini($array, $file)
 {
 	$res = array();
 
-	foreach($array as $key => $val) {
-		if(is_array($val)) {
+	foreach ($array as $key => $val) {
+		if (is_array($val)) {
 			$res[] = "[$key]";
 
 			foreach ($val as $skey => $sval) {
-				$res[] = "$skey = ".(is_numeric($sval) ? $sval : '"'.$sval.'"');
+				$res[] = "$skey = " . (is_numeric($sval) ? $sval : '"' . $sval . '"');
 			}
 		} else {
-			$res[] = "$key = ".(is_numeric($val) ? $val : '"'.$val.'"');
+			$res[] = "$key = " . (is_numeric($val) ? $val : '"' . $val . '"');
 		}
 	}
 
@@ -8814,9 +8825,9 @@ function safefilerewrite($fileName, $dataToSave)
 
 			if (!$canWrite) {
 				// If lock not obtained sleep for 0 - 100 milliseconds, to avoid collision and CPU load
-				usleep(round(rand(0, 100)*1000));
+				usleep(round(rand(0, 100) * 1000));
 			}
-		} while ((!$canWrite)and((microtime(TRUE)-$startTime) < 5));
+		} while ((!$canWrite) and ((microtime(TRUE) - $startTime) < 5));
 
 		//file was locked so now we can store information
 		if ($canWrite) {
