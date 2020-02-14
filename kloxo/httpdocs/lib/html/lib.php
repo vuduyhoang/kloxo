@@ -4250,12 +4250,10 @@ function fix_all_mysql_root_password()
 
 function fix_mysql_root_password($server)
 {
-	global $login;
-	log_log("ladebug", $login);
+	global $login;	
 	$pass = $login->password;
 	$pass = fix_nname_to_be_variable($pass);
-	$pass = substr($pass, 3, 11);
-	log_log("ladebug", $pass);
+	$pass = substr($pass, 3, 11);	
 	$dbadmin = new Dbadmin(null, $server, "mysql___$server");
 	$dbadmin->get();
 
@@ -5090,15 +5088,12 @@ function fixMySQLRootPassword($nolog = null)
 {
 	log_cleanup("Fix MySQL root password", $nolog);
 	log_cleanup("- Fix process", $nolog);
-
 	$a = null;
 	fix_mysql_root_password('localhost');
 	$dbadmin = new Dbadmin(null, 'localhost', "mysql___localhost");
 	$dbadmin->get();
-	$pass = $dbadmin->dbpassword;
-	log_log("ladebug", $dbadmin);
-	$a['mysql']['dbpassword'] = $pass;
-	log_cleanup("- slave_save_db $pass", $nolog);
+	$pass = $dbadmin->dbpassword;	
+	$a['mysql']['dbpassword'] = $pass;	
 	slave_save_db("dbadmin", $a);
 }
 
