@@ -524,7 +524,6 @@ function do_desc_update($object, $subaction, $param)
 			if (cse($k, "_b") || $k === 'used') {
 				$bvar = $object->$k;
 				$bvar->modify($v);
-
 				continue;
 			}
 		}		

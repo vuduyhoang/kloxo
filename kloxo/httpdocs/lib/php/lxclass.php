@@ -2117,16 +2117,12 @@ abstract class Lxclass
 
 		if (!$this->parent_clname) {
 			dprint("$this->nname doesn't have parent_clname\n");
-
 			return null;
 		}
-
 		list ($pclass, $pname) = getParentNameAndClass($this->parent_clname);
-
 		$parent = new $pclass($this->__masterserver, $this->__readserver, $pname);
 		$parent->get();
 		$this->__parent_o = $parent;
-
 		return $parent;
 	}
 
