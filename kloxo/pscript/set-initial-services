@@ -1,4 +1,4 @@
 #!/bin/sh
-
+echo ">>>>>>>>>>>>>>Start set-initial-services [$@] <<<<<<<<<<<<<<<<<<<<<<<<<<"
 . /script/directory
 lxphp.exe ../bin/fix/set-initial-services.php "$@"

@@ -1240,8 +1240,7 @@ STRIN;
 				break;
 
 			case "timezone":
-				$vlist['timezone'] = array('s', pserver::getTimeZoneList());
-
+				$vlist['timezone'] = array('s', pserver::getTimeZoneList());				
 				return $vlist;
 
 			case "ssl_key":
@@ -1303,13 +1302,13 @@ STRIN;
 
 				if (count($out) > 0) {
 					if (version_compare(getRpmVersionFromYum('httpd'), '2.4.0', '>')) {
-						exec("echo '' > ../etc/flag/use_apache24.flg");
+						touch("../etc/flag/use_apache24.flg");
 						$this->use_apache24 = 'on';
 						$vlist['use_apache24'] = array('h', 'on', 'off');
 						$vlist['use_apache24_message'] = array('M', array('on'));
 					} else {
 						if (version_compare(getRpmVersionFromYum('httpd24u'), '2.4.0', '>')) {
-							exec("echo '' > ../etc/flag/use_apache24.flg");
+							touch("../etc/flag/use_apache24.flg");
 							$this->use_apache24 = 'on';
 							$vlist['use_apache24'] = array('f', 'on', 'off');
 						} else{

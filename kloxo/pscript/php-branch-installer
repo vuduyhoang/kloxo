@@ -1,5 +1,4 @@
 #!/bin/sh
-
 if [ "${1}" == "--help" ] ; then
 	select=$(cat /usr/local/lxlabs/kloxo/etc/list/php.lst|tr ',' '\n'|tr '_(as' ' '|awk '{print $1}'|tr '\n' ' '|xargs|tr ' ' '/')
 	echo
@@ -10,14 +9,13 @@ if [ "${1}" == "--help" ] ; then
 	exit
 fi
 
-echo
 echo "- For help, type '$0 --help'"
 
 if [ "${#}" == 0 ] ; then
 	echo "- No argument supplied. Run 'sh $0 --help'"
 	exit
 fi
-
+echo ">>>>>>>>>>>> Start php-branch-installer [$1]  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
 ##-- for centos 6
 ##if [ "$(ps --no-headers -o comm 1)" != "systemd" ] ; then
 ##	yum replace -y libmemcached --replace-with=libmemcached10
