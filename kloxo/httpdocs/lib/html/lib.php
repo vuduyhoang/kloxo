@@ -5497,8 +5497,8 @@ function getRpmVersion($rpmname)
 
 	// MR -- use '-qa' because need no output if package not exits
 	#exec("rpm -qa --qf '%{VERSION}\n' {$rpmname}", $out);
-	$ver = lxshell_output("rpm", "-q", "-pf", "'%{VERSION}\n'", $rpmname);
-	if (preg_match('#\d+\.\d+\.\d+#', $ver, $match)) return $match[0];
+	$ver = lxshell_output("rpm", "-q", "--qf", "%{VERSION}", $rpmname);
+	if (preg_match('#\d+\.\d+\.\d+#', $ver, $match)) return trim($match[0]);
 	return '0.0.0';
 }
 
