@@ -8486,7 +8486,12 @@ function setAllWebServerInstall($nolog = null)
 			$use_apache24 = true;
 			$msg_apache24 = "OK";
 			touch("../etc/flag/use_apache24.flg");
+		}elseif (version_compare(getRpmVersion('httpd24u'), '2.4.0', '>')) {
+			$use_apache24 = true;
+			$msg_apache24 = "OK";
+			touch("../etc/flag/use_apache24.flg");
 		} else {
+			//can not detect httpd version
 			$msg_apache24 = "FAILED";
 			$use_apache24 = false;
 		}
