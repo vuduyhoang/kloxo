@@ -1240,8 +1240,7 @@ STRIN;
 				break;
 
 			case "timezone":
-				$vlist['timezone'] = array('s', pserver::getTimeZoneList());
-
+				$vlist['timezone'] = array('s', pserver::getTimeZoneList());				
 				return $vlist;
 
 			case "ssl_key":

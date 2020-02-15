@@ -171,7 +171,7 @@ class ServerMail extends lxdb
 
 				$sl_file = "/var/qmail/control/sendlimit";
 
-				if (!$this->send_limit) {
+				if (!isset($this->send_limit)) {
 					if (!file_exists($sl_file)) {
 						$this->send_limit = 3000;
 					} else {
