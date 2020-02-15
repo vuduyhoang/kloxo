@@ -102,8 +102,8 @@ class ClientBase extends ClientCore
 
 	function updateClientSendMessage($param)
 	{
-	//	dprintr($param);
-		
+		//	dprintr($param);
+
 		$flist = $param['_accountselect'];
 		$this->doSendMessage('client', $flist);
 	}
@@ -129,10 +129,10 @@ class ClientBase extends ClientCore
 			$gbl->setSessionV('customermode_flag', 'on');
 		}
 
-	//	$gbl->c_session->was();
+		//	$gbl->c_session->was();
 		$gbl->was();
 
-	/*
+		/*
 		if ($this->isOn('customermode_flag')) {
 			$param['customermode_flag'] = 'off';
 		} else {
@@ -155,7 +155,7 @@ class ClientBase extends ClientCore
 
 	function updateVpsSendMessage($param)
 	{
-	//	dprintr($param);
+		//	dprintr($param);
 		$flist = $param['_accountselect'];
 		$this->doSendMessage('vps', $flist);
 	}
@@ -181,7 +181,7 @@ class ClientBase extends ClientCore
 	{
 		global $gbl, $sgbl, $login, $ghtml;
 
-	//	if ($sgbl->isKloxo() && $this->isAdmin()) {
+		//	if ($sgbl->isKloxo() && $this->isAdmin()) {
 		if ($sgbl->isKloxo() && ($login->nname === 'admin')) {
 			if (!is_unlimited($this->priv->maindomain_num) && ($this->priv->maindomain_num - $this->used->maindomain_num) < 6) {
 				$ghtml->__http_vars['frm_smessage'] = 'warn_license_limit';
@@ -189,7 +189,7 @@ class ClientBase extends ClientCore
 			}
 		}
 
-	//	if ($this->isAdmin()) {
+		//	if ($this->isAdmin()) {
 		if ($login->nname === 'admin') {
 			$v = db_get_value("sshconfig", "localhost", "without_password_flag");
 			$vv = db_get_value("sshconfig", "localhost", "config_flag");
@@ -198,7 +198,7 @@ class ClientBase extends ClientCore
 			$this->__t_check_vvar = $vv;
 
 			if (!$this->isOn('__t_check_var') && !$this->isOn('__t_check_vvar')) {
-			//	$ghtml->__http_vars['frm_emessage'] = "ssh_root_password_access";
+				//	$ghtml->__http_vars['frm_emessage'] = "ssh_root_password_access";
 			}
 
 			if ($sgbl->isKloxo()) {
@@ -224,18 +224,18 @@ class ClientBase extends ClientCore
 		}
 
 		if ($login->sp_specialplay_o->specialplay_b->skin_name === 'simplicity') {
-		//	if ($this->isAdmin()) {
+			//	if ($this->isAdmin()) {
 			if ($login->nname === 'admin') {
-				$server = $this->syncserver;				
-				$db=db_get_value("phpini", "pserver-" . $server, "ser_phpini_flag_b");
-				if ($db===null){
+				$server = $this->syncserver;
+				$db = db_get_value("phpini", "pserver-" . $server, "ser_phpini_flag_b");
+				if ($db === null) {
 					$ghtml->__http_vars['frm_emessage'] = "phpini_not_set_pserver";
-				}else{
-				// MR -- double check for php.ini in client (especially for admin)
-				//$server_phpini = unserialize(base64_decode(db_get_value("phpini", "client-" . $this->nname, "ser_phpini_flag_b")));
-					$db=db_get_value("phpini", "client-" . $this->nname, "ser_phpini_flag_b");			
-				if ($db===null) {
-					$ghtml->__http_vars['frm_emessage'] = "phpini_not_set_client";
+				} else {
+					// MR -- double check for php.ini in client (especially for admin)
+					//$server_phpini = unserialize(base64_decode(db_get_value("phpini", "client-" . $this->nname, "ser_phpini_flag_b")));
+					$db = db_get_value("phpini", "client-" . $this->nname, "ser_phpini_flag_b");
+					if ($db === null)
+						$ghtml->__http_vars['frm_emessage'] = "phpini_not_set_client";
 				}
 			}
 		}
@@ -249,7 +249,7 @@ class ClientBase extends ClientCore
 	{
 		$newp = md5($pass);
 		$newp = substr($newp, 0, 10);
-		
+
 		return $newp;
 	}
 
@@ -283,7 +283,7 @@ class ClientBase extends ClientCore
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -291,9 +291,8 @@ class ClientBase extends ClientCore
 	{
 		$ilist[] = "cttype";
 		$ilist[] = "ddate";
-		
-		return $ilist;
 
+		return $ilist;
 	}
 
 	function getResourceChildList()
@@ -333,7 +332,7 @@ class ClientBase extends ClientCore
 		$s = null;
 
 		if (isset($this->websyncserver)) {
-		//	$s = $this->websyncserver;
+			//	$s = $this->websyncserver;
 		}
 
 		// MR -- change this function for php-fpm purpose
@@ -371,14 +370,14 @@ class ClientBase extends ClientCore
 		$alist[] = "a=resource";
 
 		if ($this->isAdmin()) {
-		//	$alist['__v_dialog_tick'] = "a=updateform&sa=ticketconfig&o=ticketconfig";
-		//	$alist[] = "o=general&c=helpdeskcategory_a&a=list";
+			//	$alist['__v_dialog_tick'] = "a=updateform&sa=ticketconfig&o=ticketconfig";
+			//	$alist[] = "o=general&c=helpdeskcategory_a&a=list";
 			$alist['__v_dialog_sca'] = "o=general&a=updateform&sa=scavengetime";
 			$alist['__v_dialog_gen'] = "o=general&a=updateform&sa=generalsetting";
 			$alist['__v_dialog_main'] = "o=general&a=updateform&sa=maintenance";
 			$alist['__v_dialog_self'] = "o=general&a=updateform&sa=selfbackupconfig";
-		//	$alist['__v_dialog_ssh'] = "o=general&a=updateform&sa=ssh_config";
-		//	$alist['__v_dialog_ipcheck'] = "o=general&a=updateform&sa=session_config";
+			//	$alist['__v_dialog_ssh'] = "o=general&a=updateform&sa=ssh_config";
+			//	$alist['__v_dialog_ipcheck'] = "o=general&a=updateform&sa=session_config";
 			$alist['__v_dialog_download'] = "o=general&a=updateform&sa=download_config";
 			$alist['__v_dialog_forc'] = "a=updateform&sa=forcedeletepserver&c=client";
 
@@ -388,7 +387,7 @@ class ClientBase extends ClientCore
 				$alist['__v_dialog_cust'] = "o=general&a=updateform&sa=customaction";
 				$alist['__v_dialog_orph'] = "a=updateform&sa=deleteorphanedvps";
 				$alist['__v_dialog_lxc'] = "o=general&a=updateform&sa=kloxo_config";
-			//	$alist[] = "a=show&o=ostemplatelist";
+				//	$alist[] = "a=show&o=ostemplatelist";
 				$alist[] = "a=list&c=customaction";
 			} else {
 				$alist[] = "o=genlist&c=dirindexlist_a&a=list";
@@ -424,9 +423,9 @@ class ClientBase extends ClientCore
 
 		$alist['__title_amisc'] = $login->getKeywordUc('misc');
 
-	//	if (!$this->isLogin()) {
-			$alist['__v_dialog_disa'] = "a=updateform&sa=disable_per";
-	//	}
+		//	if (!$this->isLogin()) {
+		$alist['__v_dialog_disa'] = "a=updateform&sa=disable_per";
+		//	}
 
 		if ($login->priv->isOn('logo_manage_flag') && $this->isLogin()) {
 			$alist['__v_dialog_uplo'] = "o=sp_specialplay&a=updateform&sa=upload_logo";
@@ -437,7 +436,7 @@ class ClientBase extends ClientCore
 				$alist[] = 'a=updateform&sa=disable_skeleton';
 			}
 
-		//	$alist[] = "a=updateform&sa=generate_csr";
+			//	$alist[] = "a=updateform&sa=generate_csr";
 		}
 
 		if (!$this->isLogin()) {
@@ -452,7 +451,7 @@ class ClientBase extends ClientCore
 		}
 
 		if ($this->isAdmin()) {
-		//	$alist[] = "a=updateform&sa=license&o=license";
+			//	$alist[] = "a=updateform&sa=license&o=license";
 		}
 
 		return $alist;
@@ -509,7 +508,6 @@ class ClientBase extends ClientCore
 		}
 
 		return $rlist;
-
 	}
 
 	function updateSkeleton($param)
@@ -554,7 +552,7 @@ class ClientBase extends ClientCore
 			}
 		}
 
-	//	throw new lxException($login->getThrow("success_message_successfully_sent"));
+		//	throw new lxException($login->getThrow("success_message_successfully_sent"));
 		throw new lxException($login->getThrow("message_sent"));
 	}
 
@@ -568,7 +566,7 @@ class ClientBase extends ClientCore
 
 		lx_mail(null, $this->contactemail, $param['wall_subject_f'], $param['wall_message_f']);
 
-	//	throw new lxException($login->getThrow("success_message_successfully_sent"), '', $this->contactemail);
+		//	throw new lxException($login->getThrow("success_message_successfully_sent"), '', $this->contactemail);
 		throw new lxException($login->getThrow("message_sent"), '', $this->contactemail);
 	}
 
@@ -593,14 +591,13 @@ class ClientBase extends ClientCore
 		global $login;
 
 		switch ($var) {
-			case "nname":
-			{
-				if (is_numeric($val)) {
-					throw new lxException($login->getThrow("invalid_client_name"), '', $val);
+			case "nname": {
+					if (is_numeric($val)) {
+						throw new lxException($login->getThrow("invalid_client_name"), '', $val);
+					}
 				}
-			}
 		}
-		
+
 		return $val;
 	}
 
@@ -621,7 +618,7 @@ class ClientBase extends ClientCore
 		global $gbl, $sgbl, $login, $ghtml;
 
 		$parent = $this->getParentO();
-	//	$parent = $parent->getClientParentO();
+		//	$parent = $parent->getClientParentO();
 
 		if ($this->isOn('use_resourceplan_f')) {
 			//$ct = $parent->getFromList("clienttemplate", $this->resourceplan_f);
@@ -641,10 +638,10 @@ class ClientBase extends ClientCore
 			}
 
 			$this->resourceplan_used = $this->resourceplan_f;
-			$pv = clone($ct->priv);
+			$pv = clone ($ct->priv);
 			$this->priv = $pv;
 			$this->fixPrivUnset();
-			$this->listpriv = clone($ct->listpriv);
+			$this->listpriv = clone ($ct->listpriv);
 			$this->disable_per = $ct->disable_per;
 			$this->dnstemplate_list = $ct->dnstemplate_list;
 		}
@@ -669,12 +666,12 @@ class ClientBase extends ClientCore
 
 		// Please note, the parent is wassed inside the createDefaultDomain, via the __desc_cmd_add.
 		// So after that, nothing will happen.
-	//	$this->domain_name = trim($this->domain_name);
+		//	$this->domain_name = trim($this->domain_name);
 
 		if ($sgbl->isKloxo() && $this->domain_name) {
 			$this->default_domain = $this->domain_name;
 			$this->createDefaultDomain($this->domain_name, $this->dnstemplate_name);
-		
+
 			if ($this->easyinstaller_app && $this->easyinstaller_app !== '--leave--') {
 				$this->createDefaultApplication($this->domain_name, $this->easyinstaller_app);
 			}
@@ -686,7 +683,7 @@ class ClientBase extends ClientCore
 	function getPrimaryDb()
 	{
 		$list = $this->getList('mysqldb');
-		foreach ((array)$list as $k => $mdb) {
+		foreach ((array) $list as $k => $mdb) {
 			if ($mdb->isOn('primarydb')) {
 				return $mdb;
 			}
@@ -793,7 +790,7 @@ class ClientBase extends ClientCore
 
 	function isSync()
 	{
-	/*
+		/*
 		if ($this->dbaction === 'update') {
 			return false;
 		}
@@ -879,7 +876,7 @@ class ClientBase extends ClientCore
 			$rs = lx_merge_good(array('--any--'), $rs);
 			$nlist['websyncserver'] = array('s', $rs);
 			$nlist['mmailsyncserver'] = array('s', $rs);
-		//	$nlist['coma_dnssyncserver_list'] = array('s', $rs);
+			//	$nlist['coma_dnssyncserver_list'] = array('s', $rs);
 		}
 
 		return $nlist;
@@ -903,24 +900,24 @@ class ClientBase extends ClientCore
 
 		if ($view === 'quota') {
 			$name_list["__v_priv_used_client_num"] = "10%";
-		//	$name_list["client_num_per_f"] = "5%";
+			//	$name_list["client_num_per_f"] = "5%";
 
-		//	$name_list["maindomain_num"] = "5%";
-		//	$name_list["__v_priv_used_maindomain_num"] = "5%";
+			//	$name_list["maindomain_num"] = "5%";
+			//	$name_list["__v_priv_used_maindomain_num"] = "5%";
 			$name_list["maindomain_num_per_f"] = "15%";
 
-		//	$name_list["traffic_usage"] = "5%";
-		//	$name_list["__v_priv_used_traffic_usage"] = "10%";
+			//	$name_list["traffic_usage"] = "5%";
+			//	$name_list["__v_priv_used_traffic_usage"] = "10%";
 			$name_list["traffic_usage_per_f"] = "20%";
 
-		//	$name_list["totaldisk_usage"] = "5%";
-		//	$name_list["__v_priv_used_totaldisk_usage"] = "10%";
+			//	$name_list["totaldisk_usage"] = "5%";
+			//	$name_list["__v_priv_used_totaldisk_usage"] = "10%";
 			$name_list["totaldisk_usage_per_f"] = "20%";
 
 			$name_list["totalinode_usage_per_f"] = "20%";
 
-		//	$name_list["mysqldb_num"] = "10%";
-		//	$name_list["__v_priv_used_mysqldb_num"] = "10%";
+			//	$name_list["mysqldb_num"] = "10%";
+			//	$name_list["__v_priv_used_mysqldb_num"] = "10%";
 			$name_list["mysqldb_num_per_f"] = "20%";
 		} else {
 			$name_list["contactemail"] = "25%";
@@ -934,7 +931,7 @@ class ClientBase extends ClientCore
 			$name_list["maindomain_num"] = "10%";
 
 			if ($sgbl->isKloxo()) {
-			//	$name_list['default_domain'] = '10%';
+				//	$name_list['default_domain'] = '10%';
 			}
 
 
@@ -961,7 +958,7 @@ class ClientBase extends ClientCore
 		if_customer_complain_and_exit();
 
 		if ($parent->isGt('wholesale') && $parent->isGte($param['cttype'])) {
-		//	throw new lxException($login->getThrow("type_of_adding_more_than_parent"));
+			//	throw new lxException($login->getThrow("type_of_adding_more_than_parent"));
 			throw new lxException($login->getThrow("client_type_more_than_parent"));
 		}
 
@@ -971,7 +968,7 @@ class ClientBase extends ClientCore
 			// blank
 		} else {
 			ClientBase::fixpserver_list($param);
-		//	$param['dnstemplate_list'] = domain::getDnsTemplateList($parent);
+			//	$param['dnstemplate_list'] = domain::getDnsTemplateList($parent);
 		}
 
 		if (isset($param['dnssyncserver_list'])) {
@@ -980,7 +977,7 @@ class ClientBase extends ClientCore
 		$param['used_s_client_num'] = '-';
 
 		$param['realpass'] = $param['password'];
-		$param['password'] = crypt($param['password'], '$1$'.randomString(8).'$');
+		$param['password'] = crypt($param['password'], '$1$' . randomString(8) . '$');
 
 		return $param;
 	}
@@ -989,7 +986,7 @@ class ClientBase extends ClientCore
 	{
 		$modlist = $this->getList('module');
 
-		foreach ((array)$modlist as $m) {
+		foreach ((array) $modlist as $m) {
 			$m->delete();
 			$m->metadbaction = 'writeonly';
 		}
@@ -1041,7 +1038,6 @@ class ClientBase extends ClientCore
 
 		if (lxfile_exists("/home/{$param['nname']}")) {
 			throw new lxException($login->getThrow("dir_exists_under_home_dir"), '', $param['nname']);
-
 		}
 
 		$param['nname'] = trim($param['nname']);
@@ -1062,7 +1058,7 @@ class ClientBase extends ClientCore
 				}
 			}
 
-		//	dprintr($param);
+			//	dprintr($param);
 
 			if ($param['resourceplan_f'] !== 'continue_without_plan') {
 				$param['use_resourceplan_f'] = 'On';
@@ -1073,11 +1069,11 @@ class ClientBase extends ClientCore
 
 			$array = client::getPserverListPriv();
 
-			foreach ((array)$array as $a) {
+			foreach ((array) $array as $a) {
 				$v = "{$a}_list";
 
 				if (!$parent->listpriv->$v) {
-				//	throw new lxException($login->getThrow("no_server_pool"), '', $v);
+					//	throw new lxException($login->getThrow("no_server_pool"), '', $v);
 				}
 
 				$param["listpriv_s_{$a}_list"] = $parent->listpriv->$v;
@@ -1096,7 +1092,7 @@ class ClientBase extends ClientCore
 			$vlist = lx_merge_good($vlist, $qvlist);
 
 			$ret['action'] = "add";
-		//	$ret['continueaction'] = 'server';
+			//	$ret['continueaction'] = 'server';
 			$ret['variable'] = $vlist;
 			$ret['param'] = $param;
 		}
@@ -1111,7 +1107,7 @@ class ClientBase extends ClientCore
 
 	static function initThisObject($parent, $class, $name = null)
 	{
-	//	if (!$parent->is__table('node')) {
+		//	if (!$parent->is__table('node')) {
 		if ($parent->getClass() !== 'node') {
 			print("Attempt to Hack <br> <br> ");
 			exit;
@@ -1140,7 +1136,7 @@ class ClientBase extends ClientCore
 	{
 		// MR - taken from https://blogs.securiteam.com/index.php/archives/2603
 		// but this logic inside commandlinelib.php
-	/*
+		/*
 		if_demo_throw_exception('info');
 
 		if (isset($param['cttype'])) {
@@ -1204,7 +1200,6 @@ class ClientBase extends ClientCore
 					$vlist['__c_subtitle_server'] = "Servers";
 					self::getDomainServerVlist($parent, null, $vlist);
 				}
-
 			}
 		}
 
@@ -1268,7 +1263,6 @@ class ClientBase extends ClientCore
 					}
 					$alist[] = $a;
 				}
-
 			}
 		}
 	}
@@ -1277,7 +1271,7 @@ class ClientBase extends ClientCore
 	// Hack function... IF it returns false, the priv field will be a '-'.
 	function showPrivInResource()
 	{
-	/*
+		/*
 		if ($this->isCustomer()) {
 			if (!$this->priv->isOn('domain_add_flag')) {
 				return false;
@@ -1297,13 +1291,13 @@ class ClientBase extends ClientCore
 
 		$alist[] = "a=list&c=client";
 
-	//	if (!$sgbl->isHyperVm()) {
-			if ($parent->isLte('wholesale')) {
-				$alist[] = "a=addform&dta[var]=cttype&dta[val]=wholesale&c=client";
-				$alist[] = "a=addform&dta[var]=cttype&dta[val]=reseller&c=client";
-			}
+		//	if (!$sgbl->isHyperVm()) {
+		if ($parent->isLte('wholesale')) {
+			$alist[] = "a=addform&dta[var]=cttype&dta[val]=wholesale&c=client";
+			$alist[] = "a=addform&dta[var]=cttype&dta[val]=reseller&c=client";
+		}
 
-	//	}
+		//	}
 
 		if ($parent->isLte('reseller')) {
 			$alist[] = "a=addform&dta[var]=cttype&dta[val]=customer&c=client";
