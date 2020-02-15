@@ -8482,8 +8482,7 @@ function setAllWebServerInstall($nolog = null)
 	if (file_exists("../etc/flag/use_apache24.flg")) {
 		$use_apache24 = true;
 		$msg_apache24 = "OK";
-	} else {
-		log_cleanup("- Httpd version: " . getRpmVersion('httpd'));
+	} else {		
 		if (version_compare(getRpmVersion('httpd'), '2.4.0', '>')) {
 			$use_apache24 = true;
 			$msg_apache24 = "OK";

@@ -226,20 +226,15 @@ class ClientBase extends ClientCore
 		if ($login->sp_specialplay_o->specialplay_b->skin_name === 'simplicity') {
 		//	if ($this->isAdmin()) {
 			if ($login->nname === 'admin') {
-				$server = $this->syncserver;
-				$server_phpini = unserialize(base64_decode(db_get_value("phpini", "pserver-" . $server, "ser_phpini_flag_b")));
-
-				// MR -- pserver must set/update php.ini
-			//	if (!isset($server_phpini->session_save_path_flag)) {
-				if (!$server_phpini->session_save_path_flag) {
+				$server = $this->syncserver;				
+				$db=db_get_value("phpini", "pserver-" . $server, "ser_phpini_flag_b");
+				if ($db===null){
 					$ghtml->__http_vars['frm_emessage'] = "phpini_not_set_pserver";
-				}
-
+				}else{
 				// MR -- double check for php.ini in client (especially for admin)
-				$server_phpini = unserialize(base64_decode(db_get_value("phpini", "client-" . $this->nname, "ser_phpini_flag_b")));
-
-			//	if (!isset($server_phpini->session_save_path_flag)) {
-				if (!$server_phpini->session_save_path_flag) {
+				//$server_phpini = unserialize(base64_decode(db_get_value("phpini", "client-" . $this->nname, "ser_phpini_flag_b")));
+					$db=db_get_value("phpini", "client-" . $this->nname, "ser_phpini_flag_b");			
+				if ($db===null) {
 					$ghtml->__http_vars['frm_emessage'] = "phpini_not_set_client";
 				}
 			}
