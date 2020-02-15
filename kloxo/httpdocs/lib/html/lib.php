@@ -7494,9 +7494,9 @@ function setCopyWebConfFiles($webdriver, $nolog = null)
 
 		if ($webdriver === 'lighttpd') {
 			// MR -- lighttpd problem if /var/log/lighttpd not apache:apache chown
-			lxfile_unix_chown_rec("/var/log/{$webdriver}", "apache:apache");
+			lxfile_unix_chown("/var/log/{$webdriver}", "apache:apache");
 			lxfile_unix_chown_rec("/var/www/lighttpd", "apache:apache");			
-			$t = getLinkCustomfile("{$pathdrv}/etc/conf", "~lxcenter.conf");
+			$t = getLinkCustomfile("{$pathdrv}/etc/conf.d", "~lxcenter.conf");
 			lxfile_cp($t, "$pathconfd/~lxcenter.conf");
 		}
 		$addition = '';

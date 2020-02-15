@@ -71,8 +71,11 @@ class phpini extends lxdb
 	function getLocalList()
 	{
 		$server = $this->syncserver;
-		$server_phpini = unserialize(base64_decode(db_get_value("phpini", "pserver-{$server}",
-			"ser_phpini_flag_b")));
+		$server_phpini = unserialize(base64_decode(db_get_value(
+			"phpini",
+			"pserver-{$server}",
+			"ser_phpini_flag_b"
+		)));
 
 		$list[] = 'display_error_flag';
 		$list[] = 'log_errors_flag';
@@ -130,8 +133,8 @@ class phpini extends lxdb
 	function fixphpIniFlag()
 	{
 		if (!isset($this->phpini_flag_b) || get_class($this->phpini_flag_b) !== 'phpini_flag_b') {
-		//if ($this->getParentO()->getClass() === 'web') { return; }
-		//if ($this->getParentO()->getClass() === 'domain') { return; }
+			//if ($this->getParentO()->getClass() === 'web') { return; }
+			//if ($this->getParentO()->getClass() === 'domain') { return; }
 			$this->phpini_flag_b = new phpini_flag_b(null, null, $this->nname);
 			$this->setUpInitialValues();
 		}
@@ -166,9 +169,9 @@ class phpini extends lxdb
 			//	if ($this->getParentO()->is__table('web')) {
 			if ($this->getParentO()->getClass() === 'web') {
 				$this->__var_web_user = $this->getParentO()->username;
-			//	$this->__var_customer_name = $this->getParentO()->customer_name;
-			//	$this->__var_disable_openbasedir = (isset($this->getParentO()->webmisc_b->disable_openbasedir)) ?
-			//	$this->getParentO()->webmisc_b->disable_openbasedir : null;
+				//	$this->__var_customer_name = $this->getParentO()->customer_name;
+				//	$this->__var_disable_openbasedir = (isset($this->getParentO()->webmisc_b->disable_openbasedir)) ?
+				//	$this->getParentO()->webmisc_b->disable_openbasedir : null;
 			} else {
 				$this->__var_web_user = $this->getParentO()->nname;
 			}
@@ -200,7 +203,7 @@ class phpini extends lxdb
 		$this->write();
 
 
-	//	if ($this->getParentO()->is__table('pserver')) {
+		//	if ($this->getParentO()->is__table('pserver')) {
 		if ($this->getParentO()->getClass() === 'pserver') {
 			exec("sh /script/fixphp --server={$this->getParentO()->nname}");
 
@@ -248,7 +251,7 @@ class phpini extends lxdb
 		$adminList = $this->getAdminList();
 
 		foreach ($totallist as $l) {
-		//	if ((!$parent->is__table('pserver') && array_search_bool($l, $inheritedlist)) || array_search_bool($l, $adminList)) {
+			//	if ((!$parent->is__table('pserver') && array_search_bool($l, $inheritedlist)) || array_search_bool($l, $adminList)) {
 			if (($parent->getClass() !== 'pserver' && array_search_bool($l, $inheritedlist)) || array_search_bool($l, $adminList)) {
 				$vlist["phpini_flag_b-$l"] = array('M', null);
 			} else {
@@ -267,13 +270,13 @@ class phpini extends lxdb
 				$vlist["phpini_flag_b-phpfpm_type_flag"] = array('s', array($this->phpini_flag_b->phpfpm_type_flag));
 			}
 
-		//	$vlist["phpini_flag_b-phpfpm_limit_extensions"] = array('t', self::getPhpfpmLimitExtensions());
+			//	$vlist["phpini_flag_b-phpfpm_limit_extensions"] = array('t', self::getPhpfpmLimitExtensions());
 
 		}
 
 		// MR -- still not work (like in 'appearance')
 		// still something wrong with 'updateall' process!
-	//	if ($parent->is__table('pserver')) {
+		//	if ($parent->is__table('pserver')) {
 		if ($parent->getClass() === 'pserver') {
 			$vlist['__v_updateall_button'] = array();
 		}
@@ -364,7 +367,7 @@ class phpini extends lxdb
 			$this->initialValue('date_timezone_flag', $c);
 		} else {
 			// it's mean php in panel itself and wrong. so changed
-		//	$this->initialValue('date_timezone_flag', date_default_timezone_get());
+			//	$this->initialValue('date_timezone_flag', date_default_timezone_get());
 			$this->initialValue('date_timezone_flag', 'Europe/London');
 		}
 
@@ -376,7 +379,9 @@ class phpini extends lxdb
 	function initialValue($var, $val)
 	{
 		if (!isset($this->phpini_flag_b->$var) || !$this->phpini_flag_b->$var) {
-			$this->phpini_flag_b->$var = $val;
+			if (isset($val)) {
+				$this->phpini_flag_b->$var = $val;
+			}
 		}
 	}
 }

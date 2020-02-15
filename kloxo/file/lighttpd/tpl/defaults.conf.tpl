@@ -8,7 +8,7 @@ if (!file_exists("/var/log/lighttpd")) {
 }
 
 chmod("/var/log/lighttpd", 0777);
-
+chown("/var/log/lighttpd","apache");
 if (!isset($phpselected)) {
 	$phpselected = 'php';
 }
