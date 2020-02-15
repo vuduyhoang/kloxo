@@ -8576,7 +8576,6 @@ function setAllInactivateWebServer($nolog = null)
 
 		log_cleanup("- Inactivate '{$v}'", $nolog);
 		exec("chkconfig {$a} off >/dev/null 2>&1");
-
 		exec("chkconfig spawn-fcgi off >/dev/null 2>&1");
 	}
 }

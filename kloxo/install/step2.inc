@@ -363,6 +363,9 @@ kloxo_install_before_bye() {
 
 	## Set ownership for Kloxo httpdocs dir
 	chown -R lxlabs:lxlabs ${kloxopath}/httpdocs
+	#echo ">>> Default configure for lighttpd <<"
+	#chown -R apache:apache /var/www/lighttpd
+	#chown -R apache:apache /var/log/lighttpd
 }
 
 kloxo_install_bye() {
