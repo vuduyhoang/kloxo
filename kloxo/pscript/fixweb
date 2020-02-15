@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "*** >>> Web portion <<<***"
+echo "*** >>>>>>>>> Start fixweb <<<<<<<<<***"
 
 . /script/counter-start.inc
 
@@ -12,7 +12,9 @@ if [ ! -f /etc/ssl/certs/dhparam.pem ] ; then
 	cd /etc/ssl/certs
 	openssl dhparam -out dhparam.pem 2048 >/dev/null 2>&1
 fi
-
+if [ ! "$(ls -A /opt/configs/lighttpd/conf/defaults)" ] ; then
+	echo "## -- Empty conf file -- for start lighttpd service " > "/opt/configs/lighttpd/conf/defaults/_empty_.conf"
+fi
 if [ -f /script/custom.fix.inc ] ; then
 	. /script/custom.fix.inc
 else

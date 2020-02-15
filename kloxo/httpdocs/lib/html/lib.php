@@ -6521,7 +6521,7 @@ function setSomePermissions($nolog = null)
 
 	log_cleanup("- Set permissions for /usr/bin/php-cgi", $nolog);
 	@lxfile_unix_chmod("/usr/bin/php-cgi", "0755");
-
+	
 	log_cleanup("- Set permissions for closeinput binary", $nolog);
 	@lxfile_unix_chmod("../cexe/closeinput", "0755");
 
@@ -7494,9 +7494,11 @@ function setCopyWebConfFiles($webdriver, $nolog = null)
 
 		if ($webdriver === 'lighttpd') {
 			// MR -- lighttpd problem if /var/log/lighttpd not apache:apache chown
-			lxfile_unix_chown("/var/log/{$webdriver}", "apache:apache");
+			lxfile_unix_chown_rec("/var/log/{$webdriver}", "apache:apache");
+			lxfile_unix_chown_rec("/var/www/lighttpd", "apache:apache");			
+			$t = getLinkCustomfile("{$pathdrv}/etc/conf", "~lxcenter.conf");
+			lxfile_cp($t, "$pathconfd/~lxcenter.conf");
 		}
-
 		$addition = '';
 	} else {
 		if (isWebProxy()) {
@@ -8481,12 +8483,12 @@ function setAllWebServerInstall($nolog = null)
 		$use_apache24 = true;
 		$msg_apache24 = "OK";
 	} else {
-		log_cleanup("- Httpd version: ".getRpmVersion('httpd'));
+		log_cleanup("- Httpd version: " . getRpmVersion('httpd'));
 		if (version_compare(getRpmVersion('httpd'), '2.4.0', '>')) {
 			$use_apache24 = true;
 			$msg_apache24 = "OK";
 			touch("../etc/flag/use_apache24.flg");
-		}elseif (version_compare(getRpmVersion('httpd24u'), '2.4.0', '>')) {
+		} elseif (version_compare(getRpmVersion('httpd24u'), '2.4.0', '>')) {
 			$use_apache24 = true;
 			$msg_apache24 = "OK";
 			touch("../etc/flag/use_apache24.flg");
@@ -8499,7 +8501,8 @@ function setAllWebServerInstall($nolog = null)
 	log_cleanup("- Use apache24 [$msg_apache24] ", $nolog);
 	foreach ($list as $k => $v) {
 		$confpath = "/opt/configs/{$v}/etc/conf";
-
+		if ($v === 'lighttpd') {
+		}
 		if ($v === 'apache') {
 			$a24mpath = "/etc/httpd/conf.modules.d";
 			if ($use_apache24 === TRUE) {
