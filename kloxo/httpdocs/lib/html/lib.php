@@ -8481,6 +8481,7 @@ function setAllWebServerInstall($nolog = null)
 		$use_apache24 = true;
 		$msg_apache24 = "OK";
 	} else {
+		log_cleanup("- Httpd version: ".getRpmVersion('httpd'));
 		if (version_compare(getRpmVersion('httpd'), '2.4.0', '>')) {
 			$use_apache24 = true;
 			$msg_apache24 = "OK";
