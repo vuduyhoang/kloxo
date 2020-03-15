@@ -3497,7 +3497,7 @@ abstract class Lxclass
 
 			if ($key === 'ser_listpriv') {
 				$key = strfrom($key, "ser_");
-				$vv = @ unserialize(base64_decode($value));
+				$vv = unserialize(base64_decode($value));
 
 				if (!$vv) {
 					dprint("{$this->getClName()} $key\n");
@@ -3547,7 +3547,6 @@ abstract class Lxclass
 						dprint("Unserialize failed: {$this->get__table()}: {$key}\n", 3);
 						$value = new $key(null, null, $this->nname);
 						$this->$key = $value;
-
 						continue;
 					}
 				}

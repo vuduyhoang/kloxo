@@ -5562,13 +5562,10 @@ function setRpmReplaced($rpmname, $replacewith)
 
 function isRpmInstalled($rpmname)
 {
-	exec("rpm -qa {$rpmname}", $out);
-
-	if (count($out) > 0) {
-		return true;
-	} else {
-		return false;
-	}
+	#exec("rpm -qa {$rpmname}", $out);
+	$out = lxshell_output("rpm", "-qa", $rpmname);
+	if (trim($out) !== "") return true;
+	return false;
 }
 
 function isPhpModuleInstalled($module)
@@ -6521,7 +6518,7 @@ function setSomePermissions($nolog = null)
 
 	log_cleanup("- Set permissions for /usr/bin/php-cgi", $nolog);
 	@lxfile_unix_chmod("/usr/bin/php-cgi", "0755");
-	
+
 	log_cleanup("- Set permissions for closeinput binary", $nolog);
 	@lxfile_unix_chmod("../cexe/closeinput", "0755");
 
@@ -7495,7 +7492,7 @@ function setCopyWebConfFiles($webdriver, $nolog = null)
 		if ($webdriver === 'lighttpd') {
 			// MR -- lighttpd problem if /var/log/lighttpd not apache:apache chown
 			lxfile_unix_chown("/var/log/{$webdriver}", "apache:apache");
-			lxfile_unix_chown_rec("/var/www/lighttpd", "apache:apache");			
+			lxfile_unix_chown_rec("/var/www/lighttpd", "apache:apache");
 			$t = getLinkCustomfile("{$pathdrv}/etc/conf.d", "~lxcenter.conf");
 			lxfile_cp($t, "$pathconfd/~lxcenter.conf");
 		}
@@ -8469,8 +8466,10 @@ function setAllWebServerInstall($nolog = null)
 	$list = getAllRealWebDriverList();
 
 	$ws = array(
-		'nginx' => 'nginx nginx-module* GeoIP spawn-fcgi fcgiwrap', 'lighttpd' => 'lighttpd lighttpd-fastcgi',
-		'hiawatha' => 'hiawatha hiawatha-addons', 'httpd' => 'httpd httpd-tools',
+		'nginx' => 'nginx nginx-module* GeoIP spawn-fcgi fcgiwrap',
+		'lighttpd' => 'lighttpd lighttpd-fastcgi',
+		'hiawatha' => 'hiawatha hiawatha-addons',
+		'httpd' => 'httpd httpd-tools',
 		'httpd24u' => 'httpd24u httpd24u-tools httpd24u-filesystem httpd24u-mod_security2'
 	);
 
@@ -8482,7 +8481,7 @@ function setAllWebServerInstall($nolog = null)
 	if (file_exists("../etc/flag/use_apache24.flg")) {
 		$use_apache24 = true;
 		$msg_apache24 = "OK";
-	} else {		
+	} else {
 		if (version_compare(getRpmVersion('httpd'), '2.4.0', '>')) {
 			$use_apache24 = true;
 			$msg_apache24 = "OK";

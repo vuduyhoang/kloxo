@@ -378,10 +378,12 @@ class phpini extends lxdb
 
 	function initialValue($var, $val)
 	{
+		dprint("initialValue $var");
 		if (!isset($this->phpini_flag_b->$var) || !$this->phpini_flag_b->$var) {
 			if (isset($val)) {
 				$this->phpini_flag_b->$var = $val;
 			}
 		}
+		dprint("set $var => $val");
 	}
 }
