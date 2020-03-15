@@ -190,7 +190,6 @@ phpused="php56"
 sh /script/php-branch-installer ${phpused}u
 
 systemctl enable php-fpm.service
-#chkconfig php-fpm on >/dev/null 2>&1
 	
 if [ "$(uname -m)" == "x86_64" ] ; then
 	ln -sf /usr/lib64/php /usr/lib/php
@@ -229,11 +228,7 @@ chkconfig httpd on >/dev/null 2>&1
 sh /script/setdriver --server=localhost --class=webcache --driver=none >/dev/null 2>&1
 sh /script/setdriver --server=localhost --class=dns --driver=bind >/dev/null 2>&1
 sh /script/setdriver --server=localhost --class=spam --driver=bogofilter >/dev/null 2>&1
-
 ## use php-cgi by default
 sh /script/set-kloxo-php >/dev/null 2>&1
-
 sh /script/restart-all --force >/dev/null 2>&1
-
 echo
-

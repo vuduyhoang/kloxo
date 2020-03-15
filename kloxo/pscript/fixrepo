@@ -4,20 +4,8 @@ echo "Clean yum meta data"
 yum --disablerepo=* --enablerepo=mratwork* clean all >/dev/null
 
 if [ "$(rpm -qa|grep 'mratwork-')" != "" ] ; then
-echo "Update mratwork-release"
+	echo "Update mratwork-release"
 	yum update mratwork* -y >/dev/null
-else
-	cd /tmp
-	'rm' -rf /etc/yum.repos.d/kloxo.repo
-	'rm' -rf /etc/yum.repos.d/kloxo-mr.repo
-	'rm' -rf /etc/yum.repos.d/kloxo-custom.repo
-	'rm' -rf /etc/yum.repos.d/lxcenter.repo
-	'rm' -rf /etc/yum.repos.d/lxlabs.repo	
-	'rm' -rf /etc/yum.repos.d/mratwork.repo.*
-	
-	wget https://github.com/mustafaramadhan/kloxo/raw/rpms/release/neutral/noarch/mratwork-release-0.0.1-1.noarch.rpm --no-check-certificate
-	rpm -ivh mratwork-release-0.0.1-1.noarch.rpm
-	yum update mratwork-* -y
 fi
 
 . /script/fix-urgent

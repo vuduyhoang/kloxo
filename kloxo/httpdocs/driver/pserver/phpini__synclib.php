@@ -191,9 +191,11 @@ class phpini__sync extends Lxdriverclass
 
 				$phps = array_merge(array('php'), $input['phpmlist']);
 
-				foreach ($phps as $k => $v) {
+				foreach ($phps as $k => $v) {					
 					$phpfpm_path = "/opt/configs/php-fpm/tpl";
-
+					if (!is_dir($phpfpm_path)){
+						continue;
+					}
 					if ($v === 'php52m') {
 						$phpfpm_cont = file_get_contents(getLinkCustomfile($phpfpm_path, "php52-fpm-pool.conf.tpl"));
 					} else {

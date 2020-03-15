@@ -8,13 +8,13 @@ fi
 
 if [ "$(rpm -qa yum-presto)" == "" ] ; then
 	if [ "$(yum list *yum*|grep '@')" != "" ] ; then
-echo "Install yum-presto deltarpm"
+		echo "Install yum-presto deltarpm"
 		yum install -y yum-presto deltarpm >/dev/null
 	fi
 fi
 ##todo move to spec
 if [ "$(rpm -qa sudo)" == "" ] ; then
-echo "Install sudo"
+	echo "Install sudo"
 	yum install -y sudo >/dev/null
 fi
 echo "Edit /etc/yum.conf"
@@ -53,12 +53,12 @@ fi
 #fi
 
 if [ "$(rpm -qa redhat-lsb)" == "" ] ; then
-echo "Install redhat-lsb"
+	echo "Install redhat-lsb"
 	yum install -y redhat-lsb >/dev/null
 fi
 
 if [ "$(rpm -qa dhclient)" == "" ] ; then
-echo "Install dhclient"
+	echo "Install dhclient"
 	yum install -y dhclient
 fi
 

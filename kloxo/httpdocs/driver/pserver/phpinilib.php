@@ -322,14 +322,12 @@ class phpini extends lxdb
 
 	function initialValuesBasic()
 	{
+		if ($this->phpini_flag_b === NULL) $this->phpini_flag_b = new stdClass();
 		$this->initialValue('output_compression_flag', 'off');
-
 		$this->initialValue('upload_max_filesize', '16M');
 		$this->initialValue('register_global_flag', 'off');
-
 		$this->phpini_flag_b->session_save_path_flag = '/var/lib/php/session';
 		$this->initialValue('session_save_path_flag', $this->phpini_flag_b->session_save_path_flag);
-
 		$initial = 'exec,passthru,shell_exec,system,proc_open,popen,show_source';
 		$this->initialValue('disable_functions', $initial);
 
@@ -378,12 +376,10 @@ class phpini extends lxdb
 
 	function initialValue($var, $val)
 	{
-		dprint("initialValue $var");
 		if (!isset($this->phpini_flag_b->$var) || !$this->phpini_flag_b->$var) {
 			if (isset($val)) {
 				$this->phpini_flag_b->$var = $val;
 			}
 		}
-		dprint("set $var => $val");
 	}
 }

@@ -39,7 +39,7 @@ class web__ extends lxDriverClass
 		// MR -- only need here for apache because switch between apache 2.2 and 2.4
 		if ($webtype === 'apache') {
 			setCopyWebConfFiles($webtype);
-		}
+		}		
 	}
 
 	static function setUnnstallPhpfpm()

@@ -109,7 +109,6 @@ class ServerMail extends lxdb
 		} else {
 			$content = $param['dns_blacklists'];
 			$file = "{$path}/current.spamdyke_rbl.txt";
-
 			file_put_contents($file, $content);
 		}
 
